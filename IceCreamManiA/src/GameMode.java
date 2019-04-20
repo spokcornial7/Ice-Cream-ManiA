@@ -1,11 +1,23 @@
 
 public class GameMode 
 {
-	private int count;
+	private int points;
 	
 	public GameMode()
 	{
-		count = 0; 
+		setPoints(0); 
+	}
+	
+	public void addPoints()
+	{
+		setPoints(getPoints() + 1);
 	}
 
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
 }
