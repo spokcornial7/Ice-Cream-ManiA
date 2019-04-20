@@ -9,6 +9,7 @@ public class GameViewer {
 		// TODO Auto-generated method stub
 		System.out.print("hello");
 		System.out.print("helen is so mean to me.");
+		System.out.print("GameMood is so ugly to me.");
 	}
 
 }
