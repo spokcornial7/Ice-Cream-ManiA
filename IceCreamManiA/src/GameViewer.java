@@ -1,17 +1,34 @@
+import javax.swing.*;
 
-public class GameViewer {
+import java.awt.*;
+import java.awt.event.*;
 
-	public GameViewer() {
+public class GameViewer extends JFrame
+{
+	
+	public GameViewer() 
+	{
 		// TODO Auto-generated constructor stub
+		JOptionPane.showMessageDialog(null, "");
+		JOptionPane.showMessageDialog(null, "");
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.print("hello");
-		System.out.print("helen is so mean to me.");
-		System.out.print("GameMood is so ugly to me.");
-		System.out.print("GameMood is so dumb :)");
-		System.out.print("GameMood is so dumb X2");
+	public static void main(String[] args) 
+	{
+		JPanel pane1 = new JPanel();
+		JLabel welcome = new JLabel("Welcome to Ice Cream Mania!");
+		JButton mode1 = new JButton("Timer");
+		JButton mode2 = new JButton("Classic");
+		pane1.add(welcome);
+		pane1.add(mode1);
+		pane1.add(mode2);
+		
+		JOptionPane.showMessageDialog(null, "");
+		
+		JButton restart = new JButton("Restart");
+		JButton diff = new JButton("Different Game Mode");
+		JButton exitB = new JButton("Exit Game");
+	
 	}
 
 }
