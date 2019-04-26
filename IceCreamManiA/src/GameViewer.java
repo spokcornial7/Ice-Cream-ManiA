@@ -2,90 +2,137 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class GameViewer extends JFrame
 {
 	JPanel pane1;
 	GameMode game;
+	String gameMode;
+	private String rules;
+	private JFrame frame1;
+	private JPanel welcomePanel;
+	private JPanel classicPanel;
+	private JPanel timerPanel;
 	
 	public GameViewer() 
 	{
-		setSize(500, 500);
-		setTitle("Ice Cream Mania");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		askGameMode();
-				
-		//JOptionPane.showMessageDialog(null, "");
+		frame1.setVisible(true);
 		
 		JButton restart = new JButton("Restart");
 		JButton diff = new JButton("Different Game Mode");
 		JButton exitB = new JButton("Exit Game");
 	}
 	
-	private void askGameMode()
-	{
-		pane1 = new JPanel();
-		JLabel welcome = new JLabel("Welcome to Ice Cream Mania!");
-		JButton mode1 = new JButton("Timer");
-		JButton mode2 = new JButton("Classic");
-		pane1.add(welcome);
-		pane1.add(mode1);
-		pane1.add(mode2);
-		add(pane1);
-		mode1.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				game = new GameModeTimer();
+
+	private void askGameMode() {
+		frame1 = new JFrame();
+		frame1.setBounds(100, 100, 420, 390);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		welcomePanel = new JPanel();
+		frame1.getContentPane().add(welcomePanel, "Welcome");
+		welcomePanel.setLayout(null);
+		welcomePanel.setVisible(true);
+		
+		JLabel lblWelcome = new JLabel("WELCOME TO ICECREAM MANIA");
+		lblWelcome.setBounds(49, 55, 313, 31);
+		welcomePanel.add(lblWelcome);
+		lblWelcome.setFont(new Font("Desdemona", Font.BOLD, 26));
+		
+		JLabel lblChooseAGame = new JLabel("Choose a Game Mode");
+		lblChooseAGame.setBounds(139, 123, 135, 16);
+		welcomePanel.add(lblChooseAGame);
+		
+		JButton btnTimer = new JButton("Timer");
+		btnTimer.setBounds(160, 180, 90, 30);
+		welcomePanel.add(btnTimer);
+		btnTimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				timerPanel.setVisible(true);
+				welcomePanel.setVisible(false);
+				createTRules();
+				JLabel timerRules = new JLabel(rules);
+				timerRules.setBounds(35, 40, 360, 260);
+				timerPanel.add(timerRules);
 			}
 		});
-		mode2.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				game = new GameModeClassic();
+		
+		rules = "";
+		JButton btnClassic = new JButton("Classic");
+		btnClassic.setBounds(157, 250, 90, 30);
+		welcomePanel.add(btnClassic);
+		btnClassic.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				classicPanel.setVisible(true);
+				welcomePanel.setVisible(false);
+				createCRules();
+				JLabel classicRules = new JLabel(rules);
+				classicRules.setBounds(35, 40, 360, 260);
+				classicPanel.add(classicRules);
 			}
 		});
+		
+		//CLASSIC PANEL
+		classicPanel = new JPanel();
+		frame1.getContentPane().add(classicPanel, "Rules");
+		classicPanel.setLayout(null);
+		classicPanel.setVisible(false);
+		
+		JButton buttonC = new JButton("Begin Game!");
+		buttonC.setBounds(150, 310, 120, 30);
+		classicPanel.add(buttonC);
+		
+		
+		//TIMER PANEL
+		timerPanel = new JPanel();
+		frame1.getContentPane().add(timerPanel, "Rules");
+		timerPanel.setLayout(null);
+		timerPanel.setVisible(false);
+		
+		JButton buttonT = new JButton("Begin Game!");
+		buttonT.setBounds(150, 310, 120, 30);
+		timerPanel.add(buttonT);
 	}
 	
-	public void listDictionary()throws IOException
+	private void createCRules()
 	{
-	    BufferedReader br = new BufferedReader(new FileReader("ClassicModeRules.txt"));
-	    String aLineFromFile = null;
-	    while ((br.readLine()) != null){
-	            aLineFromFile += br.readLine();
-	    }
-	    JOptionPane.showMessageDialog(null, aLineFromFile);
-	    br.close();
-	    return;
+		try {
+			rules = new Scanner(new File("ClassicModeRules.txt")).nextLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private String text;
+	private void createTRules()
+	{
+		try {
+			rules = new Scanner(new File("TimerModeRules.txt")).nextLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void readFileContent() throws FileNotFoundException{
-
-      // text = new Scanner( new File("ClassicModeRules.txt") ).useDelimiter("<br>").next();
-       text = new Scanner( new File("TimerModeRules.txt") ).useDelimiter("<br>").next();
-       JOptionPane.showMessageDialog(null, text, "Rules", JOptionPane.INFORMATION_MESSAGE);
+    public String getGameMode()
+    {
+    	return gameMode;
     }
-
+    
+    private void createGame()
+    {
+    	setSize(500, 500);
+		setTitle("Ice Cream Mania");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
 	public static void main(String[] args) 
 	{
 		GameViewer game = new GameViewer();
 		game.setVisible(true);	
-	
-			try {
-				game.readFileContent();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 		
 	}
 
