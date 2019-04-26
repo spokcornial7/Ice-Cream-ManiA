@@ -2,6 +2,12 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class GameViewer extends JFrame
 {
@@ -15,7 +21,7 @@ public class GameViewer extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		askGameMode();
 				
-		JOptionPane.showMessageDialog(null, "");
+		//JOptionPane.showMessageDialog(null, "");
 		
 		JButton restart = new JButton("Restart");
 		JButton diff = new JButton("Different Game Mode");
@@ -47,11 +53,40 @@ public class GameViewer extends JFrame
 			}
 		});
 	}
+	
+	public void listDictionary()throws IOException
+	{
+	    BufferedReader br = new BufferedReader(new FileReader("ClassicModeRules.txt"));
+	    String aLineFromFile = null;
+	    while ((br.readLine()) != null){
+	            aLineFromFile += br.readLine();
+	    }
+	    JOptionPane.showMessageDialog(null, aLineFromFile);
+	    br.close();
+	    return;
+	}
+	
+	private String text;
+
+    public void readFileContent() throws FileNotFoundException{
+
+      // text = new Scanner( new File("ClassicModeRules.txt") ).useDelimiter("<br>").next();
+       text = new Scanner( new File("TimerModeRules.txt") ).useDelimiter("<br>").next();
+       JOptionPane.showMessageDialog(null, text, "Rules", JOptionPane.INFORMATION_MESSAGE);
+    }
 
 	public static void main(String[] args) 
 	{
 		GameViewer game = new GameViewer();
 		game.setVisible(true);	
+	
+			try {
+				game.readFileContent();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 	}
 
 }
