@@ -12,20 +12,18 @@ public class GameViewer
 	
 	private JFrame frame1;
 	private JPanel welcomePanel;
-	private JPanel classicPanel;
-	private JPanel timerPanel;
 	private String rules;
 	private JButton btnTimer;
 	private JButton btnClassic;
-	private JButton btnTBegin;
-	private JButton btnCBegin;
+	private JPanel rulesPanel;
+	private JButton btnBegin;
 	
 	private JFrame frame2;
 	
 	
 	public GameViewer() 
 	{
-		askGameMode();
+		initialize();
 		frame1.setVisible(true);
 		
 		JButton restart = new JButton("Restart");
@@ -34,7 +32,8 @@ public class GameViewer
 	}
 	
 
-	private void askGameMode() {
+	/** Initializes the game */
+	private void initialize() {
 		ButtonListener listener = new ButtonListener();
 		
 		frame1 = new JFrame();
@@ -42,6 +41,7 @@ public class GameViewer
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		
+		// WELCOME PANEL
 		welcomePanel = new JPanel();
 		frame1.getContentPane().add(welcomePanel, "Welcome");
 		welcomePanel.setLayout(null);
@@ -66,30 +66,38 @@ public class GameViewer
 		welcomePanel.add(btnClassic);
 		btnClassic.addActionListener(listener);
 		
-		//CLASSIC PANEL
-		classicPanel = new JPanel();
-		frame1.getContentPane().add(classicPanel, "Rules");
-		classicPanel.setLayout(null);
-		classicPanel.setVisible(false);
+		// RULES PANEL
+		rulesPanel = new JPanel();
+		frame1.getContentPane().add(rulesPanel, "Rules");
+		rulesPanel.setLayout(null);
+		rulesPanel.setVisible(false);
 		
-		btnCBegin = new JButton("Begin Game!");
-		btnCBegin.setBounds(150, 310, 120, 30);
-		classicPanel.add(btnCBegin);
-		btnCBegin.addActionListener(listener);
+		btnBegin = new JButton("Begin Game!");
+		btnBegin.setBounds(150, 310, 120, 30);
+		rulesPanel.add(btnBegin);
+		btnBegin.addActionListener(listener);
 		
-		
-		//TIMER PANEL
-		timerPanel = new JPanel();
-		frame1.getContentPane().add(timerPanel, "Rules");
-		timerPanel.setLayout(null);
-		timerPanel.setVisible(false);
-		
-		btnTBegin = new JButton("Begin Game!");
-		btnTBegin.setBounds(150, 310, 120, 30);
-		timerPanel.add(btnTBegin);
-		btnTBegin.addActionListener(listener);
+		// ADDING IMAGE BACKGROUND
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(0, 0, 420, 368);
+		welcomePanel.add(layeredPane);
+		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
+		JLabel lblNewLabel = new JLabel(img);
+		lblNewLabel.setBounds(0, 0, 420, 368);
+		layeredPane.add(lblNewLabel);
 	}
 	
+	/** Read in timer mode rules */
+	private void createTRules()
+	{
+		try {
+			rules = new Scanner(new File("TimerModeRules.txt")).nextLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** Read in classic mode rules */
 	private void createCRules()
 	{
 		try {
@@ -99,19 +107,14 @@ public class GameViewer
 		}
 	}
 	
-	private void createTRules()
-	{
-		try {
-			rules = new Scanner(new File("TimerModeRules.txt")).nextLine();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
+	/** Returns game mode 
+	 *  @return game mode
+	 */
     public String getGameMode()
     {
     	return gameMode;
     }
+    
     
     private void createGame()
     {
@@ -119,6 +122,7 @@ public class GameViewer
     	frame2.setSize(500, 500);
     	frame2.setVisible(true);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame2.getContentPane().add(game);
     }
     
     private class ButtonListener implements ActionListener
@@ -126,28 +130,24 @@ public class GameViewer
 		public void actionPerformed(ActionEvent e) 
 		{
 			if(e.getSource() == btnTimer){
-				timerPanel.setVisible(true);
+				rulesPanel.setVisible(true);
 				welcomePanel.setVisible(false);
 				createTRules();
 				JLabel timerRules = new JLabel(rules);
 				timerRules.setBounds(35, 40, 360, 260);
-				timerPanel.add(timerRules);
+				rulesPanel.add(timerRules);
+				game = new GameModeTimer();
 			}
 			else if(e.getSource() == btnClassic){
-				classicPanel.setVisible(true);
+				rulesPanel.setVisible(true);
 				welcomePanel.setVisible(false);
 				createCRules();
 				JLabel classicRules = new JLabel(rules);
 				classicRules.setBounds(35, 40, 360, 260);
-				classicPanel.add(classicRules);
-			}
-			else if(e.getSource() == btnTBegin){
-				game = new GameModeTimer();
-				frame1.setVisible(false);
-				createGame();
-			}
-			else if(e.getSource() == btnCBegin){
+				rulesPanel.add(classicRules);
 				game = new GameModeClassic();
+			}
+			else if(e.getSource() == btnBegin){
 				frame1.setVisible(false);
 				createGame();
 			}
