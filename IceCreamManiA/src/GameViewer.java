@@ -5,16 +5,23 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
-public class GameViewer extends JFrame
+public class GameViewer
 {
-	JPanel pane1;
-	GameMode game;
-	String gameMode;
-	private String rules;
+	private GameMode game;
+	private String gameMode;
+	
 	private JFrame frame1;
 	private JPanel welcomePanel;
 	private JPanel classicPanel;
 	private JPanel timerPanel;
+	private String rules;
+	private JButton btnTimer;
+	private JButton btnClassic;
+	private JButton btnTBegin;
+	private JButton btnCBegin;
+	
+	private JFrame frame2;
+	
 	
 	public GameViewer() 
 	{
@@ -28,6 +35,8 @@ public class GameViewer extends JFrame
 	
 
 	private void askGameMode() {
+		ButtonListener listener = new ButtonListener();
+		
 		frame1 = new JFrame();
 		frame1.setBounds(100, 100, 420, 390);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,34 +56,15 @@ public class GameViewer extends JFrame
 		lblChooseAGame.setBounds(139, 123, 135, 16);
 		welcomePanel.add(lblChooseAGame);
 		
-		JButton btnTimer = new JButton("Timer");
+		btnTimer = new JButton("Timer");
 		btnTimer.setBounds(160, 180, 90, 30);
 		welcomePanel.add(btnTimer);
-		btnTimer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timerPanel.setVisible(true);
-				welcomePanel.setVisible(false);
-				createTRules();
-				JLabel timerRules = new JLabel(rules);
-				timerRules.setBounds(35, 40, 360, 260);
-				timerPanel.add(timerRules);
-			}
-		});
+		btnTimer.addActionListener(listener);
 		
-		rules = "";
-		JButton btnClassic = new JButton("Classic");
+		btnClassic = new JButton("Classic");
 		btnClassic.setBounds(157, 250, 90, 30);
 		welcomePanel.add(btnClassic);
-		btnClassic.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				classicPanel.setVisible(true);
-				welcomePanel.setVisible(false);
-				createCRules();
-				JLabel classicRules = new JLabel(rules);
-				classicRules.setBounds(35, 40, 360, 260);
-				classicPanel.add(classicRules);
-			}
-		});
+		btnClassic.addActionListener(listener);
 		
 		//CLASSIC PANEL
 		classicPanel = new JPanel();
@@ -82,9 +72,10 @@ public class GameViewer extends JFrame
 		classicPanel.setLayout(null);
 		classicPanel.setVisible(false);
 		
-		JButton buttonC = new JButton("Begin Game!");
-		buttonC.setBounds(150, 310, 120, 30);
-		classicPanel.add(buttonC);
+		btnCBegin = new JButton("Begin Game!");
+		btnCBegin.setBounds(150, 310, 120, 30);
+		classicPanel.add(btnCBegin);
+		btnCBegin.addActionListener(listener);
 		
 		
 		//TIMER PANEL
@@ -93,9 +84,10 @@ public class GameViewer extends JFrame
 		timerPanel.setLayout(null);
 		timerPanel.setVisible(false);
 		
-		JButton buttonT = new JButton("Begin Game!");
-		buttonT.setBounds(150, 310, 120, 30);
-		timerPanel.add(buttonT);
+		btnTBegin = new JButton("Begin Game!");
+		btnTBegin.setBounds(150, 310, 120, 30);
+		timerPanel.add(btnTBegin);
+		btnTBegin.addActionListener(listener);
 	}
 	
 	private void createCRules()
@@ -123,17 +115,49 @@ public class GameViewer extends JFrame
     
     private void createGame()
     {
-    	setSize(500, 500);
-		setTitle("Ice Cream Mania");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	frame2 = new JFrame("Ice Cream Mania");
+    	frame2.setSize(500, 500);
+    	frame2.setVisible(true);
+		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    private class ButtonListener implements ActionListener
+    {
+		public void actionPerformed(ActionEvent e) 
+		{
+			if(e.getSource() == btnTimer){
+				timerPanel.setVisible(true);
+				welcomePanel.setVisible(false);
+				createTRules();
+				JLabel timerRules = new JLabel(rules);
+				timerRules.setBounds(35, 40, 360, 260);
+				timerPanel.add(timerRules);
+			}
+			else if(e.getSource() == btnClassic){
+				classicPanel.setVisible(true);
+				welcomePanel.setVisible(false);
+				createCRules();
+				JLabel classicRules = new JLabel(rules);
+				classicRules.setBounds(35, 40, 360, 260);
+				classicPanel.add(classicRules);
+			}
+			else if(e.getSource() == btnTBegin){
+				game = new GameModeTimer();
+				frame1.setVisible(false);
+				createGame();
+			}
+			else if(e.getSource() == btnCBegin){
+				game = new GameModeClassic();
+				frame1.setVisible(false);
+				createGame();
+			}
+		}
+    	
     }
     
 	public static void main(String[] args) 
 	{
-		GameViewer game = new GameViewer();
-		game.setVisible(true);	
-		
-		
+		GameViewer gameGame = new GameViewer();	
 	}
 
 }
