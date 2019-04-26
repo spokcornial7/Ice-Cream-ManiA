@@ -13,13 +13,14 @@ public class GameViewer
 	private JFrame frame1;
 	private JPanel welcomePanel;
 	private String rules;
-	private JButton btnTimer;
+	private JButton btnTimed;
 	private JButton btnClassic;
 	private JPanel rulesPanel;
 	private JButton btnBegin;
 	
 	private JFrame frame2;
 	
+	private JFrame frame3;
 	
 	public GameViewer() 
 	{
@@ -56,10 +57,10 @@ public class GameViewer
 		lblChooseAGame.setBounds(139, 123, 135, 16);
 		welcomePanel.add(lblChooseAGame);
 		
-		btnTimer = new JButton("Timer");
-		btnTimer.setBounds(160, 180, 90, 30);
-		welcomePanel.add(btnTimer);
-		btnTimer.addActionListener(listener);
+		btnTimed = new JButton("Timed");
+		btnTimed.setBounds(160, 180, 90, 30);
+		welcomePanel.add(btnTimed);
+		btnTimed.addActionListener(listener);
 		
 		btnClassic = new JButton("Classic");
 		btnClassic.setBounds(157, 250, 90, 30);
@@ -87,7 +88,7 @@ public class GameViewer
 		layeredPane.add(lblNewLabel);
 	}
 	
-	/** Read in timer mode rules */
+	/** Read in timed mode rules */
 	private void createTRules()
 	{
 		try {
@@ -106,14 +107,6 @@ public class GameViewer
 			e.printStackTrace();
 		}
 	}
-	
-	/** Returns game mode 
-	 *  @return game mode
-	 */
-    public String getGameMode()
-    {
-    	return gameMode;
-    }
     
     
     private void createGame()
@@ -125,18 +118,27 @@ public class GameViewer
 		//frame2.getContentPane().add(game);
     }
     
+    private void endGameOpt()
+    {
+    	frame3 = new JFrame();
+    	frame3.setBounds(100, 100, 420, 390);
+		frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame3.getContentPane();
+    }
+    
     private class ButtonListener implements ActionListener
     {
 		public void actionPerformed(ActionEvent e) 
 		{
-			if(e.getSource() == btnTimer){
+			if(e.getSource() == btnTimed){
 				rulesPanel.setVisible(true);
 				welcomePanel.setVisible(false);
 				createTRules();
-				JLabel timerRules = new JLabel(rules);
-				timerRules.setBounds(35, 40, 360, 260);
-				rulesPanel.add(timerRules);
-				game = new GameModeTimer();
+				JLabel timedRules = new JLabel(rules);
+				timedRules.setBounds(35, 40, 360, 260);
+				rulesPanel.add(timedRules);
+				game = new GameModeTimed();
 			}
 			else if(e.getSource() == btnClassic){
 				rulesPanel.setVisible(true);
@@ -153,6 +155,14 @@ public class GameViewer
 			}
 		}
     	
+    }
+    
+	/** Returns game mode 
+	 *  @return game mode
+	 */
+    public String getGameMode()
+    {
+    	return gameMode;
     }
     
 	public static void main(String[] args) 

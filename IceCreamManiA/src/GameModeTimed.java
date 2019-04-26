@@ -4,10 +4,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 		
 		
-public class GameModeTimer extends GameMode
+public class GameModeTimed extends GameMode
 {
 
-	public GameModeTimer() 
+	public GameModeTimed() 
 	{
 		// TODO Auto-generated constructor stub
 		 
@@ -30,7 +30,7 @@ public class GameModeTimer extends GameMode
 	}
 
 	public static void main(String[] args) {
-		GameModeTimer x = new GameModeTimer();
+		GameModeTimed x = new GameModeTimed();
         Timer timer = new Timer();
         timer.schedule(x.new App(), 0, 1000);
     }
