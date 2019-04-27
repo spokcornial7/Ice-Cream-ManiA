@@ -8,8 +8,7 @@ import java.util.*;
 public class GameViewer
 {
 	private GameMode game;
-	private String gameMode;
-	
+
 	private JFrame frame1;
 	private JPanel welcomePanel;
 	private String rules;
@@ -18,18 +17,20 @@ public class GameViewer
 	private JPanel rulesPanel;
 	private JButton btnBegin;
 	
-	private JFrame frame2;
+	private JPanel gamePanel;
+	private JPanel endOptPanel;
+	private JButton btnReplay;
+	private JButton btnMenu;
 	
-	private JFrame frame3;
+	private static final int FRAME_X = 500;
+	private static final int FRAME_Y = 100;
+	private static final int FRAME_WIDTH = 450;
+	private static final int FRAME_HEIGHT = 600;
 	
 	public GameViewer() 
 	{
 		initialize();
 		frame1.setVisible(true);
-		
-		JButton restart = new JButton("Restart");
-		JButton diff = new JButton("Different Game Mode");
-		JButton exitB = new JButton("Exit Game");
 	}
 	
 
@@ -38,32 +39,25 @@ public class GameViewer
 		ButtonListener listener = new ButtonListener();
 		
 		frame1 = new JFrame();
-		frame1.setBounds(100, 100, 420, 390);
+		frame1.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		// WELCOME PANEL
 		welcomePanel = new JPanel();
-		frame1.getContentPane().add(welcomePanel, "Welcome");
+		frame1.getContentPane().add(welcomePanel, "Welcome to Ice Cream Mania");
 		welcomePanel.setLayout(null);
 		welcomePanel.setVisible(true);
 		
-		JLabel lblWelcome = new JLabel("WELCOME TO ICECREAM MANIA");
-		lblWelcome.setBounds(49, 55, 313, 31);
-		welcomePanel.add(lblWelcome);
-		lblWelcome.setFont(new Font("Desdemona", Font.BOLD, 26));
-		
-		JLabel lblChooseAGame = new JLabel("Choose a Game Mode");
-		lblChooseAGame.setBounds(139, 123, 135, 16);
-		welcomePanel.add(lblChooseAGame);
-		
 		btnTimed = new JButton("Timed");
-		btnTimed.setBounds(160, 180, 90, 30);
+		btnTimed.setBounds(120, 300, 150, 60);
+		btnTimed.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnTimed);
 		btnTimed.addActionListener(listener);
 		
 		btnClassic = new JButton("Classic");
-		btnClassic.setBounds(157, 250, 90, 30);
+		btnClassic.setBounds(120, 410, 150, 60);
+		btnClassic.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnClassic);
 		btnClassic.addActionListener(listener);
 		
@@ -74,17 +68,17 @@ public class GameViewer
 		rulesPanel.setVisible(false);
 		
 		btnBegin = new JButton("Begin Game!");
-		btnBegin.setBounds(150, 310, 120, 30);
+		btnBegin.setBounds(105, 450, 150, 60);
 		rulesPanel.add(btnBegin);
 		btnBegin.addActionListener(listener);
 		
 		// ADDING IMAGE BACKGROUND
 		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 420, 368);
+		layeredPane.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		welcomePanel.add(layeredPane);
 		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
 		JLabel lblNewLabel = new JLabel(img);
-		lblNewLabel.setBounds(0, 0, 420, 368);
+		lblNewLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		layeredPane.add(lblNewLabel);
 	}
 	
@@ -111,20 +105,26 @@ public class GameViewer
     
     private void createGame()
     {
-    	frame2 = new JFrame("Ice Cream Mania");
-    	frame2.setSize(500, 500);
-    	frame2.setVisible(true);
-		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame2.getContentPane().add(game);
-    }
-    
-    private void endGameOpt()
-    {
-    	frame3 = new JFrame();
-    	frame3.setBounds(100, 100, 420, 390);
-		frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame3.getContentPane();
+    	gamePanel = new JPanel();
+    	gamePanel.setLayout(null);
+    	gamePanel.setVisible(true);
+    	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
+    	
+    	JLabel lblScore = new JLabel("70");
+		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
+		lblScore.setBounds(300, 200, 50, 52);
+		endOptPanel.add(lblScore);
+	
+		JLabel lblHighscore = new JLabel("70");
+		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblHighscore.setBounds(300, 87, 32, 41);
+		endOptPanel.add(lblHighscore);
+    	
+    	if(game.isGameOver())
+    	{
+    		gamePanel.setVisible(false);
+    		endGameOpt();
+    	}
     }
     
     private class ButtonListener implements ActionListener
@@ -136,7 +136,7 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createTRules();
 				JLabel timedRules = new JLabel(rules);
-				timedRules.setBounds(35, 40, 360, 260);
+				timedRules.setBounds(40, 90, 330, 260);
 				rulesPanel.add(timedRules);
 				game = new GameModeTimed();
 			}
@@ -145,29 +145,69 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createCRules();
 				JLabel classicRules = new JLabel(rules);
-				classicRules.setBounds(35, 40, 360, 260);
+				classicRules.setBounds(40, 90, 330, 260);
 				rulesPanel.add(classicRules);
 				game = new GameModeClassic();
 			}
 			else if(e.getSource() == btnBegin){
-				frame1.setVisible(false);
+				rulesPanel.setVisible(false);
 				createGame();
+			}
+			else if(e.getSource() == btnReplay){
+				endOptPanel.setVisible(false);
+				createGame();
+			}
+			else if(e.getSource() == btnMenu){
+				endOptPanel.setVisible(false);
+				initialize();
 			}
 		}
     	
     }
     
-	/** Returns game mode 
-	 *  @return game mode
-	 */
-    public String getGameMode()
-    {
-    	return gameMode;
-    }
-    
 	public static void main(String[] args) 
 	{
 		GameViewer gameGame = new GameViewer();	
+	}
+	
+	
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void endGameOpt() {
+		
+		endOptPanel = new JPanel();
+		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
+		endOptPanel.setLayout(null);
+		endOptPanel.setVisible(true);
+		
+		JLabel lblScore = new JLabel(game.getScore());
+		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
+		lblScore.setBounds(300, 200, 50, 52);
+		endOptPanel.add(lblScore);
+	
+		JLabel lblHighscore = new JLabel(game.getHighScore());
+		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblHighscore.setBounds(300, 87, 32, 41);
+		endOptPanel.add(lblHighscore);
+		
+		btnReplay = new JButton("REPLAY");
+		btnReplay.setBounds(90, 179, 117, 29);
+		endOptPanel.add(btnReplay);
+		
+		btnMenu = new JButton("MENU");
+		btnMenu.setFont(new Font("Lucida Grande", Font.PLAIN, 7));
+		btnMenu.setBounds(90, 220, 117, 29);
+		endOptPanel.add(btnMenu);
+		
+		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBounds(0, 0, 1, 1);
+		endOptPanel.add(layeredPane);
+		
+		JLabel lblNewLabel_1 = new JLabel(img);
+		lblNewLabel_1.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		endOptPanel.add(lblNewLabel_1);
 	}
 
 }
