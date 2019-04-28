@@ -12,6 +12,8 @@ public class Circle
 	private Point upperLeft;
 	private Color color;
 	
+	private int speed;
+	
 	/** Creates a circle with a given upper-left corner and color
 	 *  @param p the point for the upper-left corner of the circle's bounding rectangle
 	 *  @param c the color to use when drawing this circle
@@ -20,6 +22,7 @@ public class Circle
 	{
 		upperLeft = p;
 		color = c;
+		speed = 10; 
 	}
 	
 	/** Retrieves the upper-left corner of the circle's bounding rectangle
@@ -38,9 +41,21 @@ public class Circle
 		return color;
 	}
 	
+	public void setSpeed(int s)
+	{
+		speed = s; 
+	}
+	
+	public int getSpeed()
+	{
+		return speed; 
+	}
+	
+	
 	@Override
 	public String toString()
 	{
 		return upperLeft + " " + color;
 	}
+
 }

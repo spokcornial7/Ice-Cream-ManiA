@@ -158,6 +158,7 @@ public class GameViewer
 	public static void main(String[] args) 
 	{
 		GameViewer gameGame = new GameViewer();	
+				
 	}
 
 }
