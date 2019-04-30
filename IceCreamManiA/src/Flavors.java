@@ -10,7 +10,8 @@ public enum Flavors
 	MINT(new Color(170, 219, 132)), 
 	ORANGE_CREAM(new Color(255, 198, 41)),
 	BIRTHDAY_CAKE(new Color(46, 203, 234)), 
-	PARTY(new Color(116, 18, 186));
+	PARTY(new Color(116, 18, 186)),
+	BOMB(Color.black);
 	
 	private Color color;
 	
