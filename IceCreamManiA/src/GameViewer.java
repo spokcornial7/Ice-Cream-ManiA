@@ -8,6 +8,7 @@ import java.util.*;
 public class GameViewer
 {
 	private GameMode game;
+	private String gameMode;
 
 	private JFrame frame1;
 	private JPanel welcomePanel;
@@ -39,6 +40,7 @@ public class GameViewer
 		ButtonListener listener = new ButtonListener();
 		
 		frame1 = new JFrame();
+		frame1.setResizable(false);
 		frame1.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
@@ -105,10 +107,17 @@ public class GameViewer
     
     private void createGame()
     {
+    	if(gameMode.equals("timed")){
+    		game =  new GameModeTimed();
+    		createTimer();
+    	}
+    	else
+    		game = new GameModeClassic();
     	gamePanel = new JPanel();
     	gamePanel.setLayout(null);
     	gamePanel.setVisible(true);
     	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
+    	frame1.add(game);
     	
     	JLabel lblScore = new JLabel("70");
 		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
@@ -138,7 +147,7 @@ public class GameViewer
 				JLabel timedRules = new JLabel(rules);
 				timedRules.setBounds(40, 90, 330, 260);
 				rulesPanel.add(timedRules);
-				game = new GameModeTimed();
+				gameMode = "timed";
 			}
 			else if(e.getSource() == btnClassic){
 				rulesPanel.setVisible(true);
@@ -147,7 +156,7 @@ public class GameViewer
 				JLabel classicRules = new JLabel(rules);
 				classicRules.setBounds(40, 90, 330, 260);
 				rulesPanel.add(classicRules);
-				game = new GameModeClassic();
+				gameMode = "classic";
 			}
 			else if(e.getSource() == btnBegin){
 				rulesPanel.setVisible(false);
@@ -164,12 +173,6 @@ public class GameViewer
 		}
     	
     }
-    
-	public static void main(String[] args) 
-	{
-		GameViewer gameGame = new GameViewer();	
-	}
-	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -210,4 +213,15 @@ public class GameViewer
 		endOptPanel.add(lblNewLabel_1);
 	}
 
+	private void createTimer()
+	{
+		JLabel timerLabel = new JLabel();
+	}
+	
+	
+	public static void main(String[] args) 
+	{
+		GameViewer gameGame = new GameViewer();	
+	}
+	
 }
