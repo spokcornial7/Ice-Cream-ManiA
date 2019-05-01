@@ -12,7 +12,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public GameMode()
 	{
 		speed = 5; 
-		circles = new ArrayList<>();
+		circles = new ArrayList<>(); //instantiate with scoops 
 	}
 	
 	
@@ -66,6 +66,17 @@ public abstract class GameMode extends JComponent implements KeyListener
 		this.circles = circles;
 	}
 	
+	public boolean ifScoopAdded()
+	{
+		/*
+		 * if (scoop.boxy >= iceCream.boxy)
+		 * 		if(scoop.boxX >= iceCream.boxX && scoop.boxX >= iceCream.boxX + diameter of scoop)
+		 * 			return true; 
+		 * 
+		 * return false;
+		 */
+		return false;
+	}
 	
 	abstract int getHighScore();
 	
