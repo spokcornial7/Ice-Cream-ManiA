@@ -1,18 +1,39 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 
-public abstract class GameMode extends JComponent implements KeyListener 
+public /*abstract*/ class GameMode extends JComponent
 {
 	private ArrayList<Circle> circles;
-	private int speed;
+	private Rectangle player;
+	
+	public static final int speed = 5;
 	
 	public GameMode()
 	{
-		speed = 5; 
 		circles = new ArrayList<>(); //instantiate with scoops 
+		player = new Rectangle(250, 449, 50, 50);
+	}
+	
+	public static void main(String[] args) 
+	{
+		JFrame frame = new JFrame();
+		frame.setSize(500,500);
+		frame.setLocation(0,0);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		GameMode game = new GameMode();
+		frame.add(game);
+		
+		frame.setVisible(true);
+		
+		KeyListenerExample listener = new KeyListenerExample(game); 
+		frame.addKeyListener(listener);
+		
+		
 	}
 	
 	
@@ -20,13 +41,20 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D gr2 = (Graphics2D) g;
+		
+		gr2.setColor(Color.black);
+		gr2.draw(player);
+		
+		Ellipse2D.Double scoop = makeScoop(500, 500);
+		gr2.draw(scoop);
+		scoopFall(scoop, 500);
 	}
 	
 	public Ellipse2D.Double makeScoop(int frameWidth, int frameHeight)
 	{
-		int x = (int) (Math.random() * frameWidth);
-		int y = (int) (Math.random() * frameHeight); 
-		int diameter = 50; 
+		int x =  100; //(int) (Math.random() * frameWidth);
+		int y = 100; //(int) (Math.random() * frameHeight); 
+		int diameter = 150; 
 		Ellipse2D.Double scoop = new Ellipse2D.Double(x, y, diameter, diameter); 
 		//^ this can be replaced with the scoop's own draw method 
 		return scoop; 
@@ -39,22 +67,19 @@ public abstract class GameMode extends JComponent implements KeyListener
 			circle.y += speed; 
 		}
 		
-		//will need to repaint after each call
+		repaint();//will need to repaint after each call
 	}
 	
-	public void keyPressed(KeyEvent e)
+	public void MoveRight()
 	{
-		if(e.getKeyCode() == 39) //right arrow code
-		{
-			//move the icecream right
-		}
-		
-		if(e.getKeyCode() == 37) //left arrow key
-		{
-			//move the icecream left 
-		}
-			
-		repaint(); //idk if gameViewer could/should do this 
+		player.x += speed; 
+		repaint();
+	}
+	
+	public void MoveLeft()
+	{
+		player.x -= speed; 
+		repaint(); 
 	}
 	
 	public ArrayList<Circle> getCircles() 
@@ -77,7 +102,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		 */
 		return false;
 	}
-	
+	/*
 	abstract int getHighScore();
 	
 	abstract void setHighScore(int highScore);
@@ -87,5 +112,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 	abstract int getPoints();
 	
 	abstract boolean isGameOver();
+	*/
 	
 }
+
