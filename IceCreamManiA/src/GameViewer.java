@@ -170,17 +170,7 @@ public class GameViewer
 		}
     	
     }
-<<<<<<< HEAD
-    
-	public static void main(String[] args) 
-	{
-		GameViewer gameGame = new GameViewer();	
-				
-	}
-	
-=======
->>>>>>> branch 'master' of https://github.com/spokcornial7/Ice-Cream-ManiA.git
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
