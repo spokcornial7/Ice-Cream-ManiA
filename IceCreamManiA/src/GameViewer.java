@@ -27,6 +27,7 @@ public class GameViewer
 	private static final int FRAME_Y = 100;
 	private static final int FRAME_WIDTH = 450;
 	private static final int FRAME_HEIGHT = 600;
+	private static final int BTN_X = 150;
 	
 	public GameViewer() 
 	{
@@ -52,13 +53,13 @@ public class GameViewer
 		welcomePanel.setVisible(true);
 		
 		btnTimed = new JButton("Timed");
-		btnTimed.setBounds(120, 300, 150, 60);
+		btnTimed.setBounds(BTN_X, 300, 150, 60);
 		btnTimed.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnTimed);
 		btnTimed.addActionListener(listener);
 		
 		btnClassic = new JButton("Classic");
-		btnClassic.setBounds(120, 410, 150, 60);
+		btnClassic.setBounds(BTN_X, 410, 150, 60);
 		btnClassic.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnClassic);
 		btnClassic.addActionListener(listener);
@@ -70,7 +71,7 @@ public class GameViewer
 		rulesPanel.setVisible(false);
 		
 		btnBegin = new JButton("Begin Game!");
-		btnBegin.setBounds(105, 450, 150, 60);
+		btnBegin.setBounds(BTN_X, 450, 150, 60);
 		rulesPanel.add(btnBegin);
 		btnBegin.addActionListener(listener);
 		
@@ -79,9 +80,9 @@ public class GameViewer
 		layeredPane.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		welcomePanel.add(layeredPane);
 		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
-		JLabel lblNewLabel = new JLabel(img);
-		lblNewLabel.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		layeredPane.add(lblNewLabel);
+		JLabel lblBackground = new JLabel(img);
+		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		layeredPane.add(lblBackground);
 	}
 	
 	/** Read in timed mode rules */
@@ -140,7 +141,7 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createTRules();
 				JLabel timedRules = new JLabel(rules);
-				timedRules.setBounds(40, 90, 330, 260);
+				timedRules.setBounds(40, 90, 330, 300);
 				rulesPanel.add(timedRules);
 				game =  new GameModeTimed();
 				//gameMode = "timed";
@@ -150,7 +151,7 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createCRules();
 				JLabel classicRules = new JLabel(rules);
-				classicRules.setBounds(40, 90, 330, 260);
+				classicRules.setBounds(40, 90, 330, 300);
 				rulesPanel.add(classicRules);
 				game = new GameModeClassic();
 				//gameMode = "classic";
