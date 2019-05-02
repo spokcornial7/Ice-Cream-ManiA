@@ -13,7 +13,7 @@ public class IceCream extends JComponent
 	public IceCream()
 	{
 		scoops = new ArrayList<>();
-		int y = 305;
+		int y = 450;
 		for (int i = 0; i < 3; i++)
 		{
 			int randFlavor = (int) (Math.random() * 8);
@@ -25,7 +25,7 @@ public class IceCream extends JComponent
 	 public void paintComponent(Graphics gr)
 	    {
 	        Graphics2D g2 = (Graphics2D) gr;
-	        Polygon cone = new Polygon(new int[] {160, 175, 190}, new int[] {500, 550, 500}, 3);
+	        Polygon cone = new Polygon(new int[] {170, 185, 200}, new int[] {500, 550, 500}, 3);
 	        Color coneColor = new Color(205,133,63);
 	        gr.setColor(coneColor);
 	        gr.fillPolygon(cone);
