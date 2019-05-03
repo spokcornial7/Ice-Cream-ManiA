@@ -1,13 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
-import java.util.List;
-import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 
 public /*abstract*/ class GameMode extends JComponent
 {
-	private ArrayList<Circle> circles;
+	private ArrayList<Scoop> circles;
 	private Rectangle player;
 	
 	public static final int speed = 5;
@@ -15,6 +13,11 @@ public /*abstract*/ class GameMode extends JComponent
 	public GameMode()
 	{
 		circles = new ArrayList<>(); //instantiate with scoops 
+		for(int num = 0; num < 10; num++)
+		{
+			Scoop scoop = makeScoop(500);
+			circles.add(scoop);
+		}
 		player = new Rectangle(250, 449, 50, 50);
 	}
 	
@@ -45,49 +48,58 @@ public /*abstract*/ class GameMode extends JComponent
 		gr2.setColor(Color.black);
 		gr2.draw(player);
 		
-		Ellipse2D.Double scoop = makeScoop(500, 500);
-		gr2.draw(scoop);
-		scoopFall(scoop, 500);
-	}
-	
-	public Ellipse2D.Double makeScoop(int frameWidth, int frameHeight)
-	{
-		int x =  100; //(int) (Math.random() * frameWidth);
-		int y = 100; //(int) (Math.random() * frameHeight); 
-		int diameter = 150; 
-		Ellipse2D.Double scoop = new Ellipse2D.Double(x, y, diameter, diameter); 
-		//^ this can be replaced with the scoop's own draw method 
-		return scoop; 
-	}
-	
-	public void scoopFall(Ellipse2D.Double circle, int frameHeight) //i used ellipse for now 
-	{
-		if(circle.y < frameHeight)
+		for(int index = 0; index < circles.size(); index++)
 		{
-			circle.y += speed; 
+			Scoop s = circles.get(index);
+			s.draw(gr2);
 		}
 		
-		repaint();//will need to repaint after each call
+		
+	}
+	
+	public Scoop makeScoop(int frameWidth)
+	{
+		int x = (int) (Math.random() * frameWidth);
+		int y = 0;
+		int flavor = (int) (Math.random() * 9);
+		Scoop s = new Scoop(x, y, flavor);  
+		//^ this can be replaced with the scoop's own draw method 
+		return s; 
+	}
+	
+	public void advanceScoop(Scoop scoop)
+	{
+		
+
 	}
 	
 	public void MoveRight()
 	{
-		player.x += speed; 
+		int playerWidth = 50;
+		if((player.x + speed + playerWidth) < 500) //frameheight
+		{
+			player.x += speed; 
+		}
+		
 		repaint();
 	}
 	
 	public void MoveLeft()
 	{
-		player.x -= speed; 
+		if((player.x - speed) > 0)
+		{
+			player.x -= speed; 
+		}
+		
 		repaint(); 
 	}
 	
-	public ArrayList<Circle> getCircles() 
+	public ArrayList<Scoop> getCircles() 
 	{
 		return circles;
 	}
 
-	public void addCircles(ArrayList<Circle> circles) {
+	public void addCircles(ArrayList<Scoop> circles) {
 		this.circles = circles;
 	}
 	
@@ -102,6 +114,7 @@ public /*abstract*/ class GameMode extends JComponent
 		 */
 		return false;
 	}
+	
 	/*
 	abstract int getHighScore();
 	
