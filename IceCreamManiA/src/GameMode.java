@@ -7,11 +7,13 @@ public /*abstract*/ class GameMode extends JComponent
 {
 	private ArrayList<Scoop> circles;
 	private Rectangle player;
+	private IceCream iceCream; 
 	
 	public static final int speed = 5;
 	
 	public GameMode()
 	{
+		setIceCream(new IceCream());
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
 		{
@@ -73,6 +75,16 @@ public /*abstract*/ class GameMode extends JComponent
 
 	}
 	
+	public boolean ifScoopAdded(Scoop s)
+	{
+		// get the scoop's x1 and y1 coordinate value 
+		//get the top scoop on the ice cream's x2 and y2 coordinate 
+		//if(x1 > (x2 - radius) && x1 < (x2 + radius))
+		//		return true; 
+		
+		return false; 
+	}
+	
 	public void MoveRight()
 	{
 		int playerWidth = 50;
@@ -94,15 +106,6 @@ public /*abstract*/ class GameMode extends JComponent
 		repaint(); 
 	}
 	
-	public ArrayList<Scoop> getCircles() 
-	{
-		return circles;
-	}
-
-	public void addCircles(ArrayList<Scoop> circles) {
-		this.circles = circles;
-	}
-	
 	public boolean ifScoopAdded()
 	{
 		/*
@@ -113,6 +116,25 @@ public /*abstract*/ class GameMode extends JComponent
 		 * return false;
 		 */
 		return false;
+	}
+
+	public IceCream getIceCream() {
+		return iceCream;
+	}
+
+	public void setIceCream(IceCream iceCream) {
+		this.iceCream = iceCream;
+	}
+	
+	//won't need these once IceCream class is finished 
+	public ArrayList<Scoop> getCircles() 
+	{			
+		return circles;
+	}
+	
+	public void addCircles(ArrayList<Scoop> circles) 
+	{			
+		this.circles = circles;
 	}
 	
 	/*
