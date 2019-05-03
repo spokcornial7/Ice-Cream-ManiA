@@ -11,26 +11,26 @@ public class KeyListenerExample implements KeyListener
 		game = g; 
 
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
+		{
+			game.MoveRight();
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
+		{
+			game.MoveLeft();
+		}
+		
+	}
 	
 	@Override
 	public void keyTyped(KeyEvent e) 
 	{
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e)
-	{
-		if(e.getKeyCode() == 39) //right arrow code
-		{
-			game.MoveRight();
-		}
-		
-		if(e.getKeyCode() == 37) //left arrow key
-		{
-			game.MoveLeft();
-		}
 		
 	}
 
