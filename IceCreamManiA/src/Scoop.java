@@ -26,10 +26,10 @@ public class Scoop
 		this.x = x; 
 		this.y = y; 
 		this.numFlavor = numFlavor; 
-		mainCircle = new Ellipse2D.Double(x, y, 48, 48);
-		leftCircle = new Ellipse2D.Double(x - 1, y + 30, 20, 20);
-		middleCircle = new Ellipse2D.Double(x + 15, y + 32, 20, 20);
-		rightCircle = new Ellipse2D.Double(x + 31, y + 30, 20, 20); 
+		mainCircle = new Ellipse2D.Double(x, y, 32, 32);
+		leftCircle = new Ellipse2D.Double(x-1, y + 22, 12, 12);
+		middleCircle = new Ellipse2D.Double(x + 11, y + 24, 12, 12);
+		rightCircle = new Ellipse2D.Double(x + 23, y + 22, 12, 12); 
 	}
 	
 	public void draw(Graphics2D gr)
@@ -64,31 +64,26 @@ public class Scoop
 		
 	}
 	
-		/*Scoop Class copied from the Classes doc does not necessarily follow everything on here
-		-Circle Class
-		-Constants: Big circle dia, small circlesdia; width, height, length and width of chips
-		-instance variables: String flavor, Circle, left-middle-right circle, boxX, boxY
-		-Constructor (int x, int y, int flavor): 
-				take in a number for that flavor- grab the enum of that number and assign it to the flavor instance variable
-				boxX = x;
-				boxY = y;
-		-public String getFlavor()
-				returns flavor so that in game, can check if correct flavor was added on
-		public void drop(int amount)
-				boxY += amount;
-		shift down()
-				boxY -= (size of diam + small circles)
-		-public void drawScoop(Graphics2D gr)
-		draw a scoop with the color of the flavor
-			i.e. if(flavor == Flavor.CHOCOLATE) => getFlavor() circle brown
+	public void dropDown (int yAmt)
+	{
+		y += yAmt;
+		mainCircle.setFrame(mainCircle.getX(), mainCircle.getY() + yAmt, 48, 48);
+		leftCircle.setFrame(leftCircle.getX(), leftCircle.getY() + yAmt, 20,  20);
+		rightCircle.setFrame(rightCircle.getX(), rightCircle.getY() + yAmt,  20,  20);
+		middleCircle.setFrame(middleCircle.getX(), middleCircle.getY() + yAmt, 20, 20);
 		
-		 *//** Retrieves the shape's bounding rectangle
-		 *  @return the bounding rectangle that encompasses this shape
-		 *//*
-	 	public Rectangle getBox()
-	 	{
-	    	Rectangle box = new Rectangle(boxX, boxY, WIDTH, HEIGHT);
-			return box;
-		}*/
+	}
+	
+	public void shiftScoopDown()
+	{
+		y += 36;
+	}
+	
+	public Rectangle getBoundingBox()
+	{
+		Rectangle box = new Rectangle(x - 1, y, 36, 36);
+		return box;
+	}
+	
 
 }
