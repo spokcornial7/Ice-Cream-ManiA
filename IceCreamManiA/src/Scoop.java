@@ -84,7 +84,22 @@ public class Scoop
 	
 	public void shiftScoopDown()
 	{
-		y += 36;
+		y += 5;
+	}
+	
+	public void shiftScoopRight()
+	{
+		x += 5; 
+	}
+	
+	public void shiftScoopLeft()
+	{
+		x -= 5; 
+	}
+	
+	public int scoopDiameter()
+	{
+		return SCOOP_XY_LENGTH;
 	}
 	
 	public Rectangle getBoundingBox()
