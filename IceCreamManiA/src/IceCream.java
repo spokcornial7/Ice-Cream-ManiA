@@ -7,9 +7,17 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 
-public class IceCream extends JComponent
+public class IceCream 
 {
 	private static final int CONE_COLOR_R = 205; 
+	private static final int CONE_COLOR_G = 133; 
+	private static final int CONE_COLOR_B = 63;
+	private static final int CONE_X_MID = 16;
+	private static final int CONE_X_RIGHT = 31
+	private static final int CONE_HEIGHT = 40
+	private static final int SCOOP_HEIGHT = 36;
+	private static final int CONE_SIDES = 3;
+	
 	private ArrayList<Scoop> scoops; 
 	private int x; 
 	private int y;
@@ -20,14 +28,14 @@ public class IceCream extends JComponent
 	{
 		this.x = x; 
 		this.y = y;		
-		cone = new Polygon(new int[] {x + CONE_COLOR_R, x + 16, x + 31}, new int[] {y - 40, y, y - 40}, 3);
+		cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_Y_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
 		scoops = new ArrayList<>();
 
 	}
 	 public void paintComponent(Graphics gr)
 	    {
 	        Graphics2D g2 = (Graphics2D) gr;
-	        Color coneColor = new Color(205,133,63);
+	        Color coneColor = new Color(CONE_COLOR_R,CONE_COLOR_G,CONE_COLOR_B);
 	        gr.setColor(coneColor);
 	        gr.fillPolygon(cone);
 	        for (int i = 0; i < scoops.size(); i++)
@@ -49,8 +57,8 @@ public class IceCream extends JComponent
 	 
 	 public void shiftDown()
 	 {
-		 coneShift += 36;
-		 cone = new Polygon(new int[] {x + 1, x + 16, x + 31}, new int[] {y - 40 + coneShift, y + coneShift, y - 40 + coneShift}, 3);
+		 coneShift += SCOOP_HEIGHT;
+		 cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x + CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT + coneShift, y + coneShift, y -  CONE_HEIGHT + coneShift}, 3);
 		 for (int i = 0; i < scoops.size(); i++)
 	        {
 	        	scoops.get(i).shiftScoopDown();

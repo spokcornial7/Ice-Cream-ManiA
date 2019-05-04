@@ -19,9 +19,17 @@ public class Scoop
 	private static final int MID_CIRCLE_X_SHIFT = 10; 
 	private static final int MID_CIRCLE_Y_SHIFT = 24; 
 	private static final int SCOOP_XY_LENGTH = 36;
+	private static final int SHIFT_AMT = 5;
 	
-	private static final int FLAVOR_THREE = 3;
-	private static final int FLAVOR_FOUR = 4;
+	private static final int NUM_CHOCOLATE = 0;
+	private static final int NUM_BANANA = 1;
+	private static final int NUM_STRAWBERRY = 2; 
+	private static final int NUM_VANILLA = 3; 
+	private static final int NUM_MINT = 4; 
+	private static final int NUM_ORANGE = 5;
+	private static final int NUM_BIRTHDAY = 6; 
+	private static final int NUM_PARTY = 7; 
+	
 	private int x;
 	private int y;
 	private int numFlavor;
@@ -54,21 +62,21 @@ public class Scoop
 	public Color getColorFlavor()
 	{
 		Color iceCreamFlavor = null; 
-		if (numFlavor == 0)
+		if (numFlavor == NUM_CHOCOLATE)
 			return Flavors.CHOCOLATE.getFlavor();
-		else if (numFlavor == 1)
+		else if (numFlavor == NUM_BANANA)
 			iceCreamFlavor = Flavors.BANANA.getFlavor();
-		else if (numFlavor == 2)
+		else if (numFlavor == NUM_STRAWBERRY)
 			iceCreamFlavor = Flavors.STRAWBERRY.getFlavor();
-		else if (numFlavor == FLAVOR_THREE)
+		else if (numFlavor == NUM_VANILLA)
 			iceCreamFlavor = Flavors.VANILLA.getFlavor();
-		else if (numFlavor == FLAVOR_FOUR)
+		else if (numFlavor == NUM_MINT)
 			iceCreamFlavor = Flavors.MINT.getFlavor();
-		else if (numFlavor == 5)
+		else if (numFlavor == NUM_ORANGE)
 			iceCreamFlavor = Flavors.ORANGE_CREAM.getFlavor();
-		else if (numFlavor == 6)
+		else if (numFlavor == NUM_BIRTHDAY)
 			iceCreamFlavor = Flavors.BIRTHDAY_CAKE.getFlavor();
-		else if (numFlavor == 7)
+		else if (numFlavor == NUM_PARTY)
 			iceCreamFlavor = Flavors.PARTY.getFlavor(); 
 		else 
 			iceCreamFlavor = Flavors.BOMB.getFlavor();
@@ -88,17 +96,17 @@ public class Scoop
 	
 	public void shiftScoopDown()
 	{
-		y += 5;
+		y += SHIFT_AMT;
 	}
 	
 	public void shiftScoopRight()
 	{
-		x += 5; 
+		x += SHIFT_AMT; 
 	}
 	
 	public void shiftScoopLeft()
 	{
-		x -= 5; 
+		x -= SHIFT_AMT; 
 	}
 	
 	public int scoopDiameter()

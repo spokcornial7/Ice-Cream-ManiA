@@ -4,7 +4,7 @@ import java.awt.Color;
 public enum Flavors 
 {	
 	CHOCOLATE(new Color(172, 115, 57)), 
-	BANANA(new Color(255, 255, 1)),
+	BANANA(new Color(255, 255, 0)),
 	STRAWBERRY(new Color(198, 123, 138)), 
 	VANILLA(Color.white), 
 	MINT(new Color(170, 219, 132)), 
