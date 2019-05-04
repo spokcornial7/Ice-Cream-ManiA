@@ -1,9 +1,14 @@
 
 
 import java.util.List;
-import java.util.Timer;
+
+import javax.swing.Timer;
+
 import java.util.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 		
 public class GameModeTimed extends GameMode
@@ -57,12 +62,17 @@ public class GameModeTimed extends GameMode
 			score=-3;
 	}
 	
-	private void createDiagram()
+	public boolean isGameOver()
+	{
+		return done;
+	}
+	
+	private void createDiagram(Graphics2D gr)
 	{
 		createRandomizedScoops();
 		while(!scoopQueue.isEmpty())
 		{
-			scoopQueue.remove().draw();
+			scoopQueue.remove().draw(gr);
 		}
 	}
 	
@@ -80,31 +90,43 @@ public class GameModeTimed extends GameMode
 		scoopQueue.add(new Scoop(scoopX, scoop5Y, rand5));
 	}
 	
-	
+	private int i;
+	private JLabel time;
+	private JFrame f;
+	private Timer timer;
 	
 	//TESTING OUT THE TIMER
 	public void drawTimer()
 	{
-		Timer timer = new Timer();
-        timer.schedule(new Countdown(), 0, 1000);
+		i = 10;
+		f = new JFrame();
+		f.setSize(300, 300);
+		time = new JLabel();
+		f.add(time);
+		f.setVisible(true);
+		
+        timer = new Timer(1000, new timerListener());
+        timer.start();
 	}
 
-	class Countdown extends TimerTask 
-	{
-		int countdown = 100;
-		public void run()
-		{
-			//add(new JLabel(countdown.toString()));
-			countdown--;
-		}
-	}
-	
-	
-	
+    class timerListener implements ActionListener 
+    {
+    	  public void actionPerformed(ActionEvent e) 
+    	  {
+    		  i--;
+    		  time.setText(String.valueOf(i));
+    		  if(i == 0)
+    		  {
+    	        	timer.stop();
+    	        	done = true;
+    		  }
+    	  }
+    }
 	
 	public static void main(String[] args) {
 		GameModeTimed x = new GameModeTimed();
 		x.drawTimer();
+		
     }
 	
 }
