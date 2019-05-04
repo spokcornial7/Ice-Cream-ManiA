@@ -9,6 +9,7 @@ import javax.swing.JComponent;
 
 public class IceCream extends JComponent
 {
+	private static final int CONE_COLOR_R = 205; 
 	private ArrayList<Scoop> scoops; 
 	private int x; 
 	private int y;
@@ -19,7 +20,7 @@ public class IceCream extends JComponent
 	{
 		this.x = x; 
 		this.y = y;		
-		cone = new Polygon(new int[] {x + 1, x + 16, x + 31}, new int[] {y - 40, y, y - 40}, 3);
+		cone = new Polygon(new int[] {x + CONE_COLOR_R, x + 16, x + 31}, new int[] {y - 40, y, y - 40}, 3);
 		scoops = new ArrayList<>();
 
 	}

@@ -21,6 +21,7 @@ public class Scoop
 	private static final int SCOOP_XY_LENGTH = 36;
 	
 	private static final int FLAVOR_THREE = 3;
+	private static final int FLAVOR_FOUR = 4;
 	private int x;
 	private int y;
 	private int numFlavor;
@@ -61,7 +62,7 @@ public class Scoop
 			iceCreamFlavor = Flavors.STRAWBERRY.getFlavor();
 		else if (numFlavor == FLAVOR_THREE)
 			iceCreamFlavor = Flavors.VANILLA.getFlavor();
-		else if (numFlavor == 4)
+		else if (numFlavor == FLAVOR_FOUR)
 			iceCreamFlavor = Flavors.MINT.getFlavor();
 		else if (numFlavor == 5)
 			iceCreamFlavor = Flavors.ORANGE_CREAM.getFlavor();
