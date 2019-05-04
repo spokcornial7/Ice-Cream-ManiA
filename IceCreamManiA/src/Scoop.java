@@ -20,6 +20,7 @@ public class Scoop
 	private static final int MID_CIRCLE_Y_SHIFT = 24; 
 	private static final int SCOOP_XY_LENGTH = 36;
 	
+	private static final int FLAVOR_THREE = 3;
 	private int x;
 	private int y;
 	private int numFlavor;
@@ -58,7 +59,7 @@ public class Scoop
 			iceCreamFlavor = Flavors.BANANA.getFlavor();
 		else if (numFlavor == 2)
 			iceCreamFlavor = Flavors.STRAWBERRY.getFlavor();
-		else if (numFlavor == 3)
+		else if (numFlavor == FLAVOR_THREE)
 			iceCreamFlavor = Flavors.VANILLA.getFlavor();
 		else if (numFlavor == 4)
 			iceCreamFlavor = Flavors.MINT.getFlavor();
@@ -66,8 +67,10 @@ public class Scoop
 			iceCreamFlavor = Flavors.ORANGE_CREAM.getFlavor();
 		else if (numFlavor == 6)
 			iceCreamFlavor = Flavors.BIRTHDAY_CAKE.getFlavor();
-		else
+		else if (numFlavor == 7)
 			iceCreamFlavor = Flavors.PARTY.getFlavor(); 
+		else 
+			iceCreamFlavor = Flavors.BOMB.getFlavor();
 		return iceCreamFlavor; 
 		
 	}
