@@ -30,14 +30,14 @@ public class IceCream
 		rec = new Rectangle(x, y, 50, 50); 
 		this.x = x; 
 		this.y = y;		
-		cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
+		
 		scoops = new ArrayList<>();
 
 	}
 	 public void draw(Graphics gr)
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
-	        
+	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
 	        g2.draw(rec);
 	        
 	        gr.setColor(CONE_COLOR);
@@ -76,11 +76,11 @@ public class IceCream
 	 
 	 public void shiftLeft()
 	 {
-		 rec.x -= 5; 
+		 x -= 5; 
 	 }
 	 
 	 public void shiftRight()
 	 {
-		 rec.x += 5; 
+		 x += 5; 
 	 }
 }

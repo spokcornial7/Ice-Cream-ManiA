@@ -8,7 +8,7 @@ import java.util.*;
 public class GameViewer
 {
 	private GameMode game;
-	//private String gameMode;
+	private String gameMode;
 
 	private JFrame frame1;
 	private JPanel welcomePanel;
@@ -127,17 +127,19 @@ public class GameViewer
     
     private void createGame()
     {
-   		game.repaint();
     	gamePanel = new JPanel();
     	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
     	gamePanel.setLayout(null);
     	gamePanel.setVisible(true);
-    	gamePanel.add(game);
+    	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+    	game.repaint();
+    	System.out.println(game.getWidth());
+    	System.out.print(game.getHeight());
+    	gamePanel.add(game);  
     	
-    	
-    	JLabel lblScore = new JLabel("70");
-		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
-		lblScore.setBounds(300, 200, 50, 52);
+    	JLabel lblScore = new JLabel("90");
+		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblScore.setBounds(300, 300, 50, 52);
 		gamePanel.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel("70");
@@ -145,6 +147,7 @@ public class GameViewer
 		lblHighscore.setBounds(300, 87, 32, 41);
 		gamePanel.add(lblHighscore);
     	
+		
     	/*if(game.isGameOver())
     	{
     		gamePanel.setVisible(false);
@@ -165,7 +168,7 @@ public class GameViewer
 				rulesPanel.add(timedRules);
 				rulesPanel.add(layeredPaneR);
 				game =  new GameModeTimed();
-				//gameMode = "timed";
+				gameMode = "timed";
 			}
 			else if(e.getSource() == btnClassic){
 				rulesPanel.setVisible(true);

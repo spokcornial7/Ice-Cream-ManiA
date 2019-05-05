@@ -1,13 +1,14 @@
-import javax.swing.*;
-
-import java.awt.event.KeyListener;
-import java.awt.*;
-import java.util.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 public /*abstract*/ class GameMode extends JComponent implements KeyListener
 {
@@ -20,15 +21,14 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	
 	public GameMode()
 	{
-		iceCream = new IceCream(235, 460);
+		rec = new Rectangle(50, 50, 50, 50);
+	
+		iceCream = new IceCream(250, 250);
 		iceCream.addScoop(new Scoop(235, 400, 3));
 		
-		rec = new Rectangle(50, 50, 50, 50);
-		
-		System.out.println(getHeight());
-		System.out.println(getWidth());
-		
 		addKeyListener(this);
+		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
 		
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
@@ -42,7 +42,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame();
-		frame.setSize(500,500);
+		frame.setSize(450,600);
 		frame.setLocation(0,0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -61,6 +61,12 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.draw(rec);
+		
+		/*int startPtX = (getWidth()/2) - 15;
+		int startPtY = getHeight() - 40;
+		iceCream = new IceCream(startPtX, startPtY);
+		iceCream.addScoop(new Scoop(235, 400, 3)); */
+		
 		iceCream.draw(g);		
 	}
 	
@@ -132,6 +138,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 				iceCream.shiftRight();
 				rec.x += 5; 
 				repaint();
+				System.out.print("Right key pressed");
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
@@ -139,6 +146,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 				iceCream.shiftLeft();
 				rec.x -= 5;
 				repaint();
+				System.out.print("Left key pressed");
 			}
 			
 		}
