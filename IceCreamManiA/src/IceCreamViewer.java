@@ -14,7 +14,6 @@ public class IceCreamViewer
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setLocation(5, 5);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(ice);
-		frame.setVisible(true);
+		
 }
 }

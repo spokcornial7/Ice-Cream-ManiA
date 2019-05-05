@@ -1,26 +1,42 @@
 import javax.swing.*;
+
+import java.awt.event.KeyListener;
 import java.awt.*;
 import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 
-public /*abstract*/ class GameMode extends JComponent
+public /*abstract*/ class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
-	private Rectangle player;
 	private IceCream iceCream; 
 	
+	private Rectangle rec; 
 	public static final int speed = 5;
+	
 	
 	public GameMode()
 	{
-		setIceCream(new IceCream());
+		iceCream = new IceCream(235, 460);
+		iceCream.addScoop(new Scoop(235, 400, 3));
+		
+		rec = new Rectangle(50, 50, 50, 50);
+		
+		System.out.println(getHeight());
+		System.out.println(getWidth());
+		
+		addKeyListener(this);
+		
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
 		{
 			Scoop scoop = makeScoop(500);
 			circles.add(scoop);
 		}
-		player = new Rectangle(250, 449, 50, 50);
+		
 	}
 	
 	public static void main(String[] args) 
@@ -32,31 +48,20 @@ public /*abstract*/ class GameMode extends JComponent
 		
 		GameMode game = new GameMode();
 		frame.add(game);
+		System.out.println(game.getHeight());
+		System.out.println(game.getWidth());
 		
 		frame.setVisible(true);
-		
-		KeyListenerExample listener = new KeyListenerExample(game); 
-		frame.addKeyListener(listener);
-		
-		
+	
 	}
 	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		Graphics2D gr2 = (Graphics2D) g;
-		
-		gr2.setColor(Color.black);
-		gr2.draw(player);
-		
-		for(int index = 0; index < circles.size(); index++)
-		{
-			Scoop s = circles.get(index);
-			s.draw(gr2);
-		}
-		
-		
+		Graphics2D g2 = (Graphics2D) g;
+		g2.draw(rec);
+		iceCream.draw(g);		
 	}
 	
 	public Scoop makeScoop(int frameWidth)
@@ -69,45 +74,30 @@ public /*abstract*/ class GameMode extends JComponent
 		return s; 
 	}
 	
-	public void advanceScoop(Scoop scoop)
-	{
-		
-
-	}
-	
 	public boolean ifScoopAdded(Scoop s)
 	{
-		// get the scoop's x1 and y1 coordinate value 
-		//get the top scoop on the ice cream's x2 and y2 coordinate 
-		//if(x1 > (x2 - radius) && x1 < (x2 + radius))
-		//		return true; 
+		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
+		ArrayList<Scoop> iceCreamScoops = iceCream.getScoops();
+		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
+		double topScoopY = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getY();
 		
+		double sX = s.getBoundingBox().getX();
+		double topScoopX = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getX();
+		
+		double radius = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getWidth() / 2;
+		
+		if(sX >= (topScoopX - radius) && sX <= (topScoopX  + radius))
+		{
+			if(sY >= topScoopY)
+			return true; 
+		}		
+
 		return false; 
-	}
-	
-	public void MoveRight()
-	{
-		int playerWidth = 50;
-		if((player.x + speed + playerWidth) < 500) //frameheight
-		{
-			player.x += speed; 
-		}
-		
-		repaint();
-	}
-	
-	public void MoveLeft()
-	{
-		if((player.x - speed) > 0)
-		{
-			player.x -= speed; 
-		}
-		
-		repaint(); 
 	}
 	
 	public boolean ifScoopAdded()
 	{
+	
 		/*
 		 * if (scoop.boxy >= iceCream.boxy)
 		 * 		if(scoop.boxX >= iceCream.boxX && scoop.boxX >= iceCream.boxX + diameter of scoop)
@@ -117,14 +107,11 @@ public /*abstract*/ class GameMode extends JComponent
 		 */
 		return false;
 	}
-
+	
 	public IceCream getIceCream() {
 		return iceCream;
 	}
 
-	public void setIceCream(IceCream iceCream) {
-		this.iceCream = iceCream;
-	}
 	
 	//won't need these once IceCream class is finished 
 	public ArrayList<Scoop> getCircles() 
@@ -137,6 +124,64 @@ public /*abstract*/ class GameMode extends JComponent
 		this.circles = circles;
 	}
 	
+		@Override
+		public void keyPressed(KeyEvent e)
+		{
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
+			{
+				iceCream.shiftRight();
+				rec.x += 5; 
+				repaint();
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
+			{
+				iceCream.shiftLeft();
+				rec.x -= 5;
+				repaint();
+			}
+			
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+	
+	
+	public class TimerListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			//while (game over variable is not true) 
+			while(true)
+			{
+				for(int index = circles.size() - 1; index >= 0 ; index--)
+				{
+					Scoop scoop = circles.get(index);
+					if(ifScoopAdded(scoop))
+					{
+						iceCream.addScoop(scoop);
+						circles.remove(index);
+					}
+					scoop.shiftScoopDown();
+					
+				}
+			}
+			
+			
+		}
+
+	}
 	/*
 	abstract int getHighScore();
 	

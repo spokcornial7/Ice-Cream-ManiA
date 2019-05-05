@@ -29,6 +29,7 @@ public class GameModeTimed extends GameMode
 	
 	public GameModeTimed() 
 	{
+		super();
 		score = 0;
 		highscore = 0;
 		scoopQueue = new PriorityQueue<>();
@@ -56,7 +57,7 @@ public class GameModeTimed extends GameMode
 	
 	private void updateScore()
 	{
-		//if(super.addScoop())
+		//if(super.ifScoopAdded())
 			score++;
 		//if wrong scoop added
 			score=-3;
@@ -128,5 +129,29 @@ public class GameModeTimed extends GameMode
 		x.drawTimer();
 		
     }
+
+	@Override
+	int getHighScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	void setHighScore(int highScore) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void addPoints(int points) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	int getPoints() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

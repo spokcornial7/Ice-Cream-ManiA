@@ -28,6 +28,11 @@ public class GameViewer
 	private static final int FRAME_WIDTH = 450;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int BTN_X = 150;
+	private static final int BTN_WIDTH = 150;
+	private static final int BTN_HEIGHT = 60;
+	
+	
+	private JLayeredPane layeredPaneR;
 	
 	public GameViewer() 
 	{
@@ -46,43 +51,57 @@ public class GameViewer
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		// WELCOME PANEL
+		createWelcomePanel(listener);
+		createRulesPanel(listener);
+		
+	}
+	
+	private void createWelcomePanel(ButtonListener listener)
+	{
 		welcomePanel = new JPanel();
 		frame1.getContentPane().add(welcomePanel, "Welcome to Ice Cream Mania");
 		welcomePanel.setLayout(null);
 		welcomePanel.setVisible(true);
 		
 		btnTimed = new JButton("Timed");
-		btnTimed.setBounds(BTN_X, 300, 150, 60);
+		btnTimed.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);
 		btnTimed.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnTimed);
 		btnTimed.addActionListener(listener);
 		
 		btnClassic = new JButton("Classic");
-		btnClassic.setBounds(BTN_X, 410, 150, 60);
+		btnClassic.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
 		btnClassic.setFont(new Font("Lucida Grande", Font.BOLD, 10));
 		welcomePanel.add(btnClassic);
 		btnClassic.addActionListener(listener);
 		
-		// RULES PANEL
+		JLayeredPane layeredPaneW = new JLayeredPane();
+		layeredPaneW.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		welcomePanel.add(layeredPaneW);
+		ImageIcon img = new ImageIcon("IMG_9048.JPG");
+		JLabel lblBackground = new JLabel(img);
+		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		layeredPaneW.add(lblBackground);
+	}
+	
+	private void createRulesPanel(ButtonListener listener)
+	{
 		rulesPanel = new JPanel();
 		frame1.getContentPane().add(rulesPanel, "Rules");
 		rulesPanel.setLayout(null);
 		rulesPanel.setVisible(false);
 		
 		btnBegin = new JButton("Begin Game!");
-		btnBegin.setBounds(BTN_X, 450, 150, 60);
+		btnBegin.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
 		rulesPanel.add(btnBegin);
 		btnBegin.addActionListener(listener);
 		
-		// ADDING IMAGE BACKGROUND
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		welcomePanel.add(layeredPane);
-		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
+		layeredPaneR = new JLayeredPane();
+		layeredPaneR.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		ImageIcon img = new ImageIcon("IMG_9059.JPG");
 		JLabel lblBackground = new JLabel(img);
 		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		layeredPane.add(lblBackground);
+		layeredPaneR.add(lblBackground);
 	}
 	
 	/** Read in timed mode rules */
@@ -108,22 +127,23 @@ public class GameViewer
     
     private void createGame()
     {
-   		//game.repaint();
+   		game.repaint();
     	gamePanel = new JPanel();
+    	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
     	gamePanel.setLayout(null);
     	gamePanel.setVisible(true);
-    	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
-    	//frame1.add(game);
+    	gamePanel.add(game);
+    	
     	
     	JLabel lblScore = new JLabel("70");
 		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
 		lblScore.setBounds(300, 200, 50, 52);
-		endOptPanel.add(lblScore);
+		gamePanel.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel("70");
 		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
 		lblHighscore.setBounds(300, 87, 32, 41);
-		endOptPanel.add(lblHighscore);
+		gamePanel.add(lblHighscore);
     	
     	/*if(game.isGameOver())
     	{
@@ -141,8 +161,9 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createTRules();
 				JLabel timedRules = new JLabel(rules);
-				timedRules.setBounds(40, 90, 330, 300);
+				timedRules.setBounds(30, 90, 330, 300);
 				rulesPanel.add(timedRules);
+				rulesPanel.add(layeredPaneR);
 				game =  new GameModeTimed();
 				//gameMode = "timed";
 			}
@@ -151,8 +172,9 @@ public class GameViewer
 				welcomePanel.setVisible(false);
 				createCRules();
 				JLabel classicRules = new JLabel(rules);
-				classicRules.setBounds(40, 90, 330, 300);
+				classicRules.setBounds(30, 90, 330, 300);
 				rulesPanel.add(classicRules);
+				rulesPanel.add(layeredPaneR);
 				game = new GameModeClassic();
 				//gameMode = "classic";
 			}
@@ -175,40 +197,39 @@ public class GameViewer
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void endGameOpt() {
-		
+	private void endGameOpt() 
+	{
 		endOptPanel = new JPanel();
 		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
 		endOptPanel.setLayout(null);
 		endOptPanel.setVisible(true);
 		
-		/*JLabel lblScore = new JLabel(game.getScore());
+		/*JLabel lblScore = new JLabel(game.getPoints());
 		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
 		lblScore.setBounds(300, 200, 50, 52);
-		endOptPanel.add(lblScore);*/
+		endOptPanel.add(lblScore);
 	
-		/*JLabel lblHighscore = new JLabel(game.getHighScore());
+		JLabel lblHighscore = new JLabel(game.getHighScore());
 		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
 		lblHighscore.setBounds(300, 87, 32, 41);
 		endOptPanel.add(lblHighscore);*/
 		
 		btnReplay = new JButton("REPLAY");
-		btnReplay.setBounds(90, 179, 117, 29);
+		btnReplay.setBounds(BTN_X, 179, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnReplay);
 		
 		btnMenu = new JButton("MENU");
 		btnMenu.setFont(new Font("Lucida Grande", Font.PLAIN, 7));
-		btnMenu.setBounds(90, 220, 117, 29);
+		btnMenu.setBounds(BTN_X, 220, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnMenu);
 		
-		ImageIcon img = new ImageIcon("/Users/carolzeng/workspace/COMSPCI/tumblr_p7ultlfFGw1x9wpiro1_500.jpg");
-		JLayeredPane layeredPane = new JLayeredPane();
-		layeredPane.setBounds(0, 0, 1, 1);
-		endOptPanel.add(layeredPane);
-		
-		JLabel lblNewLabel_1 = new JLabel(img);
-		lblNewLabel_1.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		endOptPanel.add(lblNewLabel_1);
+		ImageIcon img = new ImageIcon("IMG_9061.JPG");
+		JLayeredPane layeredPaneE = new JLayeredPane();
+		layeredPaneE.setBounds(0, 0, 1, 1);
+		endOptPanel.add(layeredPaneE);
+		JLabel lblBackground = new JLabel(img);
+		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+		endOptPanel.add(lblBackground);
 	}
 
 	private void createTimer()
