@@ -78,7 +78,7 @@ public class GameViewer
 		JLayeredPane layeredPaneW = new JLayeredPane();
 		layeredPaneW.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		welcomePanel.add(layeredPaneW);
-		ImageIcon img = new ImageIcon("IMG_9048.JPG");
+		ImageIcon img = new ImageIcon("Welcome.JPG");
 		JLabel lblBackground = new JLabel(img);
 		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		layeredPaneW.add(lblBackground);
@@ -226,7 +226,7 @@ public class GameViewer
 		btnMenu.setBounds(BTN_X, 220, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnMenu);
 		
-		ImageIcon img = new ImageIcon("IMG_9061.JPG");
+		ImageIcon img = new ImageIcon("Classic.JPG");
 		JLayeredPane layeredPaneE = new JLayeredPane();
 		layeredPaneE.setBounds(0, 0, 1, 1);
 		endOptPanel.add(layeredPaneE);
