@@ -11,6 +11,7 @@ public class GameViewer
 	private String gameMode;
 
 	private JFrame frame1;
+	private JFrame frame2;
 	private JPanel welcomePanel;
 	private String rules;
 	private JButton btnTimed;
@@ -18,7 +19,6 @@ public class GameViewer
 	private JPanel rulesPanel;
 	private JButton btnBegin;
 	
-	private JPanel gamePanel;
 	private JPanel endOptPanel;
 	private JButton btnReplay;
 	private JButton btnMenu;
@@ -38,6 +38,7 @@ public class GameViewer
 	{
 		initialize();
 		frame1.setVisible(true);
+		frame2.setVisible(false);
 	}
 	
 
@@ -50,6 +51,12 @@ public class GameViewer
 		frame1.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		frame2 = new JFrame();
+		frame2.setResizable(false);
+		frame2.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
+		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame2.getContentPane().setLayout(null);
 		
 		createWelcomePanel(listener);
 		createRulesPanel(listener);
@@ -128,30 +135,25 @@ public class GameViewer
     private void createGame()
     {
     	game = new GameMode();
-    	gamePanel = new JPanel();
-    	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
-    	gamePanel.setLayout(null);
-    	gamePanel.setVisible(true);
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+    	frame2.setVisible(true);
+    	frame2.getContentPane().add(game);
     	game.repaint();
-    	System.out.println(game.getWidth());
-    	System.out.print(game.getHeight());
-    	gamePanel.add(game);
     	
     	JLabel lblScore = new JLabel("90");
 		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
 		lblScore.setBounds(300, 300, 50, 52);
-		gamePanel.add(lblScore);
+		game.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel("70");
 		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
 		lblHighscore.setBounds(300, 87, 32, 41);
-		gamePanel.add(lblHighscore);
+		game.add(lblHighscore);
     	
 		
     	/*if(game.isGameOver())
     	{
-    		gamePanel.setVisible(false);
+    		frame2.setVisible(false);
     		endGameOpt();
     	}*/
     }
@@ -184,6 +186,7 @@ public class GameViewer
 			}
 			else if(e.getSource() == btnBegin){
 				rulesPanel.setVisible(false);
+				frame1.setVisible(false);
 				createGame();
 			}
 			else if(e.getSource() == btnReplay){
