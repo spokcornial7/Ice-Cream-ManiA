@@ -44,8 +44,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public void paintComponent(Graphics g)
 	{	
 		iceCream.draw(g);	
-		//if the score increase 
-		createDiagram(g);
+		//if the score increase then 
+			createDiagram(g);
 	}
 	
 	public Scoop makeScoop(int frameWidth)

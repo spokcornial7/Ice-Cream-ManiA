@@ -139,14 +139,16 @@ public class GameViewer
     	frame2.getContentPane().add(game);
     	game.repaint();
     	
-    	JLabel lblScore = new JLabel("90");
-		//lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-		lblScore.setBounds(390, 450, 100, 100);
+    	JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(380, 400, 100, 100);
 		frame2.add(lblScore);
 	
-		JLabel lblHighscore = new JLabel("70");
-		//lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-		lblHighscore.setBounds(390, 500, 100, 100);
+		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(380, 450, 100, 100);
 		frame2.add(lblHighscore);
     	
 		if(gameMode.equals("classic")){
@@ -159,6 +161,7 @@ public class GameViewer
 			ImageIcon img = new ImageIcon("Classic.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+			createTimer();
 			frame2.add(lblBackground);
 			}
 	
@@ -223,22 +226,21 @@ public class GameViewer
 		endOptPanel.setLayout(null);
 		endOptPanel.setVisible(true);
 		
-		/*JLabel lblScore = new JLabel(game.getPoints());
-		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 70));
+		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 70));
 		lblScore.setBounds(300, 200, 50, 52);
 		endOptPanel.add(lblScore);
 	
-		JLabel lblHighscore = new JLabel(game.getHighScore());
-		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
 		lblHighscore.setBounds(300, 87, 32, 41);
-		endOptPanel.add(lblHighscore);*/
+		endOptPanel.add(lblHighscore);
 		
 		btnReplay = new JButton("REPLAY");
 		btnReplay.setBounds(BTN_X, 179, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnReplay);
 		
 		btnMenu = new JButton("MENU");
-		btnMenu.setFont(new Font("Lucida Grande", Font.PLAIN, 7));
 		btnMenu.setBounds(BTN_X, 220, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnMenu);
 		
@@ -253,7 +255,10 @@ public class GameViewer
 
 	private void createTimer()
 	{
-		JLabel timerLabel = new JLabel();
+		JLabel timerLabel = new JLabel("00:00");
+		timerLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
+		timerLabel.setBounds(150, 90, 100, 50);
+		frame2.add(timerLabel);
 	}
 	
 	
