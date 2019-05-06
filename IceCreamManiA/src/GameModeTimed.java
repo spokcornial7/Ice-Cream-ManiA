@@ -16,15 +16,15 @@ public class GameModeTimed extends GameMode
 
 	private int score;
 	private int highscore;
-	private PriorityQueue<Scoop> scoopQueue; 
+	private Queue<Scoop> scoopQueue; 
 	private boolean done;
 	
-	public static final int scoopX = 200;
+	public static final int scoopX = 400;
 	public static final int scoop5Y = 20;
-	public static final int scoop4Y = 40;
-	public static final int scoop3Y = 60;
-	public static final int scoop2Y = 80;
-	public static final int scoop1Y = 100;
+	public static final int scoop4Y = 60;
+	public static final int scoop3Y = 100;
+	public static final int scoop2Y = 140;
+	public static final int scoop1Y = 180;
 	
 	
 	public GameModeTimed() 
@@ -32,7 +32,7 @@ public class GameModeTimed extends GameMode
 		super();
 		score = 0;
 		highscore = 0;
-		scoopQueue = new PriorityQueue<>();
+		scoopQueue = new LinkedList<>();
 		done = false;
 	}
 
@@ -43,13 +43,13 @@ public class GameModeTimed extends GameMode
 	}
 	
 	//@Override
-	public int getScore()
+	public int getPoints()
 	{
 		return score;
 	}
 	
 	//@Override
-	private void updateHighscore()
+	private void setHighscore()
 	{
 		if(score > highscore)
 			highscore = score;
@@ -57,23 +57,38 @@ public class GameModeTimed extends GameMode
 	
 	private void updateScore()
 	{
-		//if(super.ifScoopAdded())
-			score++;
-		//if wrong scoop added
-			score=-3;
+		if(super.ifScoopAdded())
+		{
+			if(correctFlavor())
+				score++;
+			else
+				score =- 3;
+		}
+	}
+
+	private boolean correctFlavor()
+	{
+		//null?
+		Scoop checkScoop = scoopQueue.peek();
+		IceCream icecream = super.getIceCream();
+		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+			return true;
+		return false;
 	}
 	
 	public boolean isGameOver()
 	{
+		super.isGameOver();
 		return done;
 	}
 	
-	private void createDiagram(Graphics2D gr)
+	public void createDiagram(Graphics g)
 	{
+		Graphics2D gr2 = (Graphics2D) g;
 		createRandomizedScoops();
 		while(!scoopQueue.isEmpty())
 		{
-			scoopQueue.remove().draw(gr);
+			scoopQueue.remove().draw(gr2);
 		}
 	}
 	
@@ -128,30 +143,6 @@ public class GameModeTimed extends GameMode
 		GameModeTimed x = new GameModeTimed();
 		x.drawTimer();
 		
-    }
-
-	@Override
-	int getHighScore() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	void setHighScore(int highScore) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void addPoints(int points) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 }

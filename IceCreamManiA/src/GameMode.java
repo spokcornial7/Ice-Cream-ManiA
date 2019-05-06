@@ -15,6 +15,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	private ArrayList<Scoop> circles;
 	private ArrayList<Scoop> iceCreamScoops;
 	private IceCream iceCream; 
+	private boolean gameDone;
 	
 	public static final int speed = 5;
 	
@@ -59,7 +60,8 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		iceCream.draw(g);		
+		iceCream.draw(g);	
+		//if the score increase createDiagram(g);
 	}
 	
 	public Scoop makeScoop(int frameWidth)
@@ -75,13 +77,15 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	public boolean ifScoopAdded(Scoop s)
 	{
 		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
+		Scoop topScoop = iceCream.getTopScoop();
+		
 		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
-		double topScoopY = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getY();
+		double topScoopY = topScoop.getBoundingBox().getY();
 		
 		double sX = s.getBoundingBox().getX();
-		double topScoopX = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getX();
+		double topScoopX = topScoop.getBoundingBox().getX();
 		
-		double radius = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getWidth() / 2;
+		double radius = topScoop.getBoundingBox().getWidth() / 2;
 		
 		if(sX >= (topScoopX - radius) && sX <= (topScoopX  + radius))
 		{
@@ -121,12 +125,17 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		this.circles = circles;
 	}
 	
+	public boolean isGameOver()
+	{
+		return gameDone;
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 		{
-			Scoop topScoop = iceCreamScoops.get(iceCreamScoops.size() - 1);
+			Scoop topScoop = iceCream.getTopScoop();
 			if(topScoop.getX() + topScoop.getBoundingBox().getWidth() < getWidth())
 				iceCream.shiftRight();
 			repaint();
@@ -134,8 +143,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
 		{
-			Scoop topScoop = iceCreamScoops.get(iceCreamScoops.size() - 1);
-			if(topScoop.getX() > 0)
+			if(iceCream.getTopScoop().getX() > 0)
 				iceCream.shiftLeft();
 			repaint();
 		}			
@@ -180,16 +188,15 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		}
 
 	}
+	
+	//abstract void createDiagram(Graphics gr);
 	/*
 	abstract int getHighScore();
 	
-	abstract void setHighScore(int highScore);
-	
-	abstract void addPoints(int points);
-	
 	abstract int getPoints();
 	
-	abstract boolean isGameOver();
+	
+
 	*/
 	
 }

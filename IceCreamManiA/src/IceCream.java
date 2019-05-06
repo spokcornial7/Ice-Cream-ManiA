@@ -22,11 +22,8 @@ public class IceCream
 	private int y;
 	private Polygon cone;
 	
-	private Rectangle rec; 
-	
 	public IceCream(int x, int y)
 	{
-		rec = new Rectangle(x, y, 50, 50); 
 		this.x = x; 
 		this.y = y;		
 		
@@ -37,7 +34,6 @@ public class IceCream
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
 	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
-	        g2.draw(rec);
 	        
 	        gr.setColor(CONE_COLOR);
 	        gr.fillPolygon(cone);
@@ -61,6 +57,11 @@ public class IceCream
 	 public ArrayList<Scoop> getScoops()
 	 {
 		 return scoops;
+	 }
+	 
+	 public Scoop getTopScoop()
+	 {
+		 return scoops.get(scoops.size() - 1);
 	 }
 	 
 	 public void shiftDown()

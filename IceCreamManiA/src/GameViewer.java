@@ -134,6 +134,8 @@ public class GameViewer
     
     private void createGame()
     {
+    	
+		
     	game = new GameMode();
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
@@ -141,15 +143,28 @@ public class GameViewer
     	game.repaint();
     	
     	JLabel lblScore = new JLabel("90");
-		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-		lblScore.setBounds(300, 300, 50, 52);
-		game.add(lblScore);
+		//lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblScore.setBounds(390, 450, 100, 100);
+		frame2.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel("70");
-		lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-		lblHighscore.setBounds(300, 87, 32, 41);
-		game.add(lblHighscore);
+		//lblHighscore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
+		lblHighscore.setBounds(390, 500, 100, 100);
+		frame2.add(lblHighscore);
     	
+		if(gameMode.equals("classic")){
+			ImageIcon img = new ImageIcon("Classic.JPG");
+			JLabel lblBackground = new JLabel(img);
+			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+			frame2.add(lblBackground);}
+		
+		if(gameMode.equals("timed")){
+			ImageIcon img = new ImageIcon();
+			JLabel lblBackground = new JLabel(img);
+			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+			frame2.add(lblBackground);
+			}
+	
 		
     	/*if(game.isGameOver())
     	{
@@ -182,7 +197,7 @@ public class GameViewer
 				rulesPanel.add(classicRules);
 				rulesPanel.add(layeredPaneR);
 				game = new GameModeClassic();
-				//gameMode = "classic";
+				gameMode = "classic";
 			}
 			else if(e.getSource() == btnBegin){
 				rulesPanel.setVisible(false);

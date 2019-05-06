@@ -68,6 +68,11 @@ public class Scoop
 		gr.fill(middleCircle);
 	}
 	
+	public int getFlavor()
+	{
+		return numFlavor;
+	}
+	
 	public Color getColorFlavor()
 	{
 		Color iceCreamFlavor = null; 
