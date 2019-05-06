@@ -86,12 +86,7 @@ public class Scoop
 	
 	public void dropDown (int yAmt)
 	{
-		y += yAmt;
-		mainCircle.setFrame(mainCircle.getX(), mainCircle.getY() + yAmt, MAIN_CIRCLE_DIA, MAIN_CIRCLE_DIA);
-		leftCircle.setFrame(leftCircle.getX(), leftCircle.getY() + yAmt, SMALL_CIRCLE_DIA,  SMALL_CIRCLE_DIA);
-		rightCircle.setFrame(rightCircle.getX(), rightCircle.getY() + yAmt,  SMALL_CIRCLE_DIA,  SMALL_CIRCLE_DIA);
-		middleCircle.setFrame(middleCircle.getX(), middleCircle.getY() + yAmt, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
-		
+		y += yAmt;		
 	}
 	
 	public void shiftScoopDown()
