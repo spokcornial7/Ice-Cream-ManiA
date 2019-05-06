@@ -21,7 +21,6 @@ public class IceCream
 	private int x; 
 	private int y;
 	private Polygon cone;
-	private int coneShift; 
 	
 	private Rectangle rec; 
 	
@@ -66,8 +65,7 @@ public class IceCream
 	 
 	 public void shiftDown()
 	 {
-		 coneShift += SCOOP_HEIGHT;
-		 cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x + CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT + coneShift, y + coneShift, y -  CONE_HEIGHT + coneShift}, 3);
+		 y += SCOOP_HEIGHT;
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopDown();
@@ -77,10 +75,18 @@ public class IceCream
 	 public void shiftLeft()
 	 {
 		 x -= 5; 
+		 for (int i = 0; i < scoops.size(); i++)
+	     {
+	       	scoops.get(i).shiftScoopLeft();
+	     }
 	 }
 	 
 	 public void shiftRight()
 	 {
 		 x += 5; 
+		 for (int i = 0; i < scoops.size(); i++)
+	     {
+	       	scoops.get(i).shiftScoopRight();
+	     }
 	 }
 }

@@ -15,14 +15,11 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	private ArrayList<Scoop> circles;
 	private IceCream iceCream; 
 	
-	private Rectangle rec; 
 	public static final int speed = 5;
 	
 	
 	public GameMode()
 	{
-		rec = new Rectangle(50, 50, 50, 50);
-	
 		iceCream = new IceCream(250, 250);
 		iceCream.addScoop(new Scoop(235, 400, 3));
 		
@@ -58,10 +55,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	
 	@Override
 	public void paintComponent(Graphics g)
-	{
-		Graphics2D g2 = (Graphics2D) g;
-		g2.draw(rec);
-		
+	{	
 		/*int startPtX = (getWidth()/2) - 15;
 		int startPtY = getHeight() - 40;
 		iceCream = new IceCream(startPtX, startPtY);
@@ -136,19 +130,14 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 			{
 				iceCream.shiftRight();
-				rec.x += 5; 
 				repaint();
-				System.out.print("Right key pressed");
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
 			{
 				iceCream.shiftLeft();
-				rec.x -= 5;
 				repaint();
-				System.out.print("Left key pressed");
-			}
-			
+			}			
 		}
 
 		@Override
