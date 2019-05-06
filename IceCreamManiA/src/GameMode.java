@@ -120,34 +120,34 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		this.circles = circles;
 	}
 	
-		@Override
-		public void keyPressed(KeyEvent e)
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 		{
-			if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
-			{
-				iceCream.shiftRight();
-				repaint();
-				System.out.print("Key pressed");
-			}
-			
-			if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
-			{
-				iceCream.shiftLeft();
-				repaint();
-			}			
+			iceCream.shiftRight();
+			repaint();
+			System.out.print("Key pressed");
 		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
+		{
+			iceCream.shiftLeft();
+			repaint();
+		}			
+	}
 
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	
