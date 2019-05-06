@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-public /*abstract*/ class GameMode extends JComponent implements KeyListener
+public abstract class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
 	private ArrayList<Scoop> iceCreamScoops;
@@ -38,30 +38,14 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 			circles.add(scoop);
 		}
 		
-	}
-	/*
-	public static void main(String[] args) 
-	{
-		JFrame frame = new JFrame();
-		frame.setSize(450,600);
-		frame.setLocation(0,0);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		GameMode game = new GameMode();
-		frame.add(game);
-		System.out.println(game.getHeight());
-		System.out.println(game.getWidth());
-		
-		frame.setVisible(true);
-	
-	}*/
-	
+	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
 		iceCream.draw(g);	
-		//if the score increase createDiagram(g);
+		//if the score increase 
+		createDiagram(g);
 	}
 	
 	public Scoop makeScoop(int frameWidth)
@@ -189,15 +173,10 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 
 	}
 	
-	//abstract void createDiagram(Graphics gr);
-	/*
+	abstract void createDiagram(Graphics gr);
+
 	abstract int getHighScore();
 	
-	abstract int getPoints();
-	
-	
-
-	*/
-	
+	abstract int getPoints();	
 }
 

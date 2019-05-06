@@ -19,12 +19,12 @@ public class GameModeTimed extends GameMode
 	private Queue<Scoop> scoopQueue; 
 	private boolean done;
 	
-	public static final int scoopX = 400;
+	public static final int scoopX = 395;
 	public static final int scoop5Y = 20;
-	public static final int scoop4Y = 60;
-	public static final int scoop3Y = 100;
-	public static final int scoop2Y = 140;
-	public static final int scoop1Y = 180;
+	public static final int scoop4Y = 80;
+	public static final int scoop3Y = 140;
+	public static final int scoop2Y = 200;
+	public static final int scoop1Y = 260;
 	
 	
 	public GameModeTimed() 
@@ -36,23 +36,29 @@ public class GameModeTimed extends GameMode
 		done = false;
 	}
 
-	//@Override
-	public int getHighscore()
+	@Override
+	public int getHighScore()
 	{
 		return highscore;
 	}
 	
-	//@Override
+	@Override
 	public int getPoints()
 	{
 		return score;
 	}
 	
-	//@Override
-	private void setHighscore()
+	private void setHighScore()
 	{
 		if(score > highscore)
 			highscore = score;
+	}
+	
+	@Override
+	public boolean isGameOver()
+	{
+		super.isGameOver();
+		return done;
 	}
 	
 	private void updateScore()
@@ -74,12 +80,6 @@ public class GameModeTimed extends GameMode
 		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
 			return true;
 		return false;
-	}
-	
-	public boolean isGameOver()
-	{
-		super.isGameOver();
-		return done;
 	}
 	
 	public void createDiagram(Graphics g)

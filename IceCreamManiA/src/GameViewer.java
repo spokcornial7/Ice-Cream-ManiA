@@ -134,9 +134,6 @@ public class GameViewer
     
     private void createGame()
     {
-    	
-		
-    	game = new GameMode();
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
     	frame2.getContentPane().add(game);
@@ -159,7 +156,7 @@ public class GameViewer
 			frame2.add(lblBackground);}
 		
 		if(gameMode.equals("timed")){
-			ImageIcon img = new ImageIcon();
+			ImageIcon img = new ImageIcon("Classic.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 			frame2.add(lblBackground);
