@@ -16,6 +16,7 @@ public class IceCream
 	private static final int CONE_HEIGHT = 40;
 	private static final int SCOOP_HEIGHT = 36;
 	private static final int CONE_SIDES = 3;
+	private static final int SHIFT_LR = 5; 
 	
 	private ArrayList<Scoop> scoops; 
 	private int x; 
@@ -36,7 +37,8 @@ public class IceCream
 	 public void draw(Graphics gr)
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
-	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
+	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, 
+	        		new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
 	        g2.draw(rec);
 	        
 	        gr.setColor(CONE_COLOR);
@@ -74,7 +76,7 @@ public class IceCream
 	 
 	 public void shiftLeft()
 	 {
-		 x -= 5; 
+		 x -= SHIFT_LR; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopLeft();
@@ -83,7 +85,7 @@ public class IceCream
 	 
 	 public void shiftRight()
 	 {
-		 x += 5; 
+		 x += SHIFT_LR; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopRight();
