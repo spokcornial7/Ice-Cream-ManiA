@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 public /*abstract*/ class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
+	private ArrayList<Scoop> iceCreamScoops;
 	private IceCream iceCream; 
 	
 	public static final int speed = 5;
@@ -21,6 +22,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	public GameMode()
 	{
 		iceCream = new IceCream(250, 250);
+		iceCreamScoops = iceCream.getScoops();
 		iceCream.addScoop(new Scoop(235, 400, 3));
 		iceCream.addScoop(new Scoop(235, 360, 2));
 		
@@ -73,7 +75,6 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	public boolean ifScoopAdded(Scoop s)
 	{
 		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
-		ArrayList<Scoop> iceCreamScoops = iceCream.getScoops();
 		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
 		double topScoopY = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getY();
 		
@@ -125,14 +126,17 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 	{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 		{
-			iceCream.shiftRight();
+			Scoop topScoop = iceCreamScoops.get(iceCreamScoops.size() - 1);
+			if(topScoop.getX() + topScoop.getBoundingBox().getWidth() < getWidth())
+				iceCream.shiftRight();
 			repaint();
-			System.out.print("Key pressed");
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
 		{
-			iceCream.shiftLeft();
+			Scoop topScoop = iceCreamScoops.get(iceCreamScoops.size() - 1);
+			if(topScoop.getX() > 0)
+				iceCream.shiftLeft();
 			repaint();
 		}			
 	}
