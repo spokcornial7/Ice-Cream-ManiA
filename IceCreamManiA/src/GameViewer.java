@@ -105,7 +105,7 @@ public class GameViewer
 		
 		layeredPaneR = new JLayeredPane();
 		layeredPaneR.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-		ImageIcon img = new ImageIcon("IMG_9059.JPG");
+		ImageIcon img = new ImageIcon("Rules.jpeg");
 		JLabel lblBackground = new JLabel(img);
 		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		layeredPaneR.add(lblBackground);
