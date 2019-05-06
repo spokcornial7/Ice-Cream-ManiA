@@ -44,6 +44,7 @@ public class Scoop
 		this.x = x; 
 		this.y = y; 
 		this.numFlavor = numFlavor; 
+
 		mainCircle = new Ellipse2D.Double(x, y, MAIN_CIRCLE_DIA, MAIN_CIRCLE_DIA);
 		leftCircle = new Ellipse2D.Double(x - LEFT_CIRCLE_X_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, 
 									SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
@@ -51,10 +52,15 @@ public class Scoop
 									SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
 		rightCircle = new Ellipse2D.Double(x + LEFTRIGHT_CIRCLE_XY_SHIFT, 
 						y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA); 
+
 	}
 	
 	public void draw(Graphics2D gr)
 	{
+		mainCircle = new Ellipse2D.Double(x, y, MAIN_CIRCLE_DIA, MAIN_CIRCLE_DIA);
+		leftCircle = new Ellipse2D.Double(x-LEFT_CIRCLE_X_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
+		middleCircle = new Ellipse2D.Double(x +  MID_CIRCLE_X_SHIFT, y + MID_CIRCLE_Y_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
+		rightCircle = new Ellipse2D.Double(x + LEFTRIGHT_CIRCLE_XY_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
 		gr.setColor(getColorFlavor());
 		gr.fill(mainCircle);
 		gr.fill(leftCircle);
@@ -87,9 +93,7 @@ public class Scoop
 		
 	}
 	
-	/** Drops scoops down the screen
-	 *  @param yAmt the amount the ice cream drops
-	 */
+
 	public void dropDown (int yAmt)
 	{
 		y += yAmt;
@@ -103,38 +107,30 @@ public class Scoop
 							SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
 	}
 	
-	/** Moves the scoop down
-	 */
+
 	public void shiftScoopDown()
 	{
-		y += SHIFT_AMT;
+		y += getBoundingBox().getHeight();
 	}
-	
-	/** Moves scoop to the right
-	 */
+
 	public void shiftScoopRight()
 	{
 		x += SHIFT_AMT; 
 	}
 	
-	/** Moves scoop to the left
-	 */
+
 	public void shiftScoopLeft()
 	{
 		x -= SHIFT_AMT; 
 	}
 	
-	/** Returns the diameter of the scoop 
-	 *  @return scoop diameter
-	 */
+
 	public int scoopDiameter()
 	{
 		return SCOOP_XY_LENGTH;
 	}
 	
-	/** Returns box that bounds the scoop object
-	 *  @return the bounding box
-	 */
+
 	public Rectangle getBoundingBox()
 	{
 		Rectangle box = new Rectangle(x - 1, y, SCOOP_XY_LENGTH, SCOOP_XY_LENGTH);

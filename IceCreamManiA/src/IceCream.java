@@ -36,6 +36,7 @@ public class IceCream
 	}
 	 public void draw(Graphics gr)
 	 { 
+<<<<<<< HEAD
 	        Graphics2D g2 = (Graphics2D) gr;
 	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, 
 	        		new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
@@ -47,6 +48,18 @@ public class IceCream
 	        {
 	        	scoops.get(i).draw(g2);
 	        }
+=======
+        Graphics2D g2 = (Graphics2D) gr;
+        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
+        g2.draw(rec);
+        
+        gr.setColor(CONE_COLOR);
+        gr.fillPolygon(cone);
+        for (int i = 0; i < scoops.size(); i++)
+        {
+        	scoops.get(i).draw(g2);
+        }
+>>>>>>> branch 'master' of https://github.com/spokcornial7/Ice-Cream-ManiA.git
 	        
 	 }
 	 
