@@ -127,6 +127,7 @@ public class GameViewer
     
     private void createGame()
     {
+    	game = new GameMode();
     	gamePanel = new JPanel();
     	frame1.getContentPane().add(gamePanel, "Ice Cream Mania");
     	gamePanel.setLayout(null);
@@ -135,7 +136,7 @@ public class GameViewer
     	game.repaint();
     	System.out.println(game.getWidth());
     	System.out.print(game.getHeight());
-    	gamePanel.add(game);  
+    	gamePanel.add(game);
     	
     	JLabel lblScore = new JLabel("90");
 		lblScore.setFont(new Font("Lucida Grande", Font.PLAIN, 50));

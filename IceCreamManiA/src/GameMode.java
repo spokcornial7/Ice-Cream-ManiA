@@ -36,7 +36,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		}
 		
 	}
-	
+	/*
 	public static void main(String[] args) 
 	{
 		JFrame frame = new JFrame();
@@ -51,17 +51,12 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		
 		frame.setVisible(true);
 	
-	}
+	}*/
 	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		/*int startPtX = (getWidth()/2) - 15;
-		int startPtY = getHeight() - 40;
-		iceCream = new IceCream(startPtX, startPtY);
-		iceCream.addScoop(new Scoop(235, 400, 3)); */
-		
 		iceCream.draw(g);		
 	}
 	
@@ -132,6 +127,7 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 			{
 				iceCream.shiftRight();
 				repaint();
+				System.out.print("Key pressed");
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
