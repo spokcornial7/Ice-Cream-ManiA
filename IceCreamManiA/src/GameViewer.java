@@ -134,6 +134,7 @@ public class GameViewer
     
     private void createGame()
     {
+    	//while(!game.isGameOver()){
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
     	frame2.getContentPane().add(game);
@@ -164,13 +165,11 @@ public class GameViewer
 			createTimer();
 			frame2.add(lblBackground);
 			}
-	
-		
-    	/*if(game.isGameOver())
-    	{
-    		frame2.setVisible(false);
-    		endGameOpt();
-    	}*/
+    	//}
+   
+    		/*frame2.setVisible(false);
+    		frame1.setVisible(true);
+    		endGameOpt();*/
     }
     
     private class ButtonListener implements ActionListener
@@ -255,10 +254,7 @@ public class GameViewer
 
 	private void createTimer()
 	{
-		JLabel timerLabel = new JLabel("00:00");
-		timerLabel.setFont(new Font("Lucida Grande", Font.BOLD, 30));
-		timerLabel.setBounds(150, 90, 100, 50);
-		frame2.add(timerLabel);
+		frame2.add(((GameModeTimed) game).drawTimer());
 	}
 	
 	

@@ -31,6 +31,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
+		gameDone = false;
+		
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
 		{
@@ -44,8 +46,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public void paintComponent(Graphics g)
 	{	
 		iceCream.draw(g);	
-		//if the score increase then 
-			createDiagram(g);
+		//if(updateScore()) 
+			drawDiagram(g);
 	}
 	
 	public Scoop makeScoop(int frameWidth)
@@ -168,12 +170,15 @@ public abstract class GameMode extends JComponent implements KeyListener
 
 	}
 	
-	abstract void createDiagram(Graphics gr);
+	abstract void drawDiagram(Graphics gr);
 
 	abstract int getHighScore();
 	
 	abstract int getPoints();	
 	
+	abstract boolean updateScore();
+	
 	abstract boolean isGameOver();
+
 }
 
