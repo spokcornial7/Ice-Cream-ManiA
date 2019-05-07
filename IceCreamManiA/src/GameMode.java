@@ -120,7 +120,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 		{
 			Scoop topScoop = iceCream.getTopScoop();
-			if(topScoop.getX() + topScoop.getBoundingBox().getWidth() < getWidth())
+			if(topScoop.getX() + topScoop.getBoundingBox().getWidth() < 370)
 				iceCream.shiftRight();
 			repaint();
 		}

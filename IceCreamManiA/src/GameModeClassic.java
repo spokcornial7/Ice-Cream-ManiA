@@ -21,7 +21,6 @@ public class GameModeClassic extends GameMode
 	public static final int SCOOP3_Y = 140;
 	public static final int SCOOP2_Y = 200;
 	public static final int SCOOP1_Y = 260;
-	private int i;
 		
 	public GameModeClassic() 
 	{
@@ -30,6 +29,7 @@ public class GameModeClassic extends GameMode
 		highscore = 0;
 		done = false;
 		scoopQueue = new LinkedList<>();
+		createDiagram();
 	}
 
 	@Override

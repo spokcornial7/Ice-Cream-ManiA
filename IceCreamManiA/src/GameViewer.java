@@ -134,7 +134,7 @@ public class GameViewer
     
     private void createGame()
     {
-    	//while(!game.isGameOver()){
+    	//if(!game.isGameOver()){
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
     	frame2.getContentPane().add(game);
@@ -236,11 +236,11 @@ public class GameViewer
 		endOptPanel.add(lblHighscore);
 		
 		btnReplay = new JButton("REPLAY");
-		btnReplay.setBounds(BTN_X, 179, BTN_WIDTH, BTN_HEIGHT);
+		btnReplay.setBounds(BTN_X, 250, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnReplay);
 		
 		btnMenu = new JButton("MENU");
-		btnMenu.setBounds(BTN_X, 220, BTN_WIDTH, BTN_HEIGHT);
+		btnMenu.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
 		endOptPanel.add(btnMenu);
 		
 		ImageIcon img = new ImageIcon("Classic.JPG");
