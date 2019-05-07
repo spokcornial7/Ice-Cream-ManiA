@@ -42,7 +42,6 @@ public class GameModeClassic extends GameMode
 	@Override
 	public boolean isGameOver()
 	{
-		super.isGameOver();
 		return done;
 	}
 	

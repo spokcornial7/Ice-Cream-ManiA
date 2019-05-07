@@ -109,11 +109,6 @@ public abstract class GameMode extends JComponent implements KeyListener
 		this.circles = circles;
 	}
 	
-	public boolean isGameOver()
-	{
-		return gameDone;
-	}
-	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
@@ -153,7 +148,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		public void actionPerformed(ActionEvent e)
 		{
 			//while (game over variable is not true) 
-			while(true)
+			while(!gameDone)
 			{
 				for(int index = circles.size() - 1; index >= 0 ; index--)
 				{
@@ -178,5 +173,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 	abstract int getHighScore();
 	
 	abstract int getPoints();	
+	
+	abstract boolean isGameOver();
 }
 
