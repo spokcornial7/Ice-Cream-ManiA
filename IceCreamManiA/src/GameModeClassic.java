@@ -1,7 +1,7 @@
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.util.*;
-import java.util.Queue;
 
 import javax.swing.*;
 
@@ -21,6 +21,7 @@ public class GameModeClassic extends GameMode
 	public static final int SCOOP3_Y = 140;
 	public static final int SCOOP2_Y = 200;
 	public static final int SCOOP1_Y = 260;
+	private int i;
 		
 	public GameModeClassic() 
 	{
@@ -50,12 +51,7 @@ public class GameModeClassic extends GameMode
 	}
 	
 	@Override
-	public boolean updateScore(){
-		return done;
-	}
-	
-	/*
-	private void updateScore()
+	public boolean updateScore()
 	{	
 		if(super.ifScoopAdded())
 		{
@@ -64,20 +60,25 @@ public class GameModeClassic extends GameMode
 				if(scoopQueue.isEmpty())
 				{
 					score++;
+					setHighScore();
 					updateDiagram();
+					return true;
 				}
+				addCheckMark();
 			}
 			else
 				done = true;
 		}
-	}*/
+		return false;
+	}
 	
 	private void addCheckMark()
 	{
 		ImageIcon check = new ImageIcon("checkmark.png");
 		Image image = check.getImage();
-		Image newimg = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		check = new ImageIcon(newimg);
+		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		Graphics g = image.getGraphics();
+		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
 	}
 	
 	@Override
@@ -119,10 +120,11 @@ public class GameModeClassic extends GameMode
 	private boolean correctFlavor()
 	{		
 		//null?
-		Scoop checkScoop = scoopQueue.peek();
+		Scoop checkScoop = scoopQueue.element();
 		IceCream icecream = super.getIceCream();
 		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
 			return true;
+		
 		return false;
 	}
 }

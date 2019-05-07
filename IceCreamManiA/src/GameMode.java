@@ -15,7 +15,6 @@ public abstract class GameMode extends JComponent implements KeyListener
 	private ArrayList<Scoop> circles;
 	private ArrayList<Scoop> iceCreamScoops;
 	private IceCream iceCream; 
-	private boolean gameDone;
 	
 	public static final int speed = 5;
 	
@@ -30,8 +29,6 @@ public abstract class GameMode extends JComponent implements KeyListener
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		
-		gameDone = false;
 		
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
@@ -48,6 +45,12 @@ public abstract class GameMode extends JComponent implements KeyListener
 		iceCream.draw(g);	
 		//if(updateScore()) 
 			drawDiagram(g);
+	}
+	
+	/* MAKE A RESTART METHOD */
+	public void restart()
+	{
+		
 	}
 	
 	public Scoop makeScoop(int frameWidth)
@@ -150,7 +153,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		public void actionPerformed(ActionEvent e)
 		{
 			//while (game over variable is not true) 
-			while(!gameDone)
+			while(!isGameOver())
 			{
 				for(int index = circles.size() - 1; index >= 0 ; index--)
 				{

@@ -102,6 +102,11 @@ public class Scoop
 	{
 		return x;
 	}
+	
+	public int getY()
+	{
+		return y;
+	}
 
 	public void dropDown (int yAmt)
 	{

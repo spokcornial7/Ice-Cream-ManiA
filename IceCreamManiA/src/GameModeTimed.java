@@ -78,9 +78,12 @@ public class GameModeTimed extends GameMode
 			if(correctFlavor())
 			{
 				score++;
+				setHighScore();
 				updateDiagram();
 				return true;
 			}
+			else if(touchedBomb())
+				done = true;
 			else
 				score =- 3;
 		}
@@ -95,6 +98,11 @@ public class GameModeTimed extends GameMode
 		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
 			return true;
 		return false;
+	}
+	
+	private boolean touchedBomb()
+	{
+		return super.getIceCream().getTopScoop().getFlavor() == 9;
 	}
 	
 	
