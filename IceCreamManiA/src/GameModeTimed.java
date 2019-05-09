@@ -57,7 +57,7 @@ public class GameModeTimed extends GameMode
 	@Override
 	public int getPoints()
 	{
-		return super.getIceCream().getScoops().size();
+		return score;
 	}
 	
 	private void setHighScore()
@@ -78,13 +78,23 @@ public class GameModeTimed extends GameMode
 	{
 		if(correctFlavor())
 		{
-			setHighScore();
+			score++;
+			//setHighScore();
 		}
 		else if(touchedBomb())
 			done = true;
 		else
 		{
-			icecream.removeScoops();
+			if(score <= 3)
+			{
+				icecream.clearScoops();
+				score = 0;
+			}
+			else
+			{
+				icecream.removeScoops();
+				score -= 3;
+			}
 		}
 		return true;
 	}
@@ -172,7 +182,7 @@ public class GameModeTimed extends GameMode
     	  {
     		  i--;
     		  time.setText(String.valueOf(i));
-    		  if(i == 0)
+    		  if(i == 0 || done)
     		  {
     	        	timer.stop();
     	        	done = true;
