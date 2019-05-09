@@ -62,6 +62,8 @@ public class IceCream
 	 
 	 public void removeScoops()
 	 {
+		 if(scoops.isEmpty())
+			 return;
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);

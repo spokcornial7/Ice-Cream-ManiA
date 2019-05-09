@@ -128,7 +128,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public Scoop[] randScoops()
 	{
-		Scoop[] scoops = new Scoop[15];
+		Scoop[] scoops = new Scoop[10];
 		for(int index = 0; index < scoops.length; index++)
 		{
 			Scoop s = makeScoop();
@@ -143,7 +143,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{	
 		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
 		int y = (int) (Math.random() * -FRAME_HEIGHT);
-		int flavor = (int) (Math.random() * 9); //make a constant 
+		int flavor = (int) (Math.random() * 6); //make a constant 
 		Scoop s = new Scoop(x, y, flavor);  
 		return s; 
 	}

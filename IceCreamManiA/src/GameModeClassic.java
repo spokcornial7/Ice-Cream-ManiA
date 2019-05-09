@@ -115,11 +115,11 @@ public class GameModeClassic extends GameMode
 	private void createDiagram()
 	{
 		scoopQueue = new LinkedList<>();
-		int rand1 = (int) (Math.random()*8);
-		int rand2 = (int) (Math.random()*8);
-		int rand3 = (int) (Math.random()*8);
-		int rand4 = (int) (Math.random()*8);
-		int rand5 = (int) (Math.random()*8);
+		int rand1 = (int) (Math.random()*4);
+		int rand2 = (int) (Math.random()*4);
+		int rand3 = (int) (Math.random()*4);
+		int rand4 = (int) (Math.random()*4);
+		int rand5 = (int) (Math.random()*4);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
