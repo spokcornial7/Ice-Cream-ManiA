@@ -47,7 +47,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			drawDiagram(g);
 		iceCream.draw(g);
 		for(Scoop s : scoops)
+		{
 			s.draw((Graphics2D) g);
+		}
+			
 		
 		if(updateScore()) 
 		{
@@ -62,8 +65,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		//Get 
 		double sX = s.getBoundingBox().getX();
 		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
-		
-		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
 		
 		if(iceCream.getScoops().isEmpty())
 		{
