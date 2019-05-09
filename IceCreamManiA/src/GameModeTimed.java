@@ -77,13 +77,15 @@ public class GameModeTimed extends GameMode
 		{
 			score++;
 			setHighScore();
-			return true;
 		}
 		else if(touchedBomb())
 			done = true;
 		else
-			score =- 3;
-		return false;
+		{
+			score -= 3;
+			super.getIceCream().removeScoops();
+		}
+		return true;
 	}
 
 	private boolean correctFlavor()
