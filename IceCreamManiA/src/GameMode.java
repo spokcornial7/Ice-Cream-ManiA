@@ -67,7 +67,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 		if(iceCream.getScoops().isEmpty())
 		{
-			if(sX >= (iceCream.getX()) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
+			if(sX >= (iceCream.getX() - 18) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
 			{
 				if(sY == iceCream.getY() - 40) // 40 is cone height
 					return true; 
@@ -125,12 +125,26 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public Scoop[] randScoops()
 	{
-		Scoop[] scoops = new Scoop[5];
+		Scoop[] scoops = new Scoop[10];
 		for(int index = 0; index < scoops.length; index++)
 		{
-			scoops[index] = makeScoop();
+			Scoop s = makeScoop();
+			scoops[index] = s;
+			
 		}
+
 		return scoops; 
+	}
+	
+	public boolean ifOverLapping(Scoop s)
+	{
+		for(Scoop temp: scoops)
+		{
+			if(s.getX() < temp.getX() + 36 && s.getX() + 36 > temp.getX())
+				if(s.getY() < temp.getY() + 36 && s.getY() + 36 > temp.getY())
+					return true;
+		}
+		return false;
 	}
 	
 	public Scoop makeScoop()
