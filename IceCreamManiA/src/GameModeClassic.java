@@ -53,22 +53,20 @@ public class GameModeClassic extends GameMode
 	@Override
 	public boolean updateScore()
 	{	
-		if(super.ifScoopAdded())
+		
+		if(correctFlavor())
 		{
-			if(correctFlavor())
+			if(scoopQueue.isEmpty())
 			{
-				if(scoopQueue.isEmpty())
-				{
-					score++;
-					setHighScore();
-					updateDiagram();
-					return true;
-				}
-				addCheckMark();
+				score++;
+				setHighScore();
+				updateDiagram();
+				return true;
 			}
-			else
-				done = true;
+			addCheckMark();
 		}
+		else
+			done = true;	
 		return false;
 	}
 	

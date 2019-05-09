@@ -44,6 +44,11 @@ public class IceCream
 	        
 	 }
 	 
+	 public int getX()
+	 {
+		 return x;
+	 }
+	 
 	 public void addScoop(Scoop newScoop)
 	 {
 		scoops.add(newScoop);

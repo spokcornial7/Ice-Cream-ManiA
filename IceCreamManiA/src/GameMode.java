@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -9,22 +11,25 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public abstract class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
-	private ArrayList<Scoop> iceCreamScoops;
 	private IceCream iceCream; 
+	private JLabel lblScore;
+	private JLabel lblHighscore;
 	
 	public static final int speed = 5;
+	public static final int RIGHT_BOUND = 370;
+	public static final int LEFT_BOUND = 5;
 	
 	
 	public GameMode()
 	{
-		iceCream = new IceCream(250, 250);
-		iceCreamScoops = iceCream.getScoops();
-		iceCream.addScoop(new Scoop(235, 400, 3));
-		iceCream.addScoop(new Scoop(235, 360, 2));
+		iceCream = new IceCream(RIGHT_BOUND/2, 560);
+		//iceCream.addScoop(new Scoop(235, 400, 3));
+		//iceCream.addScoop(new Scoop(235, 360, 2));
 		
 		addKeyListener(this);
 		setFocusable(true);
@@ -33,29 +38,30 @@ public abstract class GameMode extends JComponent implements KeyListener
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
 		{
-			Scoop scoop = makeScoop(500);
+			Scoop scoop = makeScoop();
 			circles.add(scoop);
 		}
+	
 		
 	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		iceCream.draw(g);	
-		//if(updateScore()) 
+		if(iceCream.getScoops().isEmpty())
 			drawDiagram(g);
+		iceCream.draw(g);	
+		if(updateScore()) 
+		{
+			drawDiagram(g); 
+			updateScoreLabels();
+		} 
+			
 	}
 	
-	/* MAKE A RESTART METHOD */
-	public void restart()
+	public Scoop makeScoop()
 	{
-		
-	}
-	
-	public Scoop makeScoop(int frameWidth)
-	{
-		int x = (int) (Math.random() * frameWidth);
+		int x = (int) (Math.random() * RIGHT_BOUND);
 		int y = 0;
 		int flavor = (int) (Math.random() * 9);
 		Scoop s = new Scoop(x, y, flavor);  
@@ -85,49 +91,24 @@ public abstract class GameMode extends JComponent implements KeyListener
 		return false; 
 	}
 	
-	public boolean ifScoopAdded()
-	{
-	
-		/*
-		 * if (scoop.boxy >= iceCream.boxy)
-		 * 		if(scoop.boxX >= iceCream.boxX && scoop.boxX >= iceCream.boxX + diameter of scoop)
-		 * 			return true; 
-		 * 
-		 * return false;
-		 */
-		return false;
-	}
-	
 	public IceCream getIceCream() {
 		return iceCream;
 	}
 
-	
-	//won't need these once IceCream class is finished 
-	public ArrayList<Scoop> getCircles() 
-	{			
-		return circles;
-	}
-	
-	public void addCircles(ArrayList<Scoop> circles) 
-	{			
-		this.circles = circles;
-	}
 	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
 		{
-			Scoop topScoop = iceCream.getTopScoop();
-			if(topScoop.getX() + topScoop.getBoundingBox().getWidth() < 370)
+			if(iceCream.getX() + 36 < RIGHT_BOUND)
 				iceCream.shiftRight();
 			repaint();
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
 		{
-			if(iceCream.getTopScoop().getX() > 0)
+			if(iceCream.getX() > LEFT_BOUND)
 				iceCream.shiftLeft();
 			repaint();
 		}			
@@ -162,6 +143,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 					{
 						iceCream.addScoop(scoop);
 						circles.remove(index);
+						updateScore();
 					}
 					scoop.shiftScoopDown();
 					
@@ -171,6 +153,30 @@ public abstract class GameMode extends JComponent implements KeyListener
 			
 		}
 
+	}
+	
+	public JLabel scoreLabel()
+	{
+		lblScore = new JLabel(String.valueOf(getPoints()));
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(380, 400, 100, 100);
+		return lblScore;
+	}
+	
+	public JLabel highScoreLabel()
+	{
+		lblHighscore = new JLabel(String.valueOf(getHighScore()));
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(380, 450, 100, 100);
+		return lblHighscore;
+	}
+	
+	private void updateScoreLabels()
+	{
+		lblScore.setText(String.valueOf(getPoints()));
+		lblHighscore.setText(String.valueOf(getHighScore()));
 	}
 	
 	abstract void drawDiagram(Graphics gr);

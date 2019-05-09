@@ -73,20 +73,17 @@ public class GameModeTimed extends GameMode
 	@Override
 	public boolean updateScore()
 	{
-		if(super.ifScoopAdded())
+		if(correctFlavor())
 		{
-			if(correctFlavor())
-			{
-				score++;
-				setHighScore();
-				updateDiagram();
-				return true;
-			}
-			else if(touchedBomb())
-				done = true;
-			else
-				score =- 3;
+			score++;
+			setHighScore();
+			updateDiagram();
+			return true;
 		}
+		else if(touchedBomb())
+			done = true;
+		else
+			score =- 3;
 		return false;
 	}
 
