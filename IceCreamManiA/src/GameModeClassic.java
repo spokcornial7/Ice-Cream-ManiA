@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class GameModeClassic extends GameMode
 {
-	
+	// Game instance variables
 	private int score;
 	private int highscore;
 	private boolean done;
@@ -28,7 +28,6 @@ public class GameModeClassic extends GameMode
 		score = 0;
 		highscore = 0;
 		done = false;
-		scoopQueue = new LinkedList<>();
 		createDiagram();
 	}
 
@@ -51,6 +50,12 @@ public class GameModeClassic extends GameMode
 	}
 	
 	@Override
+	public boolean isGameOver()
+	{
+		return done;
+	}
+	
+	@Override
 	public boolean updateScore()
 	{		
 		if(correctFlavor())
@@ -69,6 +74,18 @@ public class GameModeClassic extends GameMode
 		return false;
 	}
 	
+	private boolean correctFlavor()
+	{		
+		IceCream icecream = super.getIceCream();
+		if(!icecream.getScoops().isEmpty())
+		{
+			Scoop checkScoop = scoopQueue.peek();
+			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+				return true;
+		}
+		return false;
+	}
+	
 	private void addCheckMark()
 	{
 		ImageIcon check = new ImageIcon("checkmark.png");
@@ -77,12 +94,7 @@ public class GameModeClassic extends GameMode
 		Graphics g = image.getGraphics();
 		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
 	}
-	
-	@Override
-	public boolean isGameOver()
-	{
-		return done;
-	}
+
 	
 	// DIAGRAM
 	@Override
@@ -102,6 +114,7 @@ public class GameModeClassic extends GameMode
 	
 	private void createDiagram()
 	{
+		scoopQueue = new LinkedList<>();
 		int rand1 = (int) (Math.random()*8);
 		int rand2 = (int) (Math.random()*8);
 		int rand3 = (int) (Math.random()*8);
@@ -112,17 +125,5 @@ public class GameModeClassic extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP4_Y, rand4));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
-	}
-	
-	private boolean correctFlavor()
-	{		
-		IceCream icecream = super.getIceCream();
-		if(!icecream.getScoops().isEmpty())
-		{
-			Scoop checkScoop = scoopQueue.peek();
-			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
-				return true;
-		}
-		return false;
 	}
 }

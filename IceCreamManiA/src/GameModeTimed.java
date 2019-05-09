@@ -77,7 +77,6 @@ public class GameModeTimed extends GameMode
 		{
 			score++;
 			setHighScore();
-			updateDiagram();
 			return true;
 		}
 		else if(touchedBomb())
@@ -94,7 +93,10 @@ public class GameModeTimed extends GameMode
 		{
 			Scoop checkScoop = scoopQueue.peek();
 			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+			{
+				updateDiagram();
 				return true;
+			}
 		}
 		return false;
 	}
