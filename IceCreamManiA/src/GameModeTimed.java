@@ -89,16 +89,20 @@ public class GameModeTimed extends GameMode
 
 	private boolean correctFlavor()
 	{
-		//null?
-		Scoop checkScoop = scoopQueue.peek();
 		IceCream icecream = super.getIceCream();
-		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
-			return true;
+		if(!icecream.getScoops().isEmpty())
+		{
+			Scoop checkScoop = scoopQueue.peek();
+			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+				return true;
+		}
 		return false;
 	}
 	
 	private boolean touchedBomb()
 	{
+		if(super.getIceCream().getScoops().isEmpty())
+			return false;
 		return super.getIceCream().getTopScoop().getFlavor() == 9;
 	}
 	

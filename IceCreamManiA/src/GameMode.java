@@ -23,17 +23,17 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 5;
 	
+	public static final int FRAME_HEIGHT = 600;
+	
 	
 	public GameMode()
 	{
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
-		iceCream.addScoop(new Scoop(RIGHT_BOUND/2, 400, 3));
-		iceCream.addScoop(new Scoop(RIGHT_BOUND/2, 360, 2));
 		
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		timer = new Timer(100, this);
+		timer = new Timer(10, this);
 		timer.start();
 		
 		scoops = randScoops();
@@ -41,9 +41,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	@Override
 	public void paintComponent(Graphics g)
-	{	
-		//gr = g; 
-		
+	{			
 		if(iceCream.getScoops().isEmpty())
 			drawDiagram(g);
 		iceCream.draw(g);
@@ -68,13 +66,13 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 		if(iceCream.getScoops().isEmpty())
 		{
-			if(sX >= (iceCream.getX() ) && sX <= (iceCream.getX()))
+			if(sX >= (iceCream.getX()) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
 			{
-				return true; 
+				if(sY == iceCream.getY() - 40) // 40 is cone height
+					return true; 
 			}
 			return false; 
 		}
-		
 		
 		Scoop topScoop = iceCream.getTopScoop();
 		double topScoopY = topScoop.getBoundingBox().getY();
@@ -82,12 +80,11 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 		double radius = topScoop.getBoundingBox().getWidth() / 2;
 		
-		if(sX >= (topScoopX - radius) && sX <= (topScoopX  + radius))
+		if(sX >= (topScoopX - radius) && sX <= (topScoopX + 36 + radius)) //36 is scoop's width
 		{
-			if(sY >= topScoopY)
-			return true; 
+			if(sY == topScoopY)
+				return true; 
 		}		
-
 		return false; 
 	}
 	
@@ -127,7 +124,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public Scoop[] randScoops()
 	{
-		Scoop[] scoops = new Scoop[20];
+		Scoop[] scoops = new Scoop[5];
 		for(int index = 0; index < scoops.length; index++)
 		{
 			scoops[index] = makeScoop();
@@ -154,23 +151,20 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		{
 			Scoop s = scoops[index];
 			repaint();
-			s.dropDown(5);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
 				scoops[index] = makeScoop();
 				updateScore();
 			}
-			else if(s.getBoundingBox().height > getHeight())
+			else if(s.getBoundingBox().getHeight() > FRAME_HEIGHT)
 			{
 				scoops[index] = makeScoop();
-			}				
+			}	
+			s.dropDown(1);
 		}
 	
 	}
-	
-	
-
 	
 	public JLabel scoreLabel()
 	{

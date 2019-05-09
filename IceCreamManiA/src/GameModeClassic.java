@@ -52,8 +52,7 @@ public class GameModeClassic extends GameMode
 	
 	@Override
 	public boolean updateScore()
-	{	
-		
+	{		
 		if(correctFlavor())
 		{
 			if(scoopQueue.isEmpty())
@@ -117,12 +116,13 @@ public class GameModeClassic extends GameMode
 	
 	private boolean correctFlavor()
 	{		
-		//null?
-		Scoop checkScoop = scoopQueue.element();
 		IceCream icecream = super.getIceCream();
-		if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
-			return true;
-		
+		if(!icecream.getScoops().isEmpty())
+		{
+			Scoop checkScoop = scoopQueue.peek();
+			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+				return true;
+		}
 		return false;
 	}
 }
