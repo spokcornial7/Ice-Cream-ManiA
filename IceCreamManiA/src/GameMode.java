@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -135,8 +136,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public Scoop makeScoop()
 	{	
 		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
+		int y = (int) (Math.random() * 350) - FRAME_HEIGHT;
 		int flavor = (int) (Math.random() * 9); //make a constant 
-		Scoop s = new Scoop(x, 0, flavor);  
+		Scoop s = new Scoop(x, y, flavor);  
 		return s; 
 	}
 	
