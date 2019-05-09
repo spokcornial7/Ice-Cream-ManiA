@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
@@ -20,6 +19,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	private Timer timer;
+	private Timer timer2;
 	
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 5;
@@ -37,6 +37,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer = new Timer(10, this);
 		timer.start();
 		
+		timer2 = new Timer(10000000, this);
+		
 		scoops = randScoops();
 	}	
 	
@@ -46,10 +48,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(iceCream.getScoops().isEmpty())
 			drawDiagram(g);
 		iceCream.draw(g);
-		for(Scoop s : scoops)
-		{
-			s.draw((Graphics2D) g);
-		}
+		
+
+		drawScoops(g);
+
 			
 		
 		if(updateScore()) 
@@ -146,7 +148,16 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return s; 
 	}
 	
-
+	public void drawScoops(Graphics g) 
+	{
+		for(Scoop s : scoops)
+		{
+			timer2.start();
+			s.draw((Graphics2D) g);
+			//timer2.stop();
+			
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{ 
