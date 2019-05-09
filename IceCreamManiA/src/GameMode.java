@@ -80,8 +80,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		double topScoopX = topScoop.getBoundingBox().getX();
 		
 		double radius = topScoop.getBoundingBox().getWidth() / 2;
+		//x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 		
-		if(sX >= (topScoopX - radius) && sX <= (topScoopX + 36 + radius)) //36 is scoop's width
+		if(sX >= (topScoopX - radius) && sX <= (topScoopX + radius)) //36 is scoop's width
 		{
 			if(sY == topScoopY)
 				return true; 
@@ -125,7 +126,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public Scoop[] randScoops()
 	{
-		Scoop[] scoops = new Scoop[10];
+		Scoop[] scoops = new Scoop[15];
 		for(int index = 0; index < scoops.length; index++)
 		{
 			Scoop s = makeScoop();
@@ -136,21 +137,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return scoops; 
 	}
 	
-	public boolean ifOverLapping(Scoop s)
-	{
-		for(Scoop temp: scoops)
-		{
-			if(s.getX() < temp.getX() + 36 && s.getX() + 36 > temp.getX())
-				if(s.getY() < temp.getY() + 36 && s.getY() + 36 > temp.getY())
-					return true;
-		}
-		return false;
-	}
-	
 	public Scoop makeScoop()
 	{	
 		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
-		int y = (int) (Math.random() * 350) - FRAME_HEIGHT;
+		int y = (int) (Math.random() * -FRAME_HEIGHT);
 		int flavor = (int) (Math.random() * 9); //make a constant 
 		Scoop s = new Scoop(x, y, flavor);  
 		return s; 
