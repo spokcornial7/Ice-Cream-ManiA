@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
 
@@ -30,7 +31,7 @@ public class IceCream
 		scoops = new ArrayList<>();
 
 	}
-	 public void draw(Graphics gr)
+	 public void draw(Graphics gr) 
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
 	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
