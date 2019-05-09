@@ -18,6 +18,7 @@ public class GameModeTimed extends GameMode
 	private int score;
 	private int highscore;
 	private boolean done;
+	private IceCream icecream;
 	
 	// Diagram instance variables and constants
 	private Queue<Scoop> scoopQueue;
@@ -43,6 +44,7 @@ public class GameModeTimed extends GameMode
 		highscore = 0;
 		scoopQueue = new LinkedList<>();
 		done = false;
+		icecream = super.getIceCream();
 		createDiagram();
 	}
 
@@ -55,7 +57,7 @@ public class GameModeTimed extends GameMode
 	@Override
 	public int getPoints()
 	{
-		return score;
+		return super.getIceCream().getScoops().size();
 	}
 	
 	private void setHighScore()
@@ -70,25 +72,26 @@ public class GameModeTimed extends GameMode
 		return done;
 	}
 	
+	
 	@Override
 	public boolean updateScore()
 	{
 		if(correctFlavor())
 		{
-			score++;
 			setHighScore();
-			return true;
 		}
 		else if(touchedBomb())
 			done = true;
 		else
-			score =- 3;
-		return false;
+		{
+			icecream.removeScoops();
+		}
+		return true;
 	}
 
 	private boolean correctFlavor()
 	{
-		IceCream icecream = super.getIceCream();
+		
 		if(!icecream.getScoops().isEmpty())
 		{
 			Scoop checkScoop = scoopQueue.peek();
@@ -103,9 +106,9 @@ public class GameModeTimed extends GameMode
 	
 	private boolean touchedBomb()
 	{
-		if(super.getIceCream().getScoops().isEmpty())
+		if(icecream.getScoops().isEmpty())
 			return false;
-		return super.getIceCream().getTopScoop().getFlavor() == 9;
+		return icecream.getTopScoop().getFlavor() == 5;
 	}
 	
 	
@@ -131,11 +134,11 @@ public class GameModeTimed extends GameMode
 	
 	private void createDiagram()
 	{
-		int rand1 = (int) (Math.random()*8);
-		int rand2 = (int) (Math.random()*8);
-		int rand3 = (int) (Math.random()*8);
-		int rand4 = (int) (Math.random()*8);
-		int rand5 = (int) (Math.random()*8);
+		int rand1 = (int) (Math.random()*4);
+		int rand2 = (int) (Math.random()*4);
+		int rand3 = (int) (Math.random()*4);
+		int rand4 = (int) (Math.random()*4);
+		int rand5 = (int) (Math.random()*4);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
@@ -145,7 +148,7 @@ public class GameModeTimed extends GameMode
 	
 	private void addRandomScoop()
 	{
-		int rand = (int) (Math.random()*8);
+		int rand = (int) (Math.random()*4);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
 	}
 

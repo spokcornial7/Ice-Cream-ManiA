@@ -60,8 +60,12 @@ public class IceCream
 		scoops.add(newScoop);
 	 }
 	 
-	 public void removeScoop()
+	 public void removeScoops()
 	 {
+		 if(scoops.isEmpty())
+			 return;
+		 scoops.remove(scoops.size() - 1);
+		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 	 }
 	 
@@ -86,7 +90,7 @@ public class IceCream
 	 
 	 public void shiftLeft()
 	 {
-		 x -= 5; 
+		 x -= 10; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopLeft();
@@ -95,7 +99,7 @@ public class IceCream
 	 
 	 public void shiftRight()
 	 {
-		 x += 5; 
+		 x += 10; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopRight();

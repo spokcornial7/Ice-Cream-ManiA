@@ -21,6 +21,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private Timer timer;
 	private Timer timer2;
 	
+	private boolean added;
+	
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 5;
 	
@@ -54,7 +56,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 			
 		
-		if(updateScore()) 
+		if(added) 
 		{
 			drawDiagram(g); 
 			updateScoreLabels();
@@ -128,7 +130,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public Scoop[] randScoops()
 	{
-		Scoop[] scoops = new Scoop[15];
+		Scoop[] scoops = new Scoop[10];
 		for(int index = 0; index < scoops.length; index++)
 		{
 			Scoop s = makeScoop();
@@ -143,7 +145,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{	
 		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
 		int y = (int) (Math.random() * -FRAME_HEIGHT);
-		int flavor = (int) (Math.random() * 9); //make a constant 
+		int flavor = (int) (Math.random() * 6); //make a constant 
 		Scoop s = new Scoop(x, y, flavor);  
 		return s; 
 	}
@@ -167,19 +169,18 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		for(int index = scoops.length - 1; index >= 0 ; index--)
 		{
 			Scoop s = scoops[index];
-			repaint();
-			s.dropDown(1);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
 				scoops[index] = makeScoop();
-				updateScore();
+				added = updateScore();
 			}
 			else if(s.getBoundingBox().y > FRAME_HEIGHT)
 			{
 				scoops[index] = makeScoop();
 			}	
-			
+			repaint();
+			s.dropDown(1);
 		}
 	
 	}
