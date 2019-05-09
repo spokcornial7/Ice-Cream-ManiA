@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,18 +9,17 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public abstract class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
 	private IceCream iceCream; 
-	private boolean ifGameOver;
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	
-	public static final int speed = 5;
+	private Graphics gr; 
+	
 	public static final int RIGHT_BOUND = 370;
 	public static final int LEFT_BOUND = 5;
 	
@@ -36,14 +34,14 @@ public abstract class GameMode extends JComponent implements KeyListener
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		setGameOver(false); 
-		
+		/*
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
 		{
 			Scoop scoop = makeScoop();
 			circles.add(scoop);
 		}
+		*/
 	
 		
 	}	
@@ -51,6 +49,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 	@Override
 	public void paintComponent(Graphics g)
 	{	
+		gr = g; 
+		
 		if(iceCream.getScoops().isEmpty())
 			drawDiagram(g);
 		iceCream.draw(g);	
@@ -99,27 +99,17 @@ public abstract class GameMode extends JComponent implements KeyListener
 		return iceCream;
 	}
 	
-	public boolean isGameOver() 
-	{
-		return ifGameOver; 
-	}
-
-	public void setGameOver(boolean ifGameOver) 
-	{
-		this.ifGameOver = ifGameOver;
-	}
-	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
-			if(iceCream.getX() + 36 < RIGHT_BOUND)
+			if(iceCream.getX() + 36 < RIGHT_BOUND) //what is 36?????? 
 				iceCream.shiftRight();
 			repaint();
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) 
 		{
 			if(iceCream.getX() > LEFT_BOUND)
 				iceCream.shiftLeft();
@@ -168,7 +158,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		public void actionPerformed(ActionEvent e)
 		{
 			//while (game over variable is not true) 
-			while(!isGameOver())
+			while(!ifGameOver())
 			{	
 				Scoop[] scoops = randScoops();
 				for(int index = circles.size() - 1; index >= 0 ; index--)
@@ -181,6 +171,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 						updateScore();
 					}
 					s.shiftScoopDown();
+					s.draw((Graphics2D) gr);
 					if(s.getBoundingBox().height > getHeight())
 					{
 						resetScoop(s); //could be in the scoop class? 
@@ -217,6 +208,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 		lblScore.setText(String.valueOf(getPoints()));
 		lblHighscore.setText(String.valueOf(getHighScore()));
 	}
+	
+	abstract boolean ifGameOver();
 	
 	abstract void drawDiagram(Graphics gr);
 
