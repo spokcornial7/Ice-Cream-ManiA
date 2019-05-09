@@ -151,6 +151,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		{
 			Scoop s = scoops[index];
 			repaint();
+			s.dropDown(1);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
@@ -161,7 +162,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			{
 				scoops[index] = makeScoop();
 			}	
-			s.dropDown(1);
+			
 		}
 	
 	}
