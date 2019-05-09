@@ -148,7 +148,7 @@ public class GameModeTimed extends GameMode
 	// TIMER
 	public JLabel drawTimer()
 	{
-		i = 10;
+		i = 60;
 		time = new JLabel();
 		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		time.setBounds(175, 90, 100, 50);

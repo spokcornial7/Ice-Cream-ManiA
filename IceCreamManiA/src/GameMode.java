@@ -10,50 +10,46 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
-public abstract class GameMode extends JComponent implements KeyListener
+public abstract class GameMode extends JComponent implements KeyListener, ActionListener
 {
-	private ArrayList<Scoop> circles;
+	private Scoop[] scoops;
 	private IceCream iceCream; 
 	private JLabel lblScore;
 	private JLabel lblHighscore;
+	private Timer timer;
 	
-	private Graphics gr; 
-	
-	public static final int RIGHT_BOUND = 370;
+	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 5;
 	
 	
 	public GameMode()
 	{
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
-		iceCream.addScoop(new Scoop(235, 400, 3));
-		iceCream.addScoop(new Scoop(235, 360, 2));
+		iceCream.addScoop(new Scoop(RIGHT_BOUND/2, 400, 3));
+		iceCream.addScoop(new Scoop(RIGHT_BOUND/2, 360, 2));
 		
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		timer = new Timer(100, this);
+		timer.start();
 		
-		/*
-		circles = new ArrayList<>(); //instantiate with scoops 
-		for(int num = 0; num < 10; num++)
-		{
-			Scoop scoop = makeScoop();
-			circles.add(scoop);
-		}
-		*/
-	
-		
+		scoops = randScoops();
 	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		gr = g; 
+		//gr = g; 
 		
 		if(iceCream.getScoops().isEmpty())
 			drawDiagram(g);
-		iceCream.draw(g);	
+		iceCream.draw(g);
+		for(Scoop s : scoops)
+			s.draw((Graphics2D) g);
+		
 		if(updateScore()) 
 		{
 			drawDiagram(g); 
@@ -104,7 +100,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 	{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
-			if(iceCream.getX() + 36 < RIGHT_BOUND) //what is 36?????? 
+			if(iceCream.getX() < RIGHT_BOUND)
 				iceCream.shiftRight();
 			repaint();
 		}
@@ -141,49 +137,40 @@ public abstract class GameMode extends JComponent implements KeyListener
 	
 	public Scoop makeScoop()
 	{	
-		int x = (int) (Math.random() * getWidth());
+		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
 		int flavor = (int) (Math.random() * 9); //make a constant 
 		Scoop s = new Scoop(x, 0, flavor);  
 		return s; 
 	}
 	
-	public void resetScoop(Scoop s)
-	{
-		s.getBoundingBox().y = 0;
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{ 
+		if(isGameOver())
+			timer.stop();
+		
+		for(int index = scoops.length - 1; index >= 0 ; index--)
+		{
+			Scoop s = scoops[index];
+			repaint();
+			s.dropDown(5);
+			if(ifScoopAdded(s))
+			{
+				iceCream.addScoop(s);
+				scoops[index] = makeScoop();
+				updateScore();
+			}
+			else if(s.getBoundingBox().height > getHeight())
+			{
+				scoops[index] = makeScoop();
+			}				
+		}
+	
 	}
 	
-	public class TimerListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e)
-		{
-			//while (game over variable is not true) 
-			while(!ifGameOver())
-			{	
-				Scoop[] scoops = randScoops();
-				for(int index = circles.size() - 1; index >= 0 ; index--)
-				{
-					Scoop s = scoops[index];
-					if(ifScoopAdded(s))
-					{
-						iceCream.addScoop(s);
-						scoops[index] = makeScoop();
-						updateScore();
-					}
-					s.shiftScoopDown();
-					s.draw((Graphics2D) gr);
-					if(s.getBoundingBox().height > getHeight())
-					{
-						resetScoop(s); //could be in the scoop class? 
-					}
-					
-				}
-			}
-			
-			
-		}
+	
 
-	}
 	
 	public JLabel scoreLabel()
 	{
@@ -209,7 +196,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 		lblHighscore.setText(String.valueOf(getHighScore()));
 	}
 	
-	abstract boolean ifGameOver();
+	abstract boolean isGameOver();
 	
 	abstract void drawDiagram(Graphics gr);
 
