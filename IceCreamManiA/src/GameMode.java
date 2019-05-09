@@ -28,8 +28,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public GameMode()
 	{
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
-		//iceCream.addScoop(new Scoop(235, 400, 3));
-		//iceCream.addScoop(new Scoop(235, 360, 2));
+		iceCream.addScoop(new Scoop(235, 400, 3));
+		iceCream.addScoop(new Scoop(235, 360, 2));
 		
 		addKeyListener(this);
 		setFocusable(true);
