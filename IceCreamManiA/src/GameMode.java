@@ -17,6 +17,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 {
 	private ArrayList<Scoop> circles;
 	private IceCream iceCream; 
+	private boolean ifGameOver;
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	
@@ -34,6 +35,8 @@ public abstract class GameMode extends JComponent implements KeyListener
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		
+		setGameOver(false); 
 		
 		circles = new ArrayList<>(); //instantiate with scoops 
 		for(int num = 0; num < 10; num++)
@@ -59,25 +62,26 @@ public abstract class GameMode extends JComponent implements KeyListener
 			
 	}
 	
-	public Scoop makeScoop()
-	{
-		int x = (int) (Math.random() * RIGHT_BOUND);
-		int y = 0;
-		int flavor = (int) (Math.random() * 9);
-		Scoop s = new Scoop(x, y, flavor);  
-		//^ this can be replaced with the scoop's own draw method 
-		return s; 
-	}
-	
 	public boolean ifScoopAdded(Scoop s)
 	{
-		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
-		Scoop topScoop = iceCream.getTopScoop();
-		
-		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
-		double topScoopY = topScoop.getBoundingBox().getY();
-		
+		//Get 
 		double sX = s.getBoundingBox().getX();
+		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
+		
+		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
+		
+		if(iceCream.getScoops().isEmpty())
+		{
+			if(sX >= (iceCream.getX() ) && sX <= (iceCream.getX()))
+			{
+				return true; 
+			}
+			return false; 
+		}
+		
+		
+		Scoop topScoop = iceCream.getTopScoop();
+		double topScoopY = topScoop.getBoundingBox().getY();
 		double topScoopX = topScoop.getBoundingBox().getX();
 		
 		double radius = topScoop.getBoundingBox().getWidth() / 2;
@@ -94,7 +98,16 @@ public abstract class GameMode extends JComponent implements KeyListener
 	public IceCream getIceCream() {
 		return iceCream;
 	}
+	
+	public boolean isGameOver() 
+	{
+		return ifGameOver; 
+	}
 
+	public void setGameOver(boolean ifGameOver) 
+	{
+		this.ifGameOver = ifGameOver;
+	}
 	
 	@Override
 	public void keyPressed(KeyEvent e)
@@ -126,7 +139,28 @@ public abstract class GameMode extends JComponent implements KeyListener
 		
 	}
 
+	public Scoop[] randScoops()
+	{
+		Scoop[] scoops = new Scoop[20];
+		for(int index = 0; index < scoops.length; index++)
+		{
+			scoops[index] = makeScoop();
+		}
+		return scoops; 
+	}
 	
+	public Scoop makeScoop()
+	{	
+		int x = (int) (Math.random() * getWidth());
+		int flavor = (int) (Math.random() * 9); //make a constant 
+		Scoop s = new Scoop(x, 0, flavor);  
+		return s; 
+	}
+	
+	public void resetScoop(Scoop s)
+	{
+		s.getBoundingBox().y = 0;
+	}
 	
 	public class TimerListener implements ActionListener
 	{
@@ -135,17 +169,22 @@ public abstract class GameMode extends JComponent implements KeyListener
 		{
 			//while (game over variable is not true) 
 			while(!isGameOver())
-			{
+			{	
+				Scoop[] scoops = randScoops();
 				for(int index = circles.size() - 1; index >= 0 ; index--)
 				{
-					Scoop scoop = circles.get(index);
-					if(ifScoopAdded(scoop))
+					Scoop s = scoops[index];
+					if(ifScoopAdded(s))
 					{
-						iceCream.addScoop(scoop);
-						circles.remove(index);
+						iceCream.addScoop(s);
+						scoops[index] = makeScoop();
 						updateScore();
 					}
-					scoop.shiftScoopDown();
+					s.shiftScoopDown();
+					if(s.getBoundingBox().height > getHeight())
+					{
+						resetScoop(s); //could be in the scoop class? 
+					}
 					
 				}
 			}
@@ -187,7 +226,7 @@ public abstract class GameMode extends JComponent implements KeyListener
 	
 	abstract boolean updateScore();
 	
-	abstract boolean isGameOver();
+	
 
 }
 
