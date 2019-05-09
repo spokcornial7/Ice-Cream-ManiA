@@ -13,7 +13,6 @@ public class GameViewer
 	private JFrame frame1;
 	private JFrame frame2;
 	private JPanel welcomePanel;
-	private String rules;
 	private JButton btnTimed;
 	private JButton btnClassic;
 	private JPanel rulesPanel;
@@ -125,7 +124,11 @@ public class GameViewer
 	 */
     private void createGame()
     {
-    	//if(!game.isGameOver()){
+    	if(gameMode.equals("Classic"))
+    		game = new GameModeClassic();
+    	else
+    		game = new GameModeTimed();
+    	
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
     	frame2.getContentPane().add(game);
@@ -147,12 +150,11 @@ public class GameViewer
 			createTimer();
 			frame2.add(lblBackground);
 			}
-    	//}
-			/*
-    		frame2.setVisible(false);
-    		frame1.setVisible(true);
-    		welcomePanel.setVisible(false);
-    		endGameOpt(new ButtonListener());*/
+			
+//		frame2.setVisible(false);
+//		frame1.setVisible(true);
+//		welcomePanel.setVisible(false);
+//		endGameOpt(new ButtonListener());
     }
     
     /**
@@ -205,7 +207,10 @@ public class GameViewer
 	private void createTRules()
 	{
 		try {
-			rules = new Scanner(new File("TimerModeRules.txt")).nextLine();
+			JLabel timedRules = new JLabel(new Scanner(new File("TimerModeRules.txt")).nextLine());
+			timedRules.setBounds(30, 90, 330, 300);
+			rulesPanel.add(timedRules);
+			rulesPanel.add(layeredPaneR);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -215,7 +220,10 @@ public class GameViewer
 	private void createCRules()
 	{
 		try {
-			rules = new Scanner(new File("ClassicModeRules.txt")).nextLine();
+			JLabel classicRules = new JLabel(new Scanner(new File("ClassicModeRules.txt")).nextLine());
+			classicRules.setBounds(30, 90, 330, 300);
+			rulesPanel.add(classicRules);
+			rulesPanel.add(layeredPaneR);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -229,22 +237,12 @@ public class GameViewer
 				rulesPanel.setVisible(true);
 				welcomePanel.setVisible(false);
 				createTRules();
-				JLabel timedRules = new JLabel(rules);
-				timedRules.setBounds(30, 90, 330, 300);
-				rulesPanel.add(timedRules);
-				rulesPanel.add(layeredPaneR);
-				game =  new GameModeTimed();
 				gameMode = "timed";
 			}
 			else if(e.getSource() == btnClassic){
 				rulesPanel.setVisible(true);
 				welcomePanel.setVisible(false);
 				createCRules();
-				JLabel classicRules = new JLabel(rules);
-				classicRules.setBounds(30, 90, 330, 300);
-				rulesPanel.add(classicRules);
-				rulesPanel.add(layeredPaneR);
-				game = new GameModeClassic();
 				gameMode = "classic";
 			}
 			else if(e.getSource() == btnBegin){
@@ -262,9 +260,6 @@ public class GameViewer
 			}
 		}
     }
-
-	
-	
 	
 	public static void main(String[] args) 
 	{

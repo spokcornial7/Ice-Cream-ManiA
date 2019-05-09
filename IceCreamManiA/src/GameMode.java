@@ -24,7 +24,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private boolean added;
 	
 	public static final int RIGHT_BOUND = 334;
-	public static final int LEFT_BOUND = 5;
+	public static final int LEFT_BOUND = 15;
+	public static final int NUM_FLAVORS = 6;
 	
 	public static final int FRAME_HEIGHT = 600;
 	
@@ -36,15 +37,16 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		
 		timer = new Timer(10, this);
 		timer.start();
-		
+
 		scoops = randScoops();
 	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
-	{			
+	{	
 		drawDiagram(g);
 		iceCream.draw(g);
 		for(Scoop s : scoops)
@@ -136,7 +138,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{	
 		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
 		int y = (int) (Math.random() * -FRAME_HEIGHT);
-		int flavor = (int) (Math.random() * 6); //make a constant 
+		int flavor = (int) (Math.random() * NUM_FLAVORS);
 		Scoop s = new Scoop(x, y, flavor);  
 		return s; 
 	}
@@ -146,7 +148,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public void actionPerformed(ActionEvent e)
 	{ 
 		if(isGameOver())
+		{
 			timer.stop();
+		}
 		
 		for(int index = scoops.length - 1; index >= 0 ; index--)
 		{
