@@ -157,7 +157,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 				scoops[index] = makeScoop();
 				updateScore();
 			}
-			else if(s.getBoundingBox().getHeight() > FRAME_HEIGHT)
+			else if(s.getBoundingBox().y > FRAME_HEIGHT)
 			{
 				scoops[index] = makeScoop();
 			}	
