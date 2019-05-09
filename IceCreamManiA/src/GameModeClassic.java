@@ -70,7 +70,8 @@ public class GameModeClassic extends GameMode
 				updateDiagram();
 				icecream.clearScoops();
 				return true;
-			}		
+			}
+			drawDiagram(super.getGraphics());
 		}
 		else
 			done = true;	
