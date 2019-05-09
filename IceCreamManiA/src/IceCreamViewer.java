@@ -15,7 +15,7 @@ public class IceCreamViewer
 		frame.setLocation(0,0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		GameMode game = new GameModeTimed();
+		GameMode game = new GameModeClassic();
 		frame.add(game);
 		System.out.println(game.getHeight());
 		System.out.println(game.getWidth());

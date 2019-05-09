@@ -93,7 +93,7 @@ public class IceCream
 	 
 	 public void shiftLeft()
 	 {
-		 x -= 10; 
+		 x -= 15; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopLeft();
@@ -102,7 +102,7 @@ public class IceCream
 	 
 	 public void shiftRight()
 	 {
-		 x += 10; 
+		 x += 15; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopRight();

@@ -22,13 +22,16 @@ public class GameModeTimed extends GameMode
 	
 	// Diagram instance variables and constants
 	private Queue<Scoop> scoopQueue;
-	public static final int SCOOP_X = 395;
-	public static final int SCOOP5_Y = 20;
-	public static final int SCOOP4_Y = 80;
-	public static final int SCOOP3_Y = 140;
-	public static final int SCOOP2_Y = 200;
-	public static final int SCOOP1_Y = 260;
-	public static final int DIA_SHIFT_AMT = 60;
+	private static final int SCOOP_X = 395;
+	private static final int SCOOP5_Y = 20;
+	private static final int SCOOP4_Y = 80;
+	private static final int SCOOP3_Y = 140;
+	private static final int SCOOP2_Y = 200;
+	private static final int SCOOP1_Y = 260;
+	private static final int DIA_SHIFT_AMT = 60;
+	private static final int NUM_FLAVORS = 4;
+	
+	
 	
 	
 	// Timer instance variables
@@ -101,7 +104,6 @@ public class GameModeTimed extends GameMode
 
 	private boolean correctFlavor()
 	{
-		
 		if(!icecream.getScoops().isEmpty())
 		{
 			Scoop checkScoop = scoopQueue.peek();
@@ -144,11 +146,11 @@ public class GameModeTimed extends GameMode
 	
 	private void createDiagram()
 	{
-		int rand1 = (int) (Math.random()*4);
-		int rand2 = (int) (Math.random()*4);
-		int rand3 = (int) (Math.random()*4);
-		int rand4 = (int) (Math.random()*4);
-		int rand5 = (int) (Math.random()*4);
+		int rand1 = (int) (Math.random() * NUM_FLAVORS);
+		int rand2 = (int) (Math.random() * NUM_FLAVORS);
+		int rand3 = (int) (Math.random() * NUM_FLAVORS);
+		int rand4 = (int) (Math.random() * NUM_FLAVORS);
+		int rand5 = (int) (Math.random() * NUM_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
@@ -158,7 +160,7 @@ public class GameModeTimed extends GameMode
 	
 	private void addRandomScoop()
 	{
-		int rand = (int) (Math.random()*4);
+		int rand = (int) (Math.random() * NUM_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
 	}
 

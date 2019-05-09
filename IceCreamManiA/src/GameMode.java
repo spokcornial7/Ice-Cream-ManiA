@@ -45,7 +45,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	@Override
 	public void paintComponent(Graphics g)
 	{			
-		if(iceCream.getScoops().isEmpty())
+		if(getPoints() == 0)
 			drawDiagram(g);
 		iceCream.draw(g);
 		for(Scoop s : scoops)
