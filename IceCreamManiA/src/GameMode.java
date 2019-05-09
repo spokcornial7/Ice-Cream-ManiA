@@ -80,7 +80,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		double topScoopX = topScoop.getBoundingBox().getX();
 		
 		double radius = topScoop.getBoundingBox().getWidth() / 2;
-		//x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
 		
 		if(sX >= (topScoopX - radius) && sX <= (topScoopX + radius)) //36 is scoop's width
 		{
