@@ -21,6 +21,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private JLabel lblHighscore;
 	private Timer timer;
 	
+	private boolean added;
+	
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 5;
 	
@@ -52,7 +54,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		}
 			
 		
-		if(updateScore()) 
+		if(added) 
 		{
 			drawDiagram(g); 
 			updateScoreLabels();
@@ -156,19 +158,18 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		for(int index = scoops.length - 1; index >= 0 ; index--)
 		{
 			Scoop s = scoops[index];
-			repaint();
-			s.dropDown(1);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
 				scoops[index] = makeScoop();
-				updateScore();
+				added = updateScore();
 			}
 			else if(s.getBoundingBox().y > FRAME_HEIGHT)
 			{
 				scoops[index] = makeScoop();
 			}	
-			
+			repaint();
+			s.dropDown(1);
 		}
 	
 	}
