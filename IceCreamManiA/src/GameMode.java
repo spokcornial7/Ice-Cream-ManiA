@@ -20,6 +20,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	private Timer timer;
+	private GameViewer viewer;
 	
 	private boolean added;
 	
@@ -30,8 +31,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public static final int FRAME_HEIGHT = 600;
 	
 	
-	public GameMode()
+	public GameMode(GameViewer viewer)
 	{
+		this.viewer = viewer; 
+		
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 
 		addKeyListener(this);
@@ -52,13 +55,21 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		iceCream.draw(g);
 		
 		for(Scoop s : scoops)
-		{
 			s.draw((Graphics2D) g);
-		}
-
 		
 		if(added) 
 			updateScoreLabels();		
+	}
+	
+	public void reset()
+	{
+		iceCream = new IceCream(RIGHT_BOUND/2, 560);
+		timer = new Timer(10, this);
+		timer.start();
+		scoops = new ArrayList<>();
+		updateScoreLabels();
+		randScoops();
+		repaint();
 	}
 	
 	public boolean ifScoopAdded(Scoop s)
@@ -94,6 +105,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public IceCream getIceCream() {
 		return iceCream;
 	}
+	
 	
 	@Override
 	public void keyPressed(KeyEvent e)
@@ -178,7 +190,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(isGameOver())
 		{
 			timer.stop();
+			timer = null;
 			setHighScore();
+			viewer.endGame();
 		}
 		
 		for(int index = scoops.size() - 1; index >= 0 ; index--)

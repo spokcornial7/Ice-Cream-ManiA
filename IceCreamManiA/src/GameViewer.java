@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.Timer;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -62,6 +63,9 @@ public class GameViewer
 		
 		createWelcomePanel(listener);
 		createRulesPanel(listener);
+		endOptPanel = new JPanel();
+		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
+		endOptPanel.setLayout(null);
 	}
 	
 	/**
@@ -126,14 +130,13 @@ public class GameViewer
     private void createGame()
     {
     	if(gameMode.equals("classic"))
-    		game = new GameModeClassic();
+    		game = new GameModeClassic(this);
     	else
-    		game = new GameModeTimed();
-    	
+    		game = new GameModeTimed(this);
+    
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	frame2.setVisible(true);
     	frame2.getContentPane().add(game);
-    	game.repaint();
     	
     	frame2.add(game.scoreLabel());
     	frame2.add(game.highScoreLabel());
@@ -151,11 +154,6 @@ public class GameViewer
 			createTimer();
 			frame2.add(lblBackground);
 			}    	
-		
-		/*frame2.setVisible(false);
-		frame1.setVisible(true);
-		welcomePanel.setVisible(false);
-		endGameOpt(new ButtonListener());*/
     }
     
     /**
@@ -163,20 +161,21 @@ public class GameViewer
 	 * @param listener is the button listener
 	 */
 	private void endGameOpt(ButtonListener listener) 
-	{
-		endOptPanel = new JPanel();
-		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
-		endOptPanel.setLayout(null);
+	{	
 		endOptPanel.setVisible(true);
 		
-		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
-		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 70));
-		lblScore.setBounds(300, 200, 50, 52);
+		frame2.setVisible(false);
+		frame1.setVisible(true);
+		welcomePanel.setVisible(false);
+		
+		JLabel lblScore = game.scoreLabel();
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 40));
+		lblScore.setBounds(300, 87, 50, 52);
 		endOptPanel.add(lblScore);
 	
-		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
-		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
-		lblHighscore.setBounds(300, 87, 32, 41);
+		JLabel lblHighscore = game.highScoreLabel();
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		lblHighscore.setBounds(300, 200, 32, 41);
 		endOptPanel.add(lblHighscore);
 		
 		btnReplay = new JButton("REPLAY");
@@ -199,7 +198,7 @@ public class GameViewer
 	}
 
 	/** Adds timer label from GameModeTimer */
-	private void createTimer()
+	public void createTimer()
 	{
 		frame2.add(((GameModeTimed) game).drawTimer());
 	}
@@ -234,6 +233,11 @@ public class GameViewer
 		}
 	}
 	
+	public void endGame()
+	{
+		endGameOpt(new ButtonListener());
+	}
+	
     private class ButtonListener implements ActionListener
     {
 		public void actionPerformed(ActionEvent e) 
@@ -257,6 +261,7 @@ public class GameViewer
 			}
 			else if(e.getSource() == btnReplay){
 				endOptPanel.setVisible(false);
+				game.reset();
 				createGame();
 			}
 			else if(e.getSource() == btnMenu){

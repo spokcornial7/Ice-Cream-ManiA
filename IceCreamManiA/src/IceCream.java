@@ -82,10 +82,11 @@ public class IceCream
 		scoops.add(newScoop);
 	 }
 	 
-	 /** Removes 3 scoops from the ice cream
+	 /** Removes 3 scoops from the ice cream (+1 for the incorrect scoop)
 	  */
 	 public void removeScoops()
 	 {
+		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);

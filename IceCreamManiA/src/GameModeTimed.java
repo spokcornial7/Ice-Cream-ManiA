@@ -42,9 +42,9 @@ public class GameModeTimed extends GameMode
 	/**
 	 *  Instantiates game mode timed
 	 */
-	public GameModeTimed() 
+	public GameModeTimed(GameViewer viewer) 
 	{
-		super();
+		super(viewer);
 		score = 0;
 		highscore = 0;
 		scoopQueue = new LinkedList<>();
@@ -53,6 +53,18 @@ public class GameModeTimed extends GameMode
 		createDiagram();
 	}
 
+	@Override
+	public void reset()
+	{
+		super.reset();
+		score = 0;
+		scoopQueue = new LinkedList<>();
+		done = false;
+		icecream = super.getIceCream();
+		createDiagram();
+		resetTimer();
+	}
+	
 	/**
 	 *  Returns the high score
 	 *  @return high score
@@ -180,6 +192,7 @@ public class GameModeTimed extends GameMode
 	 */
 	private void createDiagram()
 	{
+		scoopQueue.clear();
 		int rand1 = (int) (Math.random() * NUM_FLAVORS);
 		int rand2 = (int) (Math.random() * NUM_FLAVORS);
 		int rand3 = (int) (Math.random() * NUM_FLAVORS);
@@ -217,6 +230,13 @@ public class GameModeTimed extends GameMode
 	    timer.start();
 		return time;
 	}
+	
+	private void resetTimer()
+	{
+		timer = new Timer(1000, new timerListener());
+		timer.start();
+		done = false;
+	}
 
 	/**
 	 * An ActionListener for the countdown timer
@@ -230,6 +250,7 @@ public class GameModeTimed extends GameMode
     		  if(i == 0 || done)
     		  {
     	        	timer.stop();
+    	        	i = 60;
     	        	done = true;
     		  }
     	  }

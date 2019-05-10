@@ -28,9 +28,9 @@ public class GameModeClassic extends GameMode
 	/**
 	 *  Instantiates game mode classic
 	 */
-	public GameModeClassic() 
+	public GameModeClassic(GameViewer viewer) 
 	{
-		super();
+		super(viewer);
 		score = 0;
 		highscore = 0;
 		done = false;
@@ -38,6 +38,15 @@ public class GameModeClassic extends GameMode
 		createDiagram();
 	}
 
+	@Override
+	public void reset()
+	{
+		super.reset();
+		score = 0;
+		done = false;
+		icecream = super.getIceCream();
+		createDiagram();
+	}
 	
 	/**
 	 *  Returns the high score
@@ -126,7 +135,6 @@ public class GameModeClassic extends GameMode
 		ImageIcon check = new ImageIcon("checkmark.png");
 		Image image = check.getImage();
 		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		//Graphics g = image.getGraphics();
 		Graphics g = super.getGraphics();
 		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
 	}
@@ -158,7 +166,7 @@ public class GameModeClassic extends GameMode
 	 */
 	private void createDiagram()
 	{
-		scoopQueue = new LinkedList<>();
+		scoopQueue.clear();
 		int rand1 = (int) (Math.random() * NUM_FLAVORS);
 		int rand2 = (int) (Math.random() * NUM_FLAVORS);
 		int rand3 = (int) (Math.random() * NUM_FLAVORS);
