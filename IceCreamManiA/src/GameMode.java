@@ -20,7 +20,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	private Timer timer;
-	private Timer timer2;
 	
 	private boolean added;
 	
@@ -33,23 +32,14 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public GameMode()
 	{
-
-		iceCream = new IceCream(250, 250);
-		iceCream.addScoop(new Scoop(250, 175, 3));
-		iceCream.addScoop(new Scoop(250, 139, 2));
-
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 
-		
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		timer = new Timer(10, this);
-		timer.start();
-
-
 		
+
 		scoops = new ArrayList<>();
 		randScoops();
 	}	
@@ -57,6 +47,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	@Override
 	public void paintComponent(Graphics g)
 	{	
+		timer = new Timer(10, this);
+		timer.start();
 		drawDiagram(g);
 		iceCream.draw(g);
 		
@@ -164,7 +156,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		for(int index = 0; index < scoops.size(); index++)
 		{
 			Scoop temp = scoops.get(index);
-			System.out.println("HAHA");
 			if(scoopTouch(s, temp)) // if the scoops touch
 				return true;;
 
@@ -175,8 +166,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public boolean scoopTouch(Scoop s, Scoop temp)
 	{
-		System.out.println("YOYO");
-		
 		//this returns that the scoops do touch
 		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
 			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
