@@ -208,10 +208,12 @@ public class GameViewer
 	private void createTRules()
 	{
 		try {
-			JLabel timedRules = new JLabel(new Scanner(new File("TimerModeRules.txt")).nextLine());
+			Scanner scan = new Scanner(new File("TimerModeRules.txt"));
+			JLabel timedRules = new JLabel(scan.nextLine());
 			timedRules.setBounds(30, 90, 330, 300);
 			rulesPanel.add(timedRules);
 			rulesPanel.add(layeredPaneR);
+			scan.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -221,10 +223,12 @@ public class GameViewer
 	private void createCRules()
 	{
 		try {
-			JLabel classicRules = new JLabel(new Scanner(new File("ClassicModeRules.txt")).nextLine());
+			Scanner scan = new Scanner(new File("ClassicModeRules.txt"));
+			JLabel classicRules = new JLabel(scan.nextLine());
 			classicRules.setBounds(30, 90, 330, 300);
 			rulesPanel.add(classicRules);
 			rulesPanel.add(layeredPaneR);
+			scan.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
