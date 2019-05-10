@@ -150,6 +150,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(isGameOver())
 		{
 			timer.stop();
+			setHighScore();
 		}
 		
 		for(int index = scoops.length - 1; index >= 0 ; index--)
@@ -202,6 +203,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	abstract int getHighScore();
 	
 	abstract int getPoints();	
+	
+	abstract void setHighScore();
 	
 	abstract boolean updateScore();
 	

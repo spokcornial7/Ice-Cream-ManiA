@@ -24,6 +24,10 @@ public class GameModeClassic extends GameMode
 	private static final int SCOOP1_Y = 260;
 	private static final int NUM_FLAVORS = 4;
 		
+	
+	/**
+	 *  Instantiates game mode classic
+	 */
 	public GameModeClassic() 
 	{
 		super();
@@ -34,30 +38,52 @@ public class GameModeClassic extends GameMode
 		createDiagram();
 	}
 
+	
+	/**
+	 *  Returns the high score
+	 *  @return high score
+	 */
 	@Override
 	public int getHighScore()
 	{
 		return highscore;
 	}
 	
+	/**
+	 *  Returns the score
+	 *  @return score
+	 */
 	@Override
 	public int getPoints()
 	{
 		return score;
 	}
 	
-	private void setHighScore()
+	/**
+	 *  Sets/updates the high score
+	 */
+	@Override
+	public void setHighScore()
 	{
 		if(score > highscore)
 			highscore = score;
 	}
 	
+	/**
+	 *  Returns if the game is over 
+	 *  @return variable holding true if game over, false if not
+	 */
 	@Override
 	public boolean isGameOver()
 	{
 		return done;
 	}
 	
+	
+	/**
+	 *  Updates and returns true if the score was updated
+	 *  @return returns true if score increased
+	 */
 	@Override
 	public boolean updateScore()
 	{		
@@ -77,6 +103,10 @@ public class GameModeClassic extends GameMode
 		return false;
 	}
 	
+	/**
+	 *  Returns if the correct flavor was added 
+	 *  @return true if correct flavor added, false if otherwise
+	 */
 	private boolean correctFlavor()
 	{		
 		if(!icecream.getScoops().isEmpty())
@@ -88,6 +118,9 @@ public class GameModeClassic extends GameMode
 		return false;
 	}
 	
+	/**
+	 *  Adds a check mark over the diagram
+	 */
 	private void addCheckMark()
 	{
 		ImageIcon check = new ImageIcon("checkmark.png");
@@ -99,7 +132,9 @@ public class GameModeClassic extends GameMode
 	}
 
 	
-	// DIAGRAM
+	/**
+	 *  Draws the diagram
+	 */
 	@Override
 	public void drawDiagram(Graphics g)
 	{
@@ -110,11 +145,17 @@ public class GameModeClassic extends GameMode
 		}
 	}
 	
+	/**
+	 *  Updates the diagram with a new diagram
+	 */
 	private void updateDiagram()
 	{
 		createDiagram();
 	}
 	
+	/**
+	 *  Creates a new diagram
+	 */
 	private void createDiagram()
 	{
 		scoopQueue = new LinkedList<>();

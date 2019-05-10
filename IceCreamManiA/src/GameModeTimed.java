@@ -39,7 +39,9 @@ public class GameModeTimed extends GameMode
 	private JLabel time;
 	private Timer timer;
 	
-	
+	/**
+	 *  Instantiates game mode timed
+	 */
 	public GameModeTimed() 
 	{
 		super();
@@ -51,39 +53,55 @@ public class GameModeTimed extends GameMode
 		createDiagram();
 	}
 
+	/**
+	 *  Returns the high score
+	 *  @return high score
+	 */
 	@Override
 	public int getHighScore()
 	{
 		return highscore;
 	}
 	
+	/**
+	 *  Returns the score
+	 *  @return score
+	 */
 	@Override
 	public int getPoints()
 	{
 		return score;
 	}
 	
-	private void setHighScore()
+	/**
+	 *  Sets/updates the high score
+	 */
+	@Override
+	public void setHighScore()
 	{
 		if(score > highscore)
 			highscore = score;
 	}
 	
+	/**
+	 *  Returns if the game is over 
+	 *  @return variable holding true if game over, false if not
+	 */
 	@Override
 	public boolean isGameOver()
 	{
 		return done;
 	}
 	
-	
+	/**
+	 *  Updates and returns true if the score was updated
+	 *  @return returns true if score increased
+	 */
 	@Override
 	public boolean updateScore()
 	{
 		if(correctFlavor())
-		{
 			score++;
-			//setHighScore();
-		}
 		else if(touchedBomb())
 			done = true;
 		else
@@ -102,6 +120,10 @@ public class GameModeTimed extends GameMode
 		return true;
 	}
 
+	/**
+	 *  Returns if the correct flavor was added 
+	 *  @return true if correct flavor added, false if otherwise
+	 */
 	private boolean correctFlavor()
 	{
 		if(!icecream.getScoops().isEmpty())
@@ -116,6 +138,10 @@ public class GameModeTimed extends GameMode
 		return false;
 	}
 	
+	/**
+	 *  Returns whether the scoop added was a bomb
+	 *  @return true if the scoop was a bomb
+	 */
 	private boolean touchedBomb()
 	{
 		if(icecream.getScoops().isEmpty())
@@ -124,7 +150,9 @@ public class GameModeTimed extends GameMode
 	}
 	
 	
-	// DIAGRAM
+	/**
+	 *  Draws the diagram
+	 */
 	public void drawDiagram(Graphics g)
 	{
 		Graphics2D gr2 = (Graphics2D) g;
@@ -134,6 +162,9 @@ public class GameModeTimed extends GameMode
 		}
 	}
 	
+	/**
+	 *  Updates the diagram by shifting down the previous diagram
+	 */
 	private void updateDiagram()
 	{
 		scoopQueue.remove();
@@ -144,6 +175,9 @@ public class GameModeTimed extends GameMode
 		addRandomScoop();
 	}
 	
+	/**
+	 *  Creates a new diagram
+	 */
 	private void createDiagram()
 	{
 		int rand1 = (int) (Math.random() * NUM_FLAVORS);
@@ -158,6 +192,9 @@ public class GameModeTimed extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
 	}
 	
+	/**
+	 *  Adds a new random scoop for the top of the diagram
+	 */
 	private void addRandomScoop()
 	{
 		int rand = (int) (Math.random() * NUM_FLAVORS);
@@ -166,7 +203,10 @@ public class GameModeTimed extends GameMode
 
 	
 	
-	// TIMER
+	/**
+	 *  Draws a label for the countdown timer
+	 *  @return the timer label
+	 */
 	public JLabel drawTimer()
 	{
 		i = 60;
@@ -178,6 +218,9 @@ public class GameModeTimed extends GameMode
 		return time;
 	}
 
+	/**
+	 * An ActionListener for the countdown timer
+	 */
     class timerListener implements ActionListener 
     {
     	  public void actionPerformed(ActionEvent e) 
