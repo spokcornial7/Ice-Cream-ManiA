@@ -20,7 +20,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	private Timer timer;
-	private Timer timer2;
 	
 	private boolean added;
 	
@@ -33,14 +32,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public GameMode()
 	{
-
-		iceCream = new IceCream(250, 250);
-		iceCream.addScoop(new Scoop(250, 175, 3));
-		iceCream.addScoop(new Scoop(250, 139, 2));
-
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 
-		
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
@@ -48,8 +41,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer = new Timer(10, this);
 		timer.start();
 
-
-		
 		scoops = new ArrayList<>();
 		randScoops();
 	}	
