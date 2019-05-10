@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
@@ -14,7 +15,7 @@ import javax.swing.Timer;
 
 public abstract class GameMode extends JComponent implements KeyListener, ActionListener
 {
-	private Scoop[] scoops;
+	private ArrayList<Scoop> scoops;
 	private IceCream iceCream; 
 	private JLabel lblScore;
 	private JLabel lblHighscore;
@@ -39,9 +40,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer = new Timer(10, this);
 		timer.start();
 		
-		timer2 = new Timer(10000000, this);
+		timer2 = new Timer(10000000, null);
 		
-		scoops = randScoops();
+		scoops = new ArrayList<>();
+		randScoops();
 	}	
 	
 	@Override
@@ -51,10 +53,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			drawDiagram(g);
 		iceCream.draw(g);
 		
-
-		drawScoops(g);
-
-			
+		for(Scoop s : scoops)
+		{
+			s.draw((Graphics2D) g);
+		}
 		
 		if(added) 
 		{
@@ -128,17 +130,22 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 	}
 
-	public Scoop[] randScoops()
+	public void randScoops()
 	{
-		Scoop[] scoops = new Scoop[10];
-		for(int index = 0; index < scoops.length; index++)
+		for(int index = 0; index < 20; index++)
 		{
 			Scoop s = makeScoop();
-			scoops[index] = s;
+			
+			while(ifOverlap(s))
+			{
+				System.out.println("HEY");
+				s = makeScoop();
+			}
+			
+			scoops.add(s);
 			
 		}
 
-		return scoops; 
 	}
 	
 	public Scoop makeScoop()
@@ -150,34 +157,53 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return s; 
 	}
 	
-	public void drawScoops(Graphics g) 
+	public boolean ifOverlap(Scoop s)
 	{
-		for(Scoop s : scoops)
+		if(scoops.size() < 1)
+			return false;
+		
+		for(int index = 0; index < scoops.size(); index++)
 		{
-			timer2.start();
-			s.draw((Graphics2D) g);
-			//timer2.stop();
-			
+			Scoop temp = scoops.get(index);
+			System.out.println("HAHA");
+			if(scoopTouch(s, temp))
+				return false;
+
 		}
+		
+		return true; 
 	}
+	
+	public boolean scoopTouch(Scoop s, Scoop temp)
+	{
+		System.out.println("YOYO");
+		
+		//x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
+		
+		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
+			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
+				return false; 
+		return true; 
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{ 
 		if(isGameOver())
 			timer.stop();
 		
-		for(int index = scoops.length - 1; index >= 0 ; index--)
+		for(int index = scoops.size() - 1; index >= 0 ; index--)
 		{
-			Scoop s = scoops[index];
+			Scoop s = scoops.get(index);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
-				scoops[index] = makeScoop();
+				scoops.set(index, makeScoop());
 				added = updateScore();
 			}
 			else if(s.getBoundingBox().y > FRAME_HEIGHT)
 			{
-				scoops[index] = makeScoop();
+				scoops.set(index, makeScoop());
 			}	
 			repaint();
 			s.dropDown(1);
