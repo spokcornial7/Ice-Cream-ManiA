@@ -38,6 +38,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
+		timer = new Timer(10, this);
+		timer.start();
 		
 		scoops = new ArrayList<>();
 		randScoops();
@@ -46,10 +48,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		timer = new Timer(10, this);
-		timer.start();
-
-		
 		drawDiagram(g);
 		iceCream.draw(g);
 		
@@ -148,7 +146,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			int flavor = (int) (Math.random() * NUM_FLAVORS);
 			s = new Scoop(x, y, flavor); 
 		}
-		while(ifOverlap(s)) ;
+		while(ifOverlap(s));
 		return s; 
 	}
 	
@@ -158,10 +156,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		{
 			Scoop temp = scoops.get(index);
 			if(scoopTouch(s, temp)) // if the scoops touch
-				return true;;
-
+				return true;
 		}
-		
 		return false; 
 	}
 	
