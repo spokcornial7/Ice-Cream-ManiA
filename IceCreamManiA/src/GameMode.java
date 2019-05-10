@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 public abstract class GameMode extends JComponent implements KeyListener, ActionListener
 {
-	private Scoop[] scoops;
+	private ArrayList<Scoop> scoops;
 	private IceCream iceCream; 
 	private JLabel lblScore;
 	private JLabel lblHighscore;
@@ -32,33 +32,33 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public GameMode()
 	{
-<<<<<<< HEAD
-		iceCream = new IceCream(250, 250);
-		iceCream.addScoop(new Scoop(250, 175, 3));
-		iceCream.addScoop(new Scoop(250, 139, 2));
-=======
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
->>>>>>> branch 'master' of https://github.com/spokcornial7/Ice-Cream-ManiA.git
-		
+
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		timer = new Timer(10, this);
-		timer.start();
-
-		scoops = randScoops();
+		
+		scoops = new ArrayList<>();
+		randScoops();
 	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
+		timer = new Timer(10, this);
+		timer.start();
+
+		
 		drawDiagram(g);
 		iceCream.draw(g);
+		
 		for(Scoop s : scoops)
 		{
 			s.draw((Graphics2D) g);
 		}
+
+		
 		if(added) 
 			updateScoreLabels();		
 	}
@@ -127,49 +127,76 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 	}
 
-	public Scoop[] randScoops()
+	public void randScoops()
 	{
-		Scoop[] scoops = new Scoop[10];
-		for(int index = 0; index < scoops.length; index++)
+		for(int index = 0; index < 12; index++)
 		{
 			Scoop s = makeScoop();
-			scoops[index] = s;
+			scoops.add(s);
 			
 		}
 
-		return scoops; 
 	}
 	
 	public Scoop makeScoop()
 	{	
-		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
-		int y = (int) (Math.random() * -FRAME_HEIGHT);
-		int flavor = (int) (Math.random() * NUM_FLAVORS);
-		Scoop s = new Scoop(x, y, flavor);  
+		Scoop s;
+		do 
+		{
+			int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
+			int y = (int) (Math.random() * -FRAME_HEIGHT);
+			int flavor = (int) (Math.random() * NUM_FLAVORS);
+			s = new Scoop(x, y, flavor); 
+		}
+		while(ifOverlap(s)) ;
 		return s; 
 	}
 	
+	public boolean ifOverlap(Scoop s)
+	{	
+		for(int index = 0; index < scoops.size(); index++)
+		{
+			Scoop temp = scoops.get(index);
+			if(scoopTouch(s, temp)) // if the scoops touch
+				return true;;
 
+		}
+		
+		return false; 
+	}
+	
+	public boolean scoopTouch(Scoop s, Scoop temp)
+	{
+		//this returns that the scoops do touch
+		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
+			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
+				return true; 
+		
+		//returns that the scoops don't touch 
+		return false; 
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{ 
 		if(isGameOver())
 		{
 			timer.stop();
+			setHighScore();
 		}
 		
-		for(int index = scoops.length - 1; index >= 0 ; index--)
+		for(int index = scoops.size() - 1; index >= 0 ; index--)
 		{
-			Scoop s = scoops[index];
+			Scoop s = scoops.get(index);
 			if(ifScoopAdded(s))
 			{
 				iceCream.addScoop(s);
-				scoops[index] = makeScoop();
+				scoops.set(index, makeScoop());
 				added = updateScore();
 			}
 			else if(s.getBoundingBox().y > FRAME_HEIGHT)
 			{
-				scoops[index] = makeScoop();
+				scoops.set(index, makeScoop());
 			}	
 			repaint();
 			s.dropDown(1);
@@ -208,6 +235,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	abstract int getHighScore();
 	
 	abstract int getPoints();	
+	
+	abstract void setHighScore();
 	
 	abstract boolean updateScore();
 	
