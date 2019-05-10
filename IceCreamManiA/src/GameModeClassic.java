@@ -12,15 +12,17 @@ public class GameModeClassic extends GameMode
 	private int score;
 	private int highscore;
 	private boolean done;
+	private IceCream icecream;
 	
 	// Diagram instance variables
 	private Queue<Scoop> scoopQueue;
-	public static final int SCOOP_X = 395;
-	public static final int SCOOP5_Y = 20;
-	public static final int SCOOP4_Y = 80;
-	public static final int SCOOP3_Y = 140;
-	public static final int SCOOP2_Y = 200;
-	public static final int SCOOP1_Y = 260;
+	private static final int SCOOP_X = 395;
+	private static final int SCOOP5_Y = 20;
+	private static final int SCOOP4_Y = 80;
+	private static final int SCOOP3_Y = 140;
+	private static final int SCOOP2_Y = 200;
+	private static final int SCOOP1_Y = 260;
+	private static final int NUM_FLAVORS = 4;
 		
 	public GameModeClassic() 
 	{
@@ -28,6 +30,7 @@ public class GameModeClassic extends GameMode
 		score = 0;
 		highscore = 0;
 		done = false;
+		icecream = super.getIceCream();
 		createDiagram();
 	}
 
@@ -60,14 +63,15 @@ public class GameModeClassic extends GameMode
 	{		
 		if(correctFlavor())
 		{
+			addCheckMark();
 			if(scoopQueue.isEmpty())
 			{
 				score++;
-				setHighScore();
 				updateDiagram();
+				icecream.clearScoops();
 				return true;
 			}
-			addCheckMark();
+			drawDiagram(super.getGraphics());
 		}
 		else
 			done = true;	
@@ -76,7 +80,6 @@ public class GameModeClassic extends GameMode
 	
 	private boolean correctFlavor()
 	{		
-		IceCream icecream = super.getIceCream();
 		if(!icecream.getScoops().isEmpty())
 		{
 			Scoop checkScoop = scoopQueue.peek();
@@ -91,7 +94,8 @@ public class GameModeClassic extends GameMode
 		ImageIcon check = new ImageIcon("checkmark.png");
 		Image image = check.getImage();
 		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Graphics g = image.getGraphics();
+		//Graphics g = image.getGraphics();
+		Graphics g = super.getGraphics();
 		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
 	}
 
@@ -115,11 +119,11 @@ public class GameModeClassic extends GameMode
 	private void createDiagram()
 	{
 		scoopQueue = new LinkedList<>();
-		int rand1 = (int) (Math.random()*4);
-		int rand2 = (int) (Math.random()*4);
-		int rand3 = (int) (Math.random()*4);
-		int rand4 = (int) (Math.random()*4);
-		int rand5 = (int) (Math.random()*4);
+		int rand1 = (int) (Math.random() * NUM_FLAVORS);
+		int rand2 = (int) (Math.random() * NUM_FLAVORS);
+		int rand3 = (int) (Math.random() * NUM_FLAVORS);
+		int rand4 = (int) (Math.random() * NUM_FLAVORS);
+		int rand5 = (int) (Math.random() * NUM_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));

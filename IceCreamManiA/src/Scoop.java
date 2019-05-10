@@ -19,7 +19,7 @@ public class Scoop
 	private static final int MID_CIRCLE_X_SHIFT = 10; 
 	private static final int MID_CIRCLE_Y_SHIFT = 24; 
 	private static final int SCOOP_XY_LENGTH = 36;
-	private static final int SHIFT_AMT = 10;
+	private static final int SHIFT_AMT = 15;
 	
 
 	private static final int NUM_BANANA = 0;
