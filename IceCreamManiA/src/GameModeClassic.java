@@ -1,28 +1,133 @@
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.util.*;
 
 import javax.swing.*;
 
 
 public class GameModeClassic extends GameMode
 {
+	// Game instance variables
+	private int score;
+	private int highscore;
+	private boolean done;
+	private IceCream icecream;
+	
+	// Diagram instance variables
+	private Queue<Scoop> scoopQueue;
+	private static final int SCOOP_X = 395;
+	private static final int SCOOP5_Y = 20;
+	private static final int SCOOP4_Y = 80;
+	private static final int SCOOP3_Y = 140;
+	private static final int SCOOP2_Y = 200;
+	private static final int SCOOP1_Y = 260;
+	private static final int NUM_FLAVORS = 4;
+		
+	public GameModeClassic() 
+	{
+		super();
+		score = 0;
+		highscore = 0;
+		done = false;
+		icecream = super.getIceCream();
+		createDiagram();
+	}
 
-	public GameModeClassic() {
-		// TODO Auto-generated constructor stub
+	@Override
+	public int getHighScore()
+	{
+		return highscore;
+	}
+	
+	@Override
+	public int getPoints()
+	{
+		return score;
+	}
+	
+	private void setHighScore()
+	{
+		if(score > highscore)
+			highscore = score;
+	}
+	
+	@Override
+	public boolean isGameOver()
+	{
+		return done;
+	}
+	
+	@Override
+	public boolean updateScore()
+	{		
+		if(correctFlavor())
+		{
+			addCheckMark();
+			if(scoopQueue.isEmpty())
+			{
+				score++;
+				updateDiagram();
+				icecream.clearScoops();
+				return true;
+			}
+			drawDiagram(super.getGraphics());
+		}
+		else
+			done = true;	
+		return false;
+	}
+	
+	private boolean correctFlavor()
+	{		
+		if(!icecream.getScoops().isEmpty())
+		{
+			Scoop checkScoop = scoopQueue.peek();
+			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+				return true;
+		}
+		return false;
+	}
+	
+	private void addCheckMark()
+	{
+		ImageIcon check = new ImageIcon("checkmark.png");
+		Image image = check.getImage();
+		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		//Graphics g = image.getGraphics();
+		Graphics g = super.getGraphics();
+		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
 	}
 
 	
+	// DIAGRAM
+	@Override
+	public void drawDiagram(Graphics g)
+	{
+		Graphics2D gr2 = (Graphics2D) g;
+		for(Scoop s : scoopQueue)
+		{
+			s.draw(gr2);
+		}
+	}
 	
-	public static void main(String[] args) {
-		ImageIcon check = new ImageIcon("checkmark.png");
-		Image image = check.getImage();
-		Image newimg = image.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		check = new ImageIcon(newimg); 
-		JLabel pane = new JLabel(check);
-		JFrame f = new JFrame();
-		f.add(pane);
-		f.setSize(300, 300);
-		f.setVisible(true);
-		
-    }
+	private void updateDiagram()
+	{
+		createDiagram();
+	}
+	
+	private void createDiagram()
+	{
+		scoopQueue = new LinkedList<>();
+		int rand1 = (int) (Math.random() * NUM_FLAVORS);
+		int rand2 = (int) (Math.random() * NUM_FLAVORS);
+		int rand3 = (int) (Math.random() * NUM_FLAVORS);
+		int rand4 = (int) (Math.random() * NUM_FLAVORS);
+		int rand5 = (int) (Math.random() * NUM_FLAVORS);
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP4_Y, rand4));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
+	}
 }

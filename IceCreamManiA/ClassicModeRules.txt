@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <html>Welcome to Ice Cream Mania!<BR><BR>Game Mode: Classic<BR><BR>The goal of the game is to correctly make as many ice cream cones as possible based on the diagram on the left. If you stack the wrong flavor scoop, the game will end. Use your left and right arrow keys to move your ice cream cone.<BR> <BR>Good luck and have fun!<BR><BR><BR> *Hint: Keep your ice cream as straight as possible* </html>
+=======
+<html>Welcome to Ice Cream Mania!<BR><BR>Game Mode: Classic<BR><BR>The goal of the game is to correctly make as many ice cream cones as possible based on the diagram on the right. If you stack the wrong flavor scoop, the game will end. Use your left and right arrow keys to move your ice cream cone.<BR> <BR>Good luck and have fun!<BR><BR><BR> *Hint: keep your ice cream as straight as possible* </html>
+>>>>>>> branch 'master' of https://github.com/spokcornial7/Ice-Cream-ManiA.git

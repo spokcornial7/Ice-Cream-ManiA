@@ -1,138 +1,116 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.Timer;
 
-public /*abstract*/ class GameMode extends JComponent implements KeyListener
+public abstract class GameMode extends JComponent implements KeyListener, ActionListener
 {
-	private ArrayList<Scoop> circles;
+	private Scoop[] scoops;
 	private IceCream iceCream; 
+	private JLabel lblScore;
+	private JLabel lblHighscore;
+	private Timer timer;
 	
-	public static final int speed = 5;
+	private boolean added;
+	
+	public static final int RIGHT_BOUND = 334;
+	public static final int LEFT_BOUND = 15;
+	public static final int NUM_FLAVORS = 6;
+	
+	public static final int FRAME_HEIGHT = 600;
 	
 	
 	public GameMode()
 	{
+<<<<<<< HEAD
 		iceCream = new IceCream(250, 250);
 		iceCream.addScoop(new Scoop(250, 175, 3));
 		iceCream.addScoop(new Scoop(250, 139, 2));
+=======
+		iceCream = new IceCream(RIGHT_BOUND/2, 560);
+>>>>>>> branch 'master' of https://github.com/spokcornial7/Ice-Cream-ManiA.git
 		
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		circles = new ArrayList<>(); //instantiate with scoops 
-		for(int num = 0; num < 10; num++)
-		{
-			Scoop scoop = makeScoop(500);
-			circles.add(scoop);
-		}
-		
-	}
-	/*
-	public static void main(String[] args) 
-	{
-		JFrame frame = new JFrame();
-		frame.setSize(450,600);
-		frame.setLocation(0,0);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		GameMode game = new GameMode();
-		frame.add(game);
-		System.out.println(game.getHeight());
-		System.out.println(game.getWidth());
-		
-		frame.setVisible(true);
-	
-	}*/
-	
+		timer = new Timer(10, this);
+		timer.start();
+
+		scoops = randScoops();
+	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		iceCream.draw(g);		
-	}
-	
-	public Scoop makeScoop(int frameWidth)
-	{
-		int x = (int) (Math.random() * frameWidth);
-		int y = 0;
-		int flavor = (int) (Math.random() * 9);
-		Scoop s = new Scoop(x, y, flavor);  
-		//^ this can be replaced with the scoop's own draw method 
-		return s; 
+		drawDiagram(g);
+		iceCream.draw(g);
+		for(Scoop s : scoops)
+		{
+			s.draw((Graphics2D) g);
+		}
+		if(added) 
+			updateScoreLabels();		
 	}
 	
 	public boolean ifScoopAdded(Scoop s)
 	{
-		//if iceCreamScoops.isEmpty() --> check to see if scoop touches cone
-		ArrayList<Scoop> iceCreamScoops = iceCream.getScoops();
-		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
-		double topScoopY = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getY();
-		
+		//Get 
 		double sX = s.getBoundingBox().getX();
-		double topScoopX = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getX();
+		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
 		
-		double radius = iceCreamScoops.get(iceCreamScoops.size() - 1).getBoundingBox().getWidth() / 2;
-		
-		if(sX >= (topScoopX - radius) && sX <= (topScoopX  + radius))
+		if(iceCream.getScoops().isEmpty())
 		{
-			if(sY >= topScoopY)
-			return true; 
+			if(sX >= (iceCream.getX() - 18) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
+			{
+				if(sY == iceCream.getY() - 40) // 40 is cone height
+					return true; 
+			}
+			return false; 
+		}
+		
+		Scoop topScoop = iceCream.getTopScoop();
+		double topScoopY = topScoop.getBoundingBox().getY();
+		double topScoopX = topScoop.getBoundingBox().getX();
+		
+		double radius = topScoop.getBoundingBox().getWidth() / 2;
+		
+		if(sX >= (topScoopX - radius) && sX <= (topScoopX + radius)) //36 is scoop's width
+		{
+			if(sY == topScoopY)
+				return true; 
 		}		
-
 		return false; 
-	}
-	
-	public boolean ifScoopAdded()
-	{
-	
-		/*
-		 * if (scoop.boxy >= iceCream.boxy)
-		 * 		if(scoop.boxX >= iceCream.boxX && scoop.boxX >= iceCream.boxX + diameter of scoop)
-		 * 			return true; 
-		 * 
-		 * return false;
-		 */
-		return false;
 	}
 	
 	public IceCream getIceCream() {
 		return iceCream;
 	}
-
-	
-	//won't need these once IceCream class is finished 
-	public ArrayList<Scoop> getCircles() 
-	{			
-		return circles;
-	}
-	
-	public void addCircles(ArrayList<Scoop> circles) 
-	{			
-		this.circles = circles;
-	}
 	
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) //right arrow code
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
-			iceCream.shiftRight();
+			if(iceCream.getX() < RIGHT_BOUND)
+				iceCream.shiftRight();
 			repaint();
-			System.out.print("Key pressed");
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) //left arrow key
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) 
 		{
-			iceCream.shiftLeft();
+			if(iceCream.getX() > LEFT_BOUND)
+				iceCream.shiftLeft();
 			repaint();
 		}			
 	}
@@ -149,44 +127,91 @@ public /*abstract*/ class GameMode extends JComponent implements KeyListener
 		
 	}
 
-	
-	
-	public class TimerListener implements ActionListener
+	public Scoop[] randScoops()
 	{
-		@Override
-		public void actionPerformed(ActionEvent e)
+		Scoop[] scoops = new Scoop[10];
+		for(int index = 0; index < scoops.length; index++)
 		{
-			//while (game over variable is not true) 
-			while(true)
-			{
-				for(int index = circles.size() - 1; index >= 0 ; index--)
-				{
-					Scoop scoop = circles.get(index);
-					if(ifScoopAdded(scoop))
-					{
-						iceCream.addScoop(scoop);
-						circles.remove(index);
-					}
-					scoop.shiftScoopDown();
-					
-				}
-			}
-			
+			Scoop s = makeScoop();
+			scoops[index] = s;
 			
 		}
 
+		return scoops; 
 	}
-	/*
-	abstract int getHighScore();
 	
-	abstract void setHighScore(int highScore);
+	public Scoop makeScoop()
+	{	
+		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
+		int y = (int) (Math.random() * -FRAME_HEIGHT);
+		int flavor = (int) (Math.random() * NUM_FLAVORS);
+		Scoop s = new Scoop(x, y, flavor);  
+		return s; 
+	}
 	
-	abstract void addPoints(int points);
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{ 
+		if(isGameOver())
+		{
+			timer.stop();
+		}
+		
+		for(int index = scoops.length - 1; index >= 0 ; index--)
+		{
+			Scoop s = scoops[index];
+			if(ifScoopAdded(s))
+			{
+				iceCream.addScoop(s);
+				scoops[index] = makeScoop();
+				added = updateScore();
+			}
+			else if(s.getBoundingBox().y > FRAME_HEIGHT)
+			{
+				scoops[index] = makeScoop();
+			}	
+			repaint();
+			s.dropDown(1);
+		}
 	
-	abstract int getPoints();
+	}
+	
+	public JLabel scoreLabel()
+	{
+		lblScore = new JLabel(String.valueOf(getPoints()));
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(380, 400, 100, 100);
+		return lblScore;
+	}
+	
+	public JLabel highScoreLabel()
+	{
+		lblHighscore = new JLabel(String.valueOf(getHighScore()));
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(380, 450, 100, 100);
+		return lblHighscore;
+	}
+	
+	private void updateScoreLabels()
+	{
+		lblScore.setText(String.valueOf(getPoints()));
+		lblHighscore.setText(String.valueOf(getHighScore()));
+	}
 	
 	abstract boolean isGameOver();
-	*/
 	
+	abstract void drawDiagram(Graphics gr);
+
+	abstract int getHighScore();
+	
+	abstract int getPoints();	
+	
+	abstract boolean updateScore();
+	
+	
+
 }
 

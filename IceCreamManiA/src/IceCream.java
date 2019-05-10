@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JComponent;
 
@@ -22,22 +23,18 @@ public class IceCream
 	private int y;
 	private Polygon cone;
 	
-	private Rectangle rec; 
-	
 	public IceCream(int x, int y)
 	{
-		rec = new Rectangle(x, y, 50, 50); 
 		this.x = x; 
 		this.y = y;		
 		
 		scoops = new ArrayList<>();
 
 	}
-	 public void draw(Graphics gr)
+	 public void draw(Graphics gr) 
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
 	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
-	        g2.draw(rec);
 	        
 	        gr.setColor(CONE_COLOR);
 	        gr.fillPolygon(cone);
@@ -48,19 +45,41 @@ public class IceCream
 	        
 	 }
 	 
+	 public int getX()
+	 {
+		 return x;
+	 }
+	 
+	 public int getY()
+	 {
+		 return y;
+	 }
+	 
 	 public void addScoop(Scoop newScoop)
 	 {
 		scoops.add(newScoop);
 	 }
 	 
-	 public void removeScoop()
+	 public void removeScoops()
 	 {
 		 scoops.remove(scoops.size() - 1);
+		 scoops.remove(scoops.size() - 1);
+		 scoops.remove(scoops.size() - 1);
+	 }
+	 
+	 public void clearScoops()
+	 {
+		 scoops.clear();
 	 }
 	 
 	 public ArrayList<Scoop> getScoops()
 	 {
 		 return scoops;
+	 }
+	 
+	 public Scoop getTopScoop()
+	 {
+		 return scoops.get(scoops.size() - 1);
 	 }
 	 
 	 public void shiftDown()
@@ -74,7 +93,7 @@ public class IceCream
 	 
 	 public void shiftLeft()
 	 {
-		 x -= 5; 
+		 x -= 15; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopLeft();
@@ -83,7 +102,7 @@ public class IceCream
 	 
 	 public void shiftRight()
 	 {
-		 x += 5; 
+		 x += 15; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopRight();

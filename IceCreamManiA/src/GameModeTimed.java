@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
 import java.util.*;
@@ -13,18 +14,30 @@ import javax.swing.*;
 		
 public class GameModeTimed extends GameMode
 {
-
+	// Game instance variables
 	private int score;
 	private int highscore;
-	private PriorityQueue<Scoop> scoopQueue; 
 	private boolean done;
+	private IceCream icecream;
 	
-	public static final int scoopX = 200;
-	public static final int scoop5Y = 20;
-	public static final int scoop4Y = 40;
-	public static final int scoop3Y = 60;
-	public static final int scoop2Y = 80;
-	public static final int scoop1Y = 100;
+	// Diagram instance variables and constants
+	private Queue<Scoop> scoopQueue;
+	private static final int SCOOP_X = 395;
+	private static final int SCOOP5_Y = 20;
+	private static final int SCOOP4_Y = 80;
+	private static final int SCOOP3_Y = 140;
+	private static final int SCOOP2_Y = 200;
+	private static final int SCOOP1_Y = 260;
+	private static final int DIA_SHIFT_AMT = 60;
+	private static final int NUM_FLAVORS = 4;
+	
+	
+	
+	
+	// Timer instance variables
+	private int i;
+	private JLabel time;
+	private Timer timer;
 	
 	
 	public GameModeTimed() 
@@ -32,82 +45,137 @@ public class GameModeTimed extends GameMode
 		super();
 		score = 0;
 		highscore = 0;
-		scoopQueue = new PriorityQueue<>();
+		scoopQueue = new LinkedList<>();
 		done = false;
+		icecream = super.getIceCream();
+		createDiagram();
 	}
 
-	//@Override
-	public int getHighscore()
+	@Override
+	public int getHighScore()
 	{
 		return highscore;
 	}
 	
-	//@Override
-	public int getScore()
+	@Override
+	public int getPoints()
 	{
 		return score;
 	}
 	
-	//@Override
-	private void updateHighscore()
+	private void setHighScore()
 	{
 		if(score > highscore)
 			highscore = score;
 	}
 	
-	private void updateScore()
-	{
-		//if(super.ifScoopAdded())
-			score++;
-		//if wrong scoop added
-			score=-3;
-	}
-	
+	@Override
 	public boolean isGameOver()
 	{
 		return done;
 	}
 	
-	private void createDiagram(Graphics2D gr)
+	
+	@Override
+	public boolean updateScore()
 	{
-		createRandomizedScoops();
-		while(!scoopQueue.isEmpty())
+		if(correctFlavor())
 		{
-			scoopQueue.remove().draw(gr);
+			score++;
+			//setHighScore();
+		}
+		else if(touchedBomb())
+			done = true;
+		else
+		{
+			if(score <= 3)
+			{
+				icecream.clearScoops();
+				score = 0;
+			}
+			else
+			{
+				icecream.removeScoops();
+				score -= 3;
+			}
+		}
+		return true;
+	}
+
+	private boolean correctFlavor()
+	{
+		if(!icecream.getScoops().isEmpty())
+		{
+			Scoop checkScoop = scoopQueue.peek();
+			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
+			{
+				updateDiagram();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean touchedBomb()
+	{
+		if(icecream.getScoops().isEmpty())
+			return false;
+		return icecream.getTopScoop().getFlavor() == 5;
+	}
+	
+	
+	// DIAGRAM
+	public void drawDiagram(Graphics g)
+	{
+		Graphics2D gr2 = (Graphics2D) g;
+		for(Scoop s : scoopQueue)
+		{
+			s.draw(gr2);
 		}
 	}
 	
-	private void createRandomizedScoops()
+	private void updateDiagram()
 	{
-		int rand1 = (int) (Math.random()*8);
-		int rand2 = (int) (Math.random()*8);
-		int rand3 = (int) (Math.random()*8);
-		int rand4 = (int) (Math.random()*8);
-		int rand5 = (int) (Math.random()*8);
-		scoopQueue.add(new Scoop(scoopX, scoop1Y, rand1));
-		scoopQueue.add(new Scoop(scoopX, scoop2Y, rand2));
-		scoopQueue.add(new Scoop(scoopX, scoop3Y, rand3));
-		scoopQueue.add(new Scoop(scoopX, scoop4Y, rand4));
-		scoopQueue.add(new Scoop(scoopX, scoop5Y, rand5));
+		scoopQueue.remove();
+		for(Scoop s : scoopQueue)
+		{
+			s.dropDown(DIA_SHIFT_AMT);
+		}
+		addRandomScoop();
 	}
 	
-	private int i;
-	private JLabel time;
-	private JFrame f;
-	private Timer timer;
-	
-	//TESTING OUT THE TIMER
-	public void drawTimer()
+	private void createDiagram()
 	{
-		i = 10;
-		f = new JFrame();
-		f.setSize(300, 300);
+		int rand1 = (int) (Math.random() * NUM_FLAVORS);
+		int rand2 = (int) (Math.random() * NUM_FLAVORS);
+		int rand3 = (int) (Math.random() * NUM_FLAVORS);
+		int rand4 = (int) (Math.random() * NUM_FLAVORS);
+		int rand5 = (int) (Math.random() * NUM_FLAVORS);
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP4_Y, rand4));
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
+	}
+	
+	private void addRandomScoop()
+	{
+		int rand = (int) (Math.random() * NUM_FLAVORS);
+		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
+	}
+
+	
+	
+	// TIMER
+	public JLabel drawTimer()
+	{
+		i = 60;
 		time = new JLabel();
-		f.add(time);
-		f.setVisible(true);
-		
-        timer = new Timer(1000, new timerListener());
-        timer.start();
+		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
+		time.setBounds(175, 90, 100, 50);
+		timer = new Timer(1000, new timerListener());
+	    timer.start();
+		return time;
 	}
 
     class timerListener implements ActionListener 
@@ -116,42 +184,11 @@ public class GameModeTimed extends GameMode
     	  {
     		  i--;
     		  time.setText(String.valueOf(i));
-    		  if(i == 0)
+    		  if(i == 0 || done)
     		  {
     	        	timer.stop();
     	        	done = true;
     		  }
     	  }
     }
-	
-	public static void main(String[] args) {
-		GameModeTimed x = new GameModeTimed();
-		x.drawTimer();
-		
-    }
-
-	@Override
-	int getHighScore() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	void setHighScore(int highScore) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	void addPoints(int points) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	int getPoints() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 }
