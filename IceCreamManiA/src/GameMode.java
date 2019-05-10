@@ -177,8 +177,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{
 		System.out.println("YOYO");
 		
-		//x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
-		
 		//this returns that the scoops do touch
 		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
 			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
