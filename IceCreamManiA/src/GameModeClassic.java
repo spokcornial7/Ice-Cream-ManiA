@@ -34,6 +34,7 @@ public class GameModeClassic extends GameMode
 		score = 0;
 		highscore = 0;
 		done = false;
+		scoopQueue = new LinkedList<>();
 		icecream = super.getIceCream();
 		createDiagram();
 	}
