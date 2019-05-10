@@ -108,4 +108,12 @@ public class IceCream
 	       	scoops.get(i).shiftScoopRight();
 	     }
 	 }
+	 
+	 public boolean isEmpty()
+	 {
+		 if (scoops.size() == 0)
+			 return true; 
+		 else
+			 return false; 
+	 }
 }

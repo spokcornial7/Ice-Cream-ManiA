@@ -12,21 +12,21 @@ import java.util.*;
 
 public class Scoop 
 {
-	private static final int MAIN_CIRCLE_DIA = 32; 
-	private static final int SMALL_CIRCLE_DIA = 12; 
-	private static final int LEFT_CIRCLE_X_SHIFT = 2;
-	private static final int LEFTRIGHT_CIRCLE_XY_SHIFT = 22; 
-	private static final int MID_CIRCLE_X_SHIFT = 10; 
-	private static final int MID_CIRCLE_Y_SHIFT = 24; 
-	private static final int SCOOP_XY_LENGTH = 36;
-	private static final int SHIFT_AMT = 15;
+	public static final int MAIN_CIRCLE_DIA = 32; 
+	public static final int SMALL_CIRCLE_DIA = 12; 
+	public static final int LEFT_CIRCLE_X_SHIFT = 2;
+	public static final int LEFTRIGHT_CIRCLE_XY_SHIFT = 22; 
+	public static final int MID_CIRCLE_X_SHIFT = 10; 
+	public static final int MID_CIRCLE_Y_SHIFT = 24; 
+	public static final int SCOOP_XY_LENGTH = 36;
+	public static final int SHIFT_AMT = 15;
 	
 
-	private static final int NUM_BANANA = 0;
-	private static final int NUM_STRAWBERRY = 1; 
-	private static final int NUM_MINT = 2; 
-	private static final int NUM_ORANGE = 3;
-	private static final int NUM_BIRTHDAY = 4; 
+	public static final int NUM_BANANA = 0;
+	public static final int NUM_STRAWBERRY = 1; 
+	public static final int NUM_MINT = 2; 
+	public static final int NUM_ORANGE = 3;
+	public static final int NUM_BIRTHDAY = 4; 
 	
 	private int x;
 	private int y;
