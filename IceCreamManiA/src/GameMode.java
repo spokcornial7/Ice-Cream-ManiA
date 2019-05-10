@@ -39,7 +39,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		setFocusTraversalKeysEnabled(false);
 		
 		
-
 		scoops = new ArrayList<>();
 		randScoops();
 	}	
@@ -49,6 +48,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{	
 		timer = new Timer(10, this);
 		timer.start();
+
 		
 		drawDiagram(g);
 		iceCream.draw(g);
