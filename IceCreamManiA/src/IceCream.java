@@ -1,3 +1,7 @@
+/** Draws the IceCream which is an ArrayList of scoops and a cone. Moves the IceCream as needed
+ *  down, left, or right and adds/removes scoops from the IceCream
+ */
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,6 +15,7 @@ import javax.swing.JComponent;
 
 public class IceCream 
 {
+	// Constants for the cone
 	private static final Color CONE_COLOR = new Color(205, 133, 63);
 	private static final int CONE_X_MID = 16;
 	private static final int CONE_X_RIGHT = 31;
@@ -23,6 +28,10 @@ public class IceCream
 	private int y;
 	private Polygon cone;
 	
+	/** Constructs an array list of Scoop that is an IceCream based of a given (x,y) coordinate
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 */
 	public IceCream(int x, int y)
 	{
 		this.x = x; 
@@ -31,6 +40,10 @@ public class IceCream
 		scoops = new ArrayList<>();
 
 	}
+	
+	 /** Draws the ice cream cone and the ice cream itself (its scoops)
+	  * @param gr what is being drawn
+	  */
 	 public void draw(Graphics gr) 
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
@@ -45,21 +58,32 @@ public class IceCream
 	        
 	 }
 	 
+	 /** Returns x coordinate of the ice cream
+	  *  @return the x coordinate
+	  */
 	 public int getX()
 	 {
 		 return x;
 	 }
 	 
+	 /** Returns the y coordinate of the ice cream
+	  * @return the y coordinate
+	  */
 	 public int getY()
 	 {
 		 return y;
 	 }
 	 
+	 /** Adds a scoop to the ice cream
+	  * @param newScoop the scoop to be added
+	  */
 	 public void addScoop(Scoop newScoop)
 	 {
 		scoops.add(newScoop);
 	 }
 	 
+	 /** Removes 3 scoops from the ice cream
+	  */
 	 public void removeScoops()
 	 {
 		 scoops.remove(scoops.size() - 1);
@@ -67,21 +91,31 @@ public class IceCream
 		 scoops.remove(scoops.size() - 1);
 	 }
 	 
+	 /** Clears all scoops from the ice cream
+	  */
 	 public void clearScoops()
 	 {
 		 scoops.clear();
 	 }
 	 
+	 /** Returns the ArrayList of scoops
+	  * @return the ArrayList of scoops
+	  */
 	 public ArrayList<Scoop> getScoops()
 	 {
 		 return scoops;
 	 }
 	 
+	 /** Returns the last added scoop
+	  * @return the top scoop that was added last
+	  */
 	 public Scoop getTopScoop()
 	 {
 		 return scoops.get(scoops.size() - 1);
 	 }
 	 
+	 /** Changes the y coordinate so that the ice cream shifts down
+	  */
 	 public void shiftDown()
 	 {
 		 y += SCOOP_HEIGHT;
@@ -91,6 +125,8 @@ public class IceCream
 	     }
 	 }
 	 
+	 /** Shifts the ice cream to the left
+	  */
 	 public void shiftLeft()
 	 {
 		 x -= 15; 
@@ -100,6 +136,8 @@ public class IceCream
 	     }
 	 }
 	 
+	 /** Shifts the ice cream to the right
+	  */
 	 public void shiftRight()
 	 {
 		 x += 15; 
@@ -109,6 +147,9 @@ public class IceCream
 	     }
 	 }
 	 
+	 /** Checks if ice cream is empty
+	  * @return whether or not the ice cream is empty
+	  */
 	 public boolean isEmpty()
 	 {
 		 if (scoops.size() == 0)
