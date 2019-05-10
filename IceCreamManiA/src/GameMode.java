@@ -164,7 +164,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		for(int index = 0; index < scoops.size(); index++)
 		{
 			Scoop temp = scoops.get(index);
-			System.out.println("HAHA");
 			if(scoopTouch(s, temp)) // if the scoops touch
 				return true;;
 
@@ -175,8 +174,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public boolean scoopTouch(Scoop s, Scoop temp)
 	{
-		System.out.println("YOYO");
-		
 		//this returns that the scoops do touch
 		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
 			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
