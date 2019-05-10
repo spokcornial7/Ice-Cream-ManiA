@@ -136,16 +136,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	public void randScoops()
 	{
-		for(int index = 0; index < 20; index++)
+		for(int index = 0; index < 12; index++)
 		{
 			Scoop s = makeScoop();
-			
-			while(ifOverlap(s))
-			{
-				System.out.println("HEY");
-				s = makeScoop();
-			}
-			
 			scoops.add(s);
 			
 		}
@@ -154,40 +147,43 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public Scoop makeScoop()
 	{	
-		int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
-		int y = (int) (Math.random() * -FRAME_HEIGHT);
-		int flavor = (int) (Math.random() * NUM_FLAVORS);
-		Scoop s = new Scoop(x, y, flavor);  
+		Scoop s;
+		do 
+		{
+			int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
+			int y = (int) (Math.random() * -FRAME_HEIGHT);
+			int flavor = (int) (Math.random() * NUM_FLAVORS);
+			s = new Scoop(x, y, flavor); 
+		}
+		while(ifOverlap(s)) ;
 		return s; 
 	}
 	
 	public boolean ifOverlap(Scoop s)
-	{
-		if(scoops.size() < 1)
-			return false;
-		
+	{	
 		for(int index = 0; index < scoops.size(); index++)
 		{
 			Scoop temp = scoops.get(index);
 			System.out.println("HAHA");
-			if(scoopTouch(s, temp))
-				return false;
+			if(scoopTouch(s, temp)) // if the scoops touch
+				return true;;
 
 		}
 		
-		return true; 
+		return false; 
 	}
 	
 	public boolean scoopTouch(Scoop s, Scoop temp)
 	{
 		System.out.println("YOYO");
 		
-		//x < r.x + r.width && x + width > r.x && y < r.y + r.height && y + height > r.y;
-		
+		//this returns that the scoops do touch
 		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
 			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
-				return false; 
-		return true; 
+				return true; 
+		
+		//returns that the scoops don't touch 
+		return false; 
 	}
 	
 	@Override
