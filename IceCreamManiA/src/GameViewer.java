@@ -1,5 +1,5 @@
 import javax.swing.*;
-
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -9,6 +9,7 @@ public class GameViewer
 {
 	private GameMode game;
 	private String gameMode;
+	//private Timer gameTimer;
 
 	private JFrame frame1;
 	private JFrame frame2;
@@ -124,7 +125,7 @@ public class GameViewer
 	 */
     private void createGame()
     {
-    	if(gameMode.equals("Classic"))
+    	if(gameMode.equals("classic"))
     		game = new GameModeClassic();
     	else
     		game = new GameModeTimed();
@@ -149,12 +150,12 @@ public class GameViewer
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 			createTimer();
 			frame2.add(lblBackground);
-			}
-			
-//		frame2.setVisible(false);
-//		frame1.setVisible(true);
-//		welcomePanel.setVisible(false);
-//		endGameOpt(new ButtonListener());
+			}    	
+		
+		/*frame2.setVisible(false);
+		frame1.setVisible(true);
+		welcomePanel.setVisible(false);
+		endGameOpt(new ButtonListener());*/
     }
     
     /**

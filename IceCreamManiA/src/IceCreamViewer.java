@@ -13,12 +13,14 @@ public class IceCreamViewer
 		JFrame frame = new JFrame();
 		frame.setSize(450,600);
 		frame.setLocation(0,0);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		GameMode game = new GameModeClassic();
 		frame.add(game);
 		System.out.println(game.getHeight());
 		System.out.println(game.getWidth());
+		
+		//WindowListener 
 		
 		frame.setVisible(true);
 }
