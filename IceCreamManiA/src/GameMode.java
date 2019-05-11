@@ -101,14 +101,14 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
-			if(iceCream.getX() < RIGHT_BOUND)
+			if(iceCream.getTopScoop().getX() + 36 < RIGHT_BOUND)
 				iceCream.shiftRight();
 			repaint();
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) 
 		{
-			if(iceCream.getX() > LEFT_BOUND)
+			if(iceCream.getTopScoop().getX() > LEFT_BOUND)
 				iceCream.shiftLeft();
 			repaint();
 		}			
