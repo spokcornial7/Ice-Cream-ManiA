@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -32,8 +33,6 @@ public class GameModeTimed extends GameMode
 	private static final int NUM_FLAVORS = 4;
 	
 	
-	
-	
 	// Timer instance variables
 	private int i;
 	private JLabel time;
@@ -51,6 +50,7 @@ public class GameModeTimed extends GameMode
 		done = false;
 		icecream = super.getIceCream();
 		createDiagram();
+		drawTimer();	
 	}
 
 	@Override
@@ -62,7 +62,8 @@ public class GameModeTimed extends GameMode
 		done = false;
 		icecream = super.getIceCream();
 		createDiagram();
-		resetTimer();
+		i = 60;
+		timer.restart();
 	}
 	
 	/**
@@ -220,7 +221,7 @@ public class GameModeTimed extends GameMode
 	 *  Draws a label for the countdown timer
 	 *  @return the timer label
 	 */
-	public JLabel drawTimer()
+	public void drawTimer()
 	{
 		i = 60;
 		time = new JLabel();
@@ -228,14 +229,7 @@ public class GameModeTimed extends GameMode
 		time.setBounds(175, 90, 100, 50);
 		timer = new Timer(1000, new timerListener());
 	    timer.start();
-		return time;
-	}
-	
-	private void resetTimer()
-	{
-		timer = new Timer(1000, new timerListener());
-		timer.start();
-		done = false;
+		super.getViewer().getGameFrame().add(time);
 	}
 
 	/**

@@ -29,12 +29,12 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public static final int NUM_FLAVORS = 6;
 	
 	public static final int FRAME_HEIGHT = 600;
+	public static final int FRAME_WIDTH = 450;
 	
 	
 	public GameMode(GameViewer viewer)
 	{
 		this.viewer = viewer; 
-		
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 
 		addKeyListener(this);
@@ -64,12 +64,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public void reset()
 	{
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
-		timer = new Timer(10, this);
-		timer.start();
+		timer.restart();
 		scoops = new ArrayList<>();
-		updateScoreLabels();
 		randScoops();
-		repaint();
+		updateScoreLabels();
 	}
 	
 	public boolean ifScoopAdded(Scoop s)
@@ -106,6 +104,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return iceCream;
 	}
 	
+	public GameViewer getViewer() {
+		return viewer;
+	}
 	
 	@Override
 	public void keyPressed(KeyEvent e)
@@ -190,8 +191,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(isGameOver())
 		{
 			timer.stop();
-			timer = null;
 			setHighScore();
+			updateScoreLabels();
 			viewer.endGame();
 		}
 		
@@ -214,7 +215,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	}
 	
-	public JLabel scoreLabel()
+	public JLabel addScoreLabel()
 	{
 		lblScore = new JLabel(String.valueOf(getPoints()));
 		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
@@ -223,7 +224,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return lblScore;
 	}
 	
-	public JLabel highScoreLabel()
+	public JLabel addHighScoreLabel()
 	{
 		lblHighscore = new JLabel(String.valueOf(getHighScore()));
 		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
@@ -232,12 +233,12 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return lblHighscore;
 	}
 	
-	private void updateScoreLabels()
+	public void updateScoreLabels()
 	{
 		lblScore.setText(String.valueOf(getPoints()));
 		lblHighscore.setText(String.valueOf(getHighScore()));
 	}
-	
+
 	abstract boolean isGameOver();
 	
 	abstract void drawDiagram(Graphics gr);

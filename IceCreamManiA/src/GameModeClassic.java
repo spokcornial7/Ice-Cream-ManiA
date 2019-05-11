@@ -179,4 +179,5 @@ public class GameModeClassic extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP4_Y, rand4));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
 	}
+
 }

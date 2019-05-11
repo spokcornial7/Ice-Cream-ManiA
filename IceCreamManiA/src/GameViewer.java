@@ -10,10 +10,9 @@ public class GameViewer
 {
 	private GameMode game;
 	private String gameMode;
-	//private Timer gameTimer;
 
 	private JFrame frame1;
-	private JFrame frame2;
+	private JFrame gameFrame;
 	private JPanel welcomePanel;
 	private JButton btnTimed;
 	private JButton btnClassic;
@@ -54,12 +53,12 @@ public class GameViewer
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		frame2 = new JFrame();
-		frame2.setResizable(false);
-		frame2.setVisible(false);
-		frame2.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
-		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame2.getContentPane().setLayout(null);
+		gameFrame = new JFrame();
+		gameFrame.setResizable(false);
+		gameFrame.setVisible(false);
+		gameFrame.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.getContentPane().setLayout(null);
 		
 		createWelcomePanel(listener);
 		createRulesPanel(listener);
@@ -130,30 +129,41 @@ public class GameViewer
     private void createGame()
     {
     	if(gameMode.equals("classic"))
+    	{
     		game = new GameModeClassic(this);
+    	}
     	else
+    	{
     		game = new GameModeTimed(this);
-    
+    	}
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-    	frame2.setVisible(true);
-    	frame2.getContentPane().add(game);
+    	gameFrame.getContentPane().add(game);
+    
+    	startGame();
+    }
+    
+    private void startGame()
+    {
+    	gameFrame.setVisible(true);  
     	
-    	frame2.add(game.scoreLabel());
-    	frame2.add(game.highScoreLabel());
-    	
-		if(gameMode.equals("classic")){
-			ImageIcon img = new ImageIcon("Classic.JPG");
-			JLabel lblBackground = new JLabel(img);
-			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-			frame2.add(lblBackground);}
+    	gameFrame.add(game.addScoreLabel());
+    	gameFrame.add(game.addHighScoreLabel());
 		
-		if(gameMode.equals("timed")){
+    	if(gameMode.equals("classic"))
+		{
 			ImageIcon img = new ImageIcon("Classic.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-			createTimer();
-			frame2.add(lblBackground);
-			}    	
+			gameFrame.add(lblBackground);
+		}
+		else
+		{
+			
+			ImageIcon img = new ImageIcon("Classic.JPG");
+			JLabel lblBackground = new JLabel(img);
+			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+			gameFrame.add(lblBackground);
+		}
     }
     
     /**
@@ -164,19 +174,20 @@ public class GameViewer
 	{	
 		endOptPanel.setVisible(true);
 		
-		frame2.setVisible(false);
+		gameFrame.setVisible(false);
 		frame1.setVisible(true);
 		welcomePanel.setVisible(false);
 		
-		JLabel lblScore = game.scoreLabel();
+		JLabel lblScore = game.addScoreLabel();
 		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 40));
-		lblScore.setBounds(300, 87, 50, 52);
+		lblScore.setBounds(300, 87, 70, 70);
 		endOptPanel.add(lblScore);
 	
-		JLabel lblHighscore = game.highScoreLabel();
+		JLabel lblHighscore = game.addHighScoreLabel();
 		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		lblHighscore.setBounds(300, 200, 32, 41);
+		lblHighscore.setBounds(300, 200, 70, 70);
 		endOptPanel.add(lblHighscore);
+		
 		
 		btnReplay = new JButton("REPLAY");
 		btnReplay.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);
@@ -195,12 +206,6 @@ public class GameViewer
 		JLabel lblBackground = new JLabel(img);
 		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		endOptPanel.add(lblBackground);
-	}
-
-	/** Adds timer label from GameModeTimer */
-	public void createTimer()
-	{
-		frame2.add(((GameModeTimed) game).drawTimer());
 	}
 	
 	/** Read in timed mode rules */
@@ -262,7 +267,7 @@ public class GameViewer
 			else if(e.getSource() == btnReplay){
 				endOptPanel.setVisible(false);
 				game.reset();
-				createGame();
+				startGame();
 			}
 			else if(e.getSource() == btnMenu){
 				endOptPanel.setVisible(false);
@@ -270,7 +275,19 @@ public class GameViewer
 			}
 		}
     }
+    
+    public JFrame getFrame1()
+    {
+    	return frame1;
+    }
 	
+    
+    public JFrame getGameFrame()
+    {
+    	return gameFrame;
+    }
+    
+    
 	public static void main(String[] args) 
 	{
 		GameViewer gameGame = new GameViewer();	
