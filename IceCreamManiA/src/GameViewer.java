@@ -154,8 +154,7 @@ public class GameViewer
 			gameFrame.add(lblBackground);
 		}
 		else
-		{
-			
+		{			
 			ImageIcon img = new ImageIcon("Classic.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
@@ -186,8 +185,7 @@ public class GameViewer
 		JLabel lblHighscore = game.addHighScoreLabel();
 		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		lblHighscore.setBounds(300, 200, 70, 70);
-		endOptPanel.add(lblHighscore);
-		
+		endOptPanel.add(lblHighscore);	
 		
 		btnReplay = new JButton("REPLAY");
 		btnReplay.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);

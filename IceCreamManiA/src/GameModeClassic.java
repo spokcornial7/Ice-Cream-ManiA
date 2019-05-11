@@ -10,7 +10,7 @@ public class GameModeClassic extends GameMode
 {
 	// Game instance variables
 	private int score;
-	private int highscore;
+	private static int highscore = 0;
 	private boolean done;
 	private IceCream icecream;
 	
@@ -32,7 +32,6 @@ public class GameModeClassic extends GameMode
 	{
 		super(viewer);
 		score = 0;
-		highscore = 0;
 		done = false;
 		scoopQueue = new LinkedList<>();
 		icecream = super.getIceCream();
@@ -99,10 +98,11 @@ public class GameModeClassic extends GameMode
 	{		
 		if(correctFlavor())
 		{
-			addCheckMark();
+			scoopQueue.remove();
 			if(scoopQueue.isEmpty())
 			{
 				score++;
+				super.increaseSpeed();
 				updateDiagram();
 				icecream.clearScoops();
 				return true;
@@ -128,17 +128,19 @@ public class GameModeClassic extends GameMode
 		return false;
 	}
 	
+	
+	
 	/**
 	 *  Adds a check mark over the diagram
 	 */
-	private void addCheckMark()
+	/*private void addCheckMark()
 	{
 		ImageIcon check = new ImageIcon("checkmark.png");
 		Image image = check.getImage();
 		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 		Graphics g = super.getGraphics();
 		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
-	}
+	}*/
 
 	
 	/**

@@ -17,7 +17,7 @@ public class GameModeTimed extends GameMode
 {
 	// Game instance variables
 	private int score;
-	private int highscore;
+	private static int highscore = 0;
 	private boolean done;
 	private IceCream icecream;
 	
@@ -31,6 +31,7 @@ public class GameModeTimed extends GameMode
 	private static final int SCOOP1_Y = 260;
 	private static final int DIA_SHIFT_AMT = 60;
 	private static final int NUM_FLAVORS = 4;
+	private static final int MAX_SCOOPS = 5;
 	
 	
 	// Timer instance variables
@@ -45,7 +46,6 @@ public class GameModeTimed extends GameMode
 	{
 		super(viewer);
 		score = 0;
-		highscore = 0;
 		scoopQueue = new LinkedList<>();
 		done = false;
 		icecream = super.getIceCream();
@@ -53,16 +53,17 @@ public class GameModeTimed extends GameMode
 		drawTimer();	
 	}
 
+	
 	@Override
 	public void reset()
 	{
-		super.reset();
 		score = 0;
+		super.reset();
 		scoopQueue = new LinkedList<>();
 		done = false;
 		icecream = super.getIceCream();
 		createDiagram();
-		i = 60;
+		i = 70;
 		timer.restart();
 	}
 	
@@ -114,7 +115,11 @@ public class GameModeTimed extends GameMode
 	public boolean updateScore()
 	{
 		if(correctFlavor())
+		{
 			score++;
+			if(icecream.getScoops().size() > MAX_SCOOPS)
+				icecream.shiftDown();
+		}
 		else if(touchedBomb())
 			done = true;
 		else
@@ -129,6 +134,8 @@ public class GameModeTimed extends GameMode
 				icecream.removeScoops();
 				score -= 3;
 			}
+			if(icecream.getY() > 560)
+				icecream.setY(560);
 		}
 		return true;
 	}
@@ -139,7 +146,7 @@ public class GameModeTimed extends GameMode
 	 */
 	private boolean correctFlavor()
 	{
-		if(!icecream.getScoops().isEmpty())
+		if(!icecream.isEmpty())
 		{
 			Scoop checkScoop = scoopQueue.peek();
 			if(checkScoop.getFlavor() == icecream.getTopScoop().getFlavor())
@@ -157,7 +164,7 @@ public class GameModeTimed extends GameMode
 	 */
 	private boolean touchedBomb()
 	{
-		if(icecream.getScoops().isEmpty())
+		if(icecream.isEmpty())
 			return false;
 		return icecream.getTopScoop().getFlavor() == 5;
 	}
@@ -223,7 +230,7 @@ public class GameModeTimed extends GameMode
 	 */
 	public void drawTimer()
 	{
-		i = 60;
+		i = 70;
 		time = new JLabel();
 		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		time.setBounds(175, 90, 100, 50);

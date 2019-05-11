@@ -126,6 +126,11 @@ public class Scoop
 	{
 		return y;
 	}
+	
+	public void setY(int newY)
+	{
+		y -= newY;
+	}
 
 	/** Drops the scoop down the screen by a given amount
 	 * @param yAmt the amount to be dropped

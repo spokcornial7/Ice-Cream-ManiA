@@ -23,6 +23,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private GameViewer viewer;
 	
 	private boolean added;
+	private int speed;
 	
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 15;
@@ -32,8 +33,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public static final int FRAME_WIDTH = 450;
 	
 	
+	
 	public GameMode(GameViewer viewer)
 	{
+		speed = 10;
 		this.viewer = viewer; 
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 
@@ -41,7 +44,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		
-		timer = new Timer(10, this);
+		timer = new Timer(speed, this);
 		timer.start();
 		
 		scoops = new ArrayList<>();
@@ -63,11 +66,21 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public void reset()
 	{
+		updateScoreLabels();
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
-		timer.restart();
+		speed = 10;
+		timer = new Timer(speed, this);
+		timer.start();
 		scoops = new ArrayList<>();
 		randScoops();
-		updateScoreLabels();
+		
+	}
+	
+	public void increaseSpeed()
+	{
+		speed -= 0.1;
+		timer = new Timer(speed, this);
+		timer.start();
 	}
 	
 	public boolean ifScoopAdded(Scoop s)
@@ -76,7 +89,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		double sX = s.getBoundingBox().getX();
 		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
 		
-		if(iceCream.getScoops().isEmpty())
+		if(iceCream.isEmpty())
 		{
 			if(sX >= (iceCream.getX() - 18) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
 			{

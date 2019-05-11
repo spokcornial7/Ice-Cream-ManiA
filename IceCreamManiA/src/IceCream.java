@@ -74,6 +74,17 @@ public class IceCream
 		 return y;
 	 }
 	 
+	 /** Sets y to a desired y value
+	  *  @param newY is new y value
+	  */
+	 public void setY(int newY)
+	 {
+		 int scoopShift = y - newY;
+		 y = newY;
+		 for(int i = 0; i < scoops.size(); i++)
+			 scoops.get(i).setY(scoopShift);
+	 }
+	 
 	 /** Adds a scoop to the ice cream
 	  * @param newScoop the scoop to be added
 	  */
