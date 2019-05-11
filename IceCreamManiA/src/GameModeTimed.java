@@ -256,7 +256,7 @@ public class GameModeTimed extends GameMode
 		i = TIMER_START;
 		time = new JLabel();
 		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
-		time.setBounds(175, 90, 100, 50);
+		time.setBounds(180, 100, 100, 50);
 		timer = new Timer(1000, new timerListener(this));
 	    timer.start();
 		super.getViewer().getGameFrame().add(time);

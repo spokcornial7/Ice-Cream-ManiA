@@ -154,7 +154,7 @@ public class GameViewer
 		}
 		else
 		{			
-			ImageIcon img = new ImageIcon("Classic.JPG");
+			ImageIcon img = new ImageIcon("Timer.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 			gameFrame.add(lblBackground);
@@ -177,13 +177,15 @@ public class GameViewer
 		welcomePanel.setVisible(false);
 		
 		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
-		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 40));
-		lblScore.setBounds(300, 87, 70, 70);
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 30));
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(250, 155, 70, 70);
 		endOptPanel.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
-		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		lblHighscore.setBounds(300, 200, 70, 70);
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(250, 185, 70, 70);
 		endOptPanel.add(lblHighscore);	
 		
 		btnReplay = new JButton("REPLAY");
@@ -196,7 +198,7 @@ public class GameViewer
 		endOptPanel.add(btnMenu);
 		btnMenu.addActionListener(listener);
 		
-		ImageIcon img = new ImageIcon("Classic.JPG");
+		ImageIcon img = new ImageIcon("End Screen.JPG");
 		JLayeredPane layeredPaneE = new JLayeredPane();
 		layeredPaneE.setBounds(0, 0, 1, 1);
 		endOptPanel.add(layeredPaneE);
