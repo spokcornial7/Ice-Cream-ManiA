@@ -26,6 +26,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	private boolean added;
 	private int speed;
+	private static final int ITL_SPEED = 8;
 	
 	public static final int RIGHT_BOUND = 334;
 	public static final int LEFT_BOUND = 15;
@@ -33,14 +34,19 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public static final int FRAME_HEIGHT = 600;
 	public static final int FRAME_WIDTH = 450;
+	public static final int CONE_STARTY = 560;
 	
+	private static final Rectangle BORDER = new Rectangle(0, 0, 450, 600 );
+	private static final Rectangle RIGHT_BOX = new Rectangle(370, 0, 80, 600);
+	private static final Rectangle DIA_BOX = new Rectangle(380, 6, 60, 310);
+	private static final Color BORDER_COLOR = new Color(71, 87, 165);
 	
 	
 	public GameMode(GameViewer viewer)
 	{
-		speed = 8;
+		speed = ITL_SPEED;
 		this.viewer = viewer; 
-		iceCream = new IceCream(RIGHT_BOUND/2, 560);
+		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_STARTY);
 
 		addKeyListener(this);
 		setFocusable(true);
@@ -51,12 +57,14 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		
 		scoops = new ArrayList<>();
 		randScoops();
+		
+		addScoreLabel();
+		addHighScoreLabel();
 	}	
 	
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		
 		iceCream.draw(g);
 		drawBorder((Graphics2D) g);
 		drawDiagram(g);
@@ -70,9 +78,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public void reset()
 	{
-		iceCream = new IceCream(RIGHT_BOUND/2, 560);
+		updateScoreLabels();
+		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_STARTY);
 		timer.stop();
-		speed = 10;
+		speed = ITL_SPEED;
 		timer = new Timer(speed, this);
 		timer.start();
 		scoops = new ArrayList<>();
@@ -81,17 +90,12 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public void drawBorder(Graphics2D gr)
 	{
-		gr.setColor(new Color(71, 87, 165));
-		gr.setStroke(new BasicStroke(5));
-		Rectangle border = new Rectangle(0, 0, 450, 600 );
-		gr.draw(border);
-		
-		Rectangle rightBox = new Rectangle(370, 0, 80, 600);
-		gr.fill(rightBox);
-		
-		Rectangle diaBox = new Rectangle(380, 6, 60, 310);
+		gr.setColor(BORDER_COLOR);
+		gr.setStroke(new BasicStroke(11));
+		gr.draw(BORDER);
+		gr.fill(RIGHT_BOX);
 		gr.setColor(Color.white);
-		gr.fill(diaBox);
+		gr.fill(DIA_BOX);
 	}
 	
 	public void increaseSpeed()
@@ -247,22 +251,23 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	}
 	
-	public JLabel addScoreLabel()
+
+	public void addScoreLabel()
 	{
 		lblScore = new JLabel(String.valueOf(getPoints()));
 		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
 		lblScore.setForeground(Color.white);
 		lblScore.setBounds(380, 400, 100, 100);
-		return lblScore;
+		viewer.getGameFrame().add(lblScore);
 	}
 	
-	public JLabel addHighScoreLabel()
+	public void addHighScoreLabel()
 	{
 		lblHighscore = new JLabel(String.valueOf(getHighScore()));
 		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		lblHighscore.setForeground(Color.white);
 		lblHighscore.setBounds(380, 450, 100, 100);
-		return lblHighscore;
+		viewer.getGameFrame().add(lblHighscore);
 	}
 	
 	public void updateScoreLabels()

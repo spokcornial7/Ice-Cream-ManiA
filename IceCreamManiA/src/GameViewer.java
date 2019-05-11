@@ -135,6 +135,8 @@ public class GameViewer
     	}
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	gameFrame.getContentPane().add(game);
+    	
+    	
     
     	startGame();
     }
@@ -142,9 +144,6 @@ public class GameViewer
     private void startGame()
     {
     	gameFrame.setVisible(true);  
-    	
-    	gameFrame.add(game.addScoreLabel());
-    	gameFrame.add(game.addHighScoreLabel());
 		
     	if(gameMode.equals("classic"))
 		{
@@ -177,12 +176,12 @@ public class GameViewer
 		frame1.setVisible(true);
 		welcomePanel.setVisible(false);
 		
-		JLabel lblScore = game.addScoreLabel();
+		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
 		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 40));
 		lblScore.setBounds(300, 87, 70, 70);
 		endOptPanel.add(lblScore);
 	
-		JLabel lblHighscore = game.addHighScoreLabel();
+		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
 		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		lblHighscore.setBounds(300, 200, 70, 70);
 		endOptPanel.add(lblHighscore);	

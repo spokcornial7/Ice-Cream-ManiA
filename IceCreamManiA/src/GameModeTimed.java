@@ -33,11 +33,14 @@ public class GameModeTimed extends GameMode
 	private static final int NUM_FLAVORS = 4;
 	private static final int MAX_SCOOPS = 5;
 	
+	private static final Rectangle TIMED_BOX = new Rectangle(385, 253, 50, 55);
+	private static final Color BOX_COLOR = new Color(254, 195, 207);
 	
-	// Timer instance variables
+	// Timer instance variables/constants
 	private int i;
 	private JLabel time;
 	private Timer timer;
+	private static final int TIMER_START = 70;
 	
 	/**
 	 *  Instantiates game mode timed
@@ -63,7 +66,7 @@ public class GameModeTimed extends GameMode
 		done = false;
 		icecream = super.getIceCream();
 		createDiagram();
-		i = 70;
+		i = TIMER_START;
 		timer.restart();
 	}
 	
@@ -71,10 +74,9 @@ public class GameModeTimed extends GameMode
 	public void drawBorder(Graphics2D gr)
 	{
 		super.drawBorder(gr);
-		gr.setColor(new Color(254, 195, 207));
+		gr.setColor(BOX_COLOR);
 		gr.setStroke(new BasicStroke(4));
-		Rectangle timedBox = new Rectangle(385, 253, 50, 55);
-		gr.draw(timedBox);
+		gr.draw(TIMED_BOX);
 	}
 	
 	/**
@@ -251,7 +253,7 @@ public class GameModeTimed extends GameMode
 	 */
 	public void drawTimer()
 	{
-		i = 70;
+		i = TIMER_START;
 		time = new JLabel();
 		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		time.setBounds(175, 90, 100, 50);
@@ -281,7 +283,6 @@ public class GameModeTimed extends GameMode
 	    	if(i == 0 || done)
 	    	{
 	    		timer.stop();
-	    		i = 60;
 	    		done = true;
 	    	}
     	}
