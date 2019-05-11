@@ -222,7 +222,10 @@ public class GameModeTimed extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
 	}
 
-	
+	public void increaseSpeed()
+	{
+		super.increaseSpeed();
+	}
 	
 	/**
 	 *  Draws a label for the countdown timer
@@ -234,7 +237,7 @@ public class GameModeTimed extends GameMode
 		time = new JLabel();
 		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
 		time.setBounds(175, 90, 100, 50);
-		timer = new Timer(1000, new timerListener());
+		timer = new Timer(1000, new timerListener(this));
 	    timer.start();
 		super.getViewer().getGameFrame().add(time);
 	}
@@ -244,16 +247,25 @@ public class GameModeTimed extends GameMode
 	 */
     class timerListener implements ActionListener 
     {
-    	  public void actionPerformed(ActionEvent e) 
-    	  {
-    		  i--;
-    		  time.setText(String.valueOf(i));
-    		  if(i == 0 || done)
-    		  {
-    	        	timer.stop();
-    	        	i = 60;
-    	        	done = true;
-    		  }
-    	  }
+    	private GameModeTimed game;
+    	
+    	public timerListener(GameModeTimed g)
+    	{
+    		game = g;
+    	}
+    	
+    	public void actionPerformed(ActionEvent e) 
+    	{
+	    	i--;
+	    	if(i % 10 == 0)
+	    		game.increaseSpeed();
+	    	time.setText(String.valueOf(i));
+	    	if(i == 0 || done)
+	    	{
+	    		timer.stop();
+	    		i = 60;
+	    		done = true;
+	    	}
+    	}
     }
 }
