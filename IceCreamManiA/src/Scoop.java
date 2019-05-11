@@ -32,6 +32,7 @@ public class Scoop
 	public static final int NUM_MINT = 2; 
 	public static final int NUM_ORANGE = 3;
 	public static final int NUM_BIRTHDAY = 4; 
+	public static final int NUM_BOMB = 5; 
 
 	// Constructor instance variables
 	private int x;
@@ -76,9 +77,13 @@ public class Scoop
 		rightCircle = new Ellipse2D.Double(x + LEFTRIGHT_CIRCLE_XY_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
 		gr.setColor(getColorFlavor());
 		gr.fill(mainCircle);
-		gr.fill(leftCircle);
-		gr.fill(rightCircle);
-		gr.fill(middleCircle);
+		if(numFlavor != NUM_BOMB)
+		{
+			gr.fill(leftCircle);
+			gr.fill(rightCircle);
+			gr.fill(middleCircle);
+		}
+		
 	}
 	
 	/** Returns number that corresponds with flavor of scoop 

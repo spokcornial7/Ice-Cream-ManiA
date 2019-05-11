@@ -49,6 +49,14 @@ public class GameModeClassic extends GameMode
 	}
 	
 	/**
+	 *  Returns the number of flavors in this game mode
+	 */
+	public int flavorNum()
+	{
+		return NUM_FLAVORS;
+	}
+	
+	/**
 	 *  Returns the high score
 	 *  @return high score
 	 */

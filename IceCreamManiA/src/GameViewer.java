@@ -134,9 +134,7 @@ public class GameViewer
     		game = new GameModeTimed(this);
     	}
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-    	gameFrame.getContentPane().add(game);
-    	
-    	
+    	gameFrame.getContentPane().add(game);    	
     
     	startGame();
     }

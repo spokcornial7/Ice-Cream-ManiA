@@ -30,7 +30,8 @@ public class GameModeTimed extends GameMode
 	private static final int SCOOP2_Y = 200;
 	private static final int SCOOP1_Y = 260;
 	private static final int DIA_SHIFT_AMT = 60;
-	private static final int NUM_FLAVORS = 4;
+	private static final int DIA_FLAVORS = 4;
+	private static final int NUM_FLAVORS = 5;
 	private static final int MAX_SCOOPS = 5;
 	
 	private static final Rectangle TIMED_BOX = new Rectangle(385, 253, 50, 55);
@@ -77,6 +78,14 @@ public class GameModeTimed extends GameMode
 		gr.setColor(BOX_COLOR);
 		gr.setStroke(new BasicStroke(4));
 		gr.draw(TIMED_BOX);
+	}
+	
+	/**
+	 *  Returns the number of flavors in this game mode
+	 */
+	public int flavorNum()
+	{
+		return NUM_FLAVORS;
 	}
 	
 	/**
@@ -221,11 +230,11 @@ public class GameModeTimed extends GameMode
 	private void createDiagram()
 	{
 		scoopQueue.clear();
-		int rand1 = (int) (Math.random() * NUM_FLAVORS);
-		int rand2 = (int) (Math.random() * NUM_FLAVORS);
-		int rand3 = (int) (Math.random() * NUM_FLAVORS);
-		int rand4 = (int) (Math.random() * NUM_FLAVORS);
-		int rand5 = (int) (Math.random() * NUM_FLAVORS);
+		int rand1 = (int) (Math.random() * DIA_FLAVORS);
+		int rand2 = (int) (Math.random() * DIA_FLAVORS);
+		int rand3 = (int) (Math.random() * DIA_FLAVORS);
+		int rand4 = (int) (Math.random() * DIA_FLAVORS);
+		int rand5 = (int) (Math.random() * DIA_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));
@@ -238,7 +247,7 @@ public class GameModeTimed extends GameMode
 	 */
 	private void addRandomScoop()
 	{
-		int rand = (int) (Math.random() * NUM_FLAVORS);
+		int rand = (int) (Math.random() * DIA_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
 	}
 

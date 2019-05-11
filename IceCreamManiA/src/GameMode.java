@@ -150,8 +150,11 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) 
 		{
 			if(iceCream.isEmpty())
-				iceCream.shiftRight();
-			else if(iceCream.getTopScoop().getX() + 36 < RIGHT_BOUND)
+			{
+				if(iceCream.getX() < RIGHT_BOUND)
+					iceCream.shiftRight();
+			}	
+			else if(iceCream.getTopScoop().getX() < RIGHT_BOUND)
 				iceCream.shiftRight();
 			repaint();
 		}
@@ -159,8 +162,11 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) 
 		{
 			if(iceCream.isEmpty())
-				iceCream.shiftLeft();
-			else if(iceCream.getTopScoop().getX() + 36 < LEFT_BOUND)
+			{
+				if(iceCream.getX() > LEFT_BOUND)
+					iceCream.shiftLeft();
+			}	
+			else if(iceCream.getTopScoop().getX() > LEFT_BOUND)
 				iceCream.shiftLeft();				
 			repaint();
 		}			
@@ -196,7 +202,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		{
 			int x = (int) (Math.random() * (RIGHT_BOUND - LEFT_BOUND) + LEFT_BOUND);
 			int y = (int) (Math.random() * -FRAME_HEIGHT);
-			int flavor = (int) (Math.random() * NUM_FLAVORS);
+			int flavor = (int) (Math.random() * (flavorNum() + 1));
 			s = new Scoop(x, y, flavor); 
 		}
 		while(ifOverlap(s));
@@ -291,6 +297,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	abstract void setHighScore();
 	
 	abstract boolean updateScore();
+	
+	abstract int flavorNum();
 	
 	
 
