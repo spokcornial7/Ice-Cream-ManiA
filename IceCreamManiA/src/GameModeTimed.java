@@ -57,8 +57,8 @@ public class GameModeTimed extends GameMode
 	@Override
 	public void reset()
 	{
-		score = 0;
 		super.reset();
+		score = 0;
 		scoopQueue = new LinkedList<>();
 		done = false;
 		icecream = super.getIceCream();
@@ -128,14 +128,20 @@ public class GameModeTimed extends GameMode
 			{
 				icecream.clearScoops();
 				score = 0;
+				if(icecream.getY() > 560)
+					icecream.setY(560);
 			}
 			else
 			{
 				icecream.removeScoops();
 				score -= 3;
+				if(icecream.getTopScoop().getY() > 500)
+				{
+					int shiftUpVal = icecream.getTopScoop().getY() - 350;
+					icecream.shiftY(shiftUpVal);
+				}
 			}
-			if(icecream.getY() > 560)
-				icecream.setY(560);
+			
 		}
 		return true;
 	}

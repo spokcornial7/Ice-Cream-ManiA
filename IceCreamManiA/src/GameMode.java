@@ -66,7 +66,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public void reset()
 	{
-		updateScoreLabels();
 		iceCream = new IceCream(RIGHT_BOUND/2, 560);
 		timer.stop();
 		speed = 10;
@@ -74,7 +73,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer.start();
 		scoops = new ArrayList<>();
 		randScoops();
-		
 	}
 	
 	public void increaseSpeed()
