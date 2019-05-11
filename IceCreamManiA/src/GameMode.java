@@ -1,7 +1,9 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -54,8 +56,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	@Override
 	public void paintComponent(Graphics g)
 	{	
-		drawDiagram(g);
+		
 		iceCream.draw(g);
+		drawBorder((Graphics2D) g);
+		drawDiagram(g);
 		
 		for(Scoop s : scoops)
 			s.draw((Graphics2D) g);
@@ -73,6 +77,21 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer.start();
 		scoops = new ArrayList<>();
 		randScoops();
+	}
+	
+	public void drawBorder(Graphics2D gr)
+	{
+		gr.setColor(new Color(71, 87, 165));
+		gr.setStroke(new BasicStroke(5));
+		Rectangle border = new Rectangle(0, 0, 450, 600 );
+		gr.draw(border);
+		
+		Rectangle rightBox = new Rectangle(370, 0, 80, 600);
+		gr.fill(rightBox);
+		
+		Rectangle diaBox = new Rectangle(380, 6, 60, 310);
+		gr.setColor(Color.white);
+		gr.fill(diaBox);
 	}
 	
 	public void increaseSpeed()

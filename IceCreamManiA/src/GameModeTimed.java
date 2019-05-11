@@ -23,7 +23,7 @@ public class GameModeTimed extends GameMode
 	
 	// Diagram instance variables and constants
 	private Queue<Scoop> scoopQueue;
-	private static final int SCOOP_X = 395;
+	private static final int SCOOP_X = 394;
 	private static final int SCOOP5_Y = 20;
 	private static final int SCOOP4_Y = 80;
 	private static final int SCOOP3_Y = 140;
@@ -65,6 +65,16 @@ public class GameModeTimed extends GameMode
 		createDiagram();
 		i = 70;
 		timer.restart();
+	}
+	
+	@Override
+	public void drawBorder(Graphics2D gr)
+	{
+		super.drawBorder(gr);
+		gr.setColor(new Color(254, 195, 207));
+		gr.setStroke(new BasicStroke(4));
+		Rectangle timedBox = new Rectangle(385, 253, 50, 55);
+		gr.draw(timedBox);
 	}
 	
 	/**
@@ -138,6 +148,8 @@ public class GameModeTimed extends GameMode
 				if(icecream.getTopScoop().getY() > 500)
 				{
 					int shiftUpVal = icecream.getTopScoop().getY() - 350;
+					if(icecream.getY() - shiftUpVal < 560)
+						shiftUpVal = icecream.getY() - 560;
 					icecream.shiftY(shiftUpVal);
 				}
 			}

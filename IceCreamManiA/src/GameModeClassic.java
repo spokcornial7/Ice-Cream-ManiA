@@ -16,7 +16,7 @@ public class GameModeClassic extends GameMode
 	
 	// Diagram instance variables
 	private Queue<Scoop> scoopQueue;
-	private static final int SCOOP_X = 395;
+	private static final int SCOOP_X = 394;
 	private static final int SCOOP5_Y = 20;
 	private static final int SCOOP4_Y = 80;
 	private static final int SCOOP3_Y = 140;
