@@ -62,9 +62,6 @@ public class GameViewer
 		
 		createWelcomePanel(listener);
 		createRulesPanel(listener);
-		endOptPanel = new JPanel();
-		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
-		endOptPanel.setLayout(null);
 	}
 	
 	/**
@@ -172,6 +169,9 @@ public class GameViewer
 	 */
 	private void endGameOpt(ButtonListener listener) 
 	{	
+		endOptPanel = new JPanel();
+		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
+		endOptPanel.setLayout(null);
 		endOptPanel.setVisible(true);
 		
 		gameFrame.setVisible(false);
