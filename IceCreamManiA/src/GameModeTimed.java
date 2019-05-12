@@ -219,7 +219,7 @@ public class GameModeTimed extends GameMode
 	}
 
 	/**
-	 * An ActionListener for the countdown timer
+	 * An ActionListener for the count down timer
 	 */
     class timerListener implements ActionListener 
     {

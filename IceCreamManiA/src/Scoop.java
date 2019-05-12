@@ -7,12 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
-import java.awt.Polygon;
-import java.awt.geom.Line2D;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+
 
 public class Scoop 
 {
@@ -24,7 +19,7 @@ public class Scoop
 	public static final int MID_CIRCLE_X_SHIFT = 10; 
 	public static final int MID_CIRCLE_Y_SHIFT = 24; 
 	public static final int SCOOP_XY_LENGTH = 36;
-	public static final int SHIFT_AMT = 15;
+	public static final int SHIFT_AMT = 18;
 	
 	// Flavors
 	public static final int NUM_BANANA = 0;

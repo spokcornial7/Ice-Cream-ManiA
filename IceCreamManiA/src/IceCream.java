@@ -6,11 +6,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import javax.swing.JComponent;
+// import java.util.concurrent.TimeUnit;
 
 
 public class IceCream 
