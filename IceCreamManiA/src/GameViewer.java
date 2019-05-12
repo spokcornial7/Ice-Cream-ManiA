@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.Timer;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -9,10 +10,9 @@ public class GameViewer
 {
 	private GameMode game;
 	private String gameMode;
-	//private Timer gameTimer;
 
 	private JFrame frame1;
-	private JFrame frame2;
+	private JFrame gameFrame;
 	private JPanel welcomePanel;
 	private JButton btnTimed;
 	private JButton btnClassic;
@@ -53,12 +53,12 @@ public class GameViewer
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		frame2 = new JFrame();
-		frame2.setResizable(false);
-		frame2.setVisible(false);
-		frame2.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
-		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame2.getContentPane().setLayout(null);
+		gameFrame = new JFrame();
+		gameFrame.setResizable(false);
+		gameFrame.setVisible(false);
+		gameFrame.setBounds(FRAME_X, FRAME_Y, FRAME_WIDTH, FRAME_HEIGHT);
+		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.getContentPane().setLayout(null);
 		
 		createWelcomePanel(listener);
 		createRulesPanel(listener);
@@ -126,36 +126,37 @@ public class GameViewer
     private void createGame()
     {
     	if(gameMode.equals("classic"))
-    		game = new GameModeClassic();
+    	{
+    		game = new GameModeClassic(this);
+    	}
     	else
-    		game = new GameModeTimed();
-    	
+    	{
+    		game = new GameModeTimed(this);
+    	}
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-    	frame2.setVisible(true);
-    	frame2.getContentPane().add(game);
-    	game.repaint();
-    	
-    	frame2.add(game.scoreLabel());
-    	frame2.add(game.highScoreLabel());
-    	
-		if(gameMode.equals("classic")){
+    	gameFrame.getContentPane().add(game);    	
+    
+    	startGame();
+    }
+    
+    private void startGame()
+    {
+    	gameFrame.setVisible(true);  
+		
+    	if(gameMode.equals("classic"))
+		{
 			ImageIcon img = new ImageIcon("Classic.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-			frame2.add(lblBackground);}
-		
-		if(gameMode.equals("timed")){
-			ImageIcon img = new ImageIcon("Classic.JPG");
+			gameFrame.add(lblBackground);
+		}
+		else
+		{			
+			ImageIcon img = new ImageIcon("Timer.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-			createTimer();
-			frame2.add(lblBackground);
-			}    	
-		
-		/*frame2.setVisible(false);
-		frame1.setVisible(true);
-		welcomePanel.setVisible(false);
-		endGameOpt(new ButtonListener());*/
+			gameFrame.add(lblBackground);
+		}
     }
     
     /**
@@ -163,21 +164,27 @@ public class GameViewer
 	 * @param listener is the button listener
 	 */
 	private void endGameOpt(ButtonListener listener) 
-	{
+	{	
 		endOptPanel = new JPanel();
 		frame1.getContentPane().add(endOptPanel, "Thanks for playing!");
 		endOptPanel.setLayout(null);
 		endOptPanel.setVisible(true);
 		
+		gameFrame.setVisible(false);
+		frame1.setVisible(true);
+		welcomePanel.setVisible(false);
+		
 		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
-		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 70));
-		lblScore.setBounds(300, 200, 50, 52);
+		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 30));
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(250, 155, 70, 70);
 		endOptPanel.add(lblScore);
 	
 		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
-		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
-		lblHighscore.setBounds(300, 87, 32, 41);
-		endOptPanel.add(lblHighscore);
+		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(250, 185, 70, 70);
+		endOptPanel.add(lblHighscore);	
 		
 		btnReplay = new JButton("REPLAY");
 		btnReplay.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);
@@ -189,19 +196,13 @@ public class GameViewer
 		endOptPanel.add(btnMenu);
 		btnMenu.addActionListener(listener);
 		
-		ImageIcon img = new ImageIcon("Classic.JPG");
+		ImageIcon img = new ImageIcon("End Screen.JPG");
 		JLayeredPane layeredPaneE = new JLayeredPane();
 		layeredPaneE.setBounds(0, 0, 1, 1);
 		endOptPanel.add(layeredPaneE);
 		JLabel lblBackground = new JLabel(img);
 		lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 		endOptPanel.add(lblBackground);
-	}
-
-	/** Adds timer label from GameModeTimer */
-	private void createTimer()
-	{
-		frame2.add(((GameModeTimed) game).drawTimer());
 	}
 	
 	/** Read in timed mode rules */
@@ -234,6 +235,11 @@ public class GameViewer
 		}
 	}
 	
+	public void endGame()
+	{
+		endGameOpt(new ButtonListener());
+	}
+	
     private class ButtonListener implements ActionListener
     {
 		public void actionPerformed(ActionEvent e) 
@@ -257,7 +263,8 @@ public class GameViewer
 			}
 			else if(e.getSource() == btnReplay){
 				endOptPanel.setVisible(false);
-				createGame();
+				game.reset();
+				startGame();
 			}
 			else if(e.getSource() == btnMenu){
 				endOptPanel.setVisible(false);
@@ -265,7 +272,19 @@ public class GameViewer
 			}
 		}
     }
+    
+    public JFrame getFrame1()
+    {
+    	return frame1;
+    }
 	
+    
+    public JFrame getGameFrame()
+    {
+    	return gameFrame;
+    }
+    
+    
 	public static void main(String[] args) 
 	{
 		GameViewer gameGame = new GameViewer();	

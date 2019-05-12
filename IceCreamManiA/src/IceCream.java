@@ -71,6 +71,24 @@ public class IceCream
 		 return y;
 	 }
 	 
+	 /** Shifts ice cream with its cone up
+	  *  @param shiftAmt is the amount shifted
+	  */
+	 public void shiftY(int shiftAmt)
+	 {
+		 y -= shiftAmt;
+		 for(int i = 0; i < scoops.size(); i++)
+			 scoops.get(i).setY(shiftAmt);
+	 }
+	 
+	 /** Sets y to a desired y value
+	  *  @param newY is new y value
+	  */
+	 public void setY(int newY)
+	 {
+		 y = newY;
+	 }
+	 
 	 /** Adds a scoop to the ice cream
 	  * @param newScoop the scoop to be added
 	  */
@@ -79,10 +97,11 @@ public class IceCream
 		scoops.add(newScoop);
 	 }
 	 
-	 /** Removes 3 scoops from the ice cream
+	 /** Removes 3 scoops from the ice cream (+1 for the incorrect scoop)
 	  */
 	 public void removeScoops()
 	 {
+		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
 		 scoops.remove(scoops.size() - 1);
