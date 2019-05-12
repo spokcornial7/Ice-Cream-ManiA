@@ -142,7 +142,10 @@ public class GameModeTimed extends GameMode
 				icecream.shiftDown();
 		}
 		else if(touchedBomb())
+		{
+			score = 0;
 			done = true;
+		}
 		else
 		{
 			if(score <= 3)
