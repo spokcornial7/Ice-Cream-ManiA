@@ -23,6 +23,7 @@ public class IceCream
 	private static final int CONE_HEIGHT = 40;
 	private static final int SCOOP_HEIGHT = 36;
 	private static final int CONE_SIDES = 3;
+	private static final int SHIFT_AMT = 15; 
 	
 	// Instance variables
 	private ArrayList<Scoop> scoops; 
@@ -151,7 +152,7 @@ public class IceCream
 	  */
 	 public void shiftLeft()
 	 {
-		 x -= 15; 
+		 x -= SHIFT_AMT; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopLeft();
@@ -162,7 +163,7 @@ public class IceCream
 	  */
 	 public void shiftRight()
 	 {
-		 x += 15; 
+		 x += SHIFT_AMT; 
 		 for (int i = 0; i < scoops.size(); i++)
 	     {
 	       	scoops.get(i).shiftScoopRight();
