@@ -1,5 +1,13 @@
+/** GameViewer.java manages the game. It displays the game and leads the user to their
+ *  desired game mode. It also allows the user to restart the game or return to the menu
+ *  to choose a new game mode. It also displays the rules of each game mode for the user
+ *  @author Carol Zeng 
+ *  Collaborators: Helen Zhao, Lauren Ouyang
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2, 3
+ *  Due Date: 5/16/19
+ */
 import javax.swing.*;
-import javax.swing.Timer;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -7,22 +15,8 @@ import java.io.*;
 import java.util.*;
 
 public class GameViewer
-{
-	private GameMode game;
-	private String gameMode;
-
-	private JFrame frame1;
-	private JFrame gameFrame;
-	private JPanel welcomePanel;
-	private JButton btnTimed;
-	private JButton btnClassic;
-	private JPanel rulesPanel;
-	private JButton btnBegin;
-	
-	private JPanel endOptPanel;
-	private JButton btnReplay;
-	private JButton btnMenu;
-	
+{	
+	// Frame and Button constants
 	private static final int FRAME_X = 500;
 	private static final int FRAME_Y = 100;
 	private static final int FRAME_WIDTH = 450;
@@ -31,16 +25,29 @@ public class GameViewer
 	private static final int BTN_WIDTH = 150;
 	private static final int BTN_HEIGHT = 60;
 	
+	// Game instance variables
+	private GameMode game;
+	private String gameMode;
+
+	// Frame and Button instance variables
+	private JFrame frame1;
+	private JFrame gameFrame;
+	private JPanel welcomePanel;
+	private JButton btnTimed;
+	private JButton btnClassic;
+	private JPanel rulesPanel;
+	private JButton btnBegin;	
+	private JPanel endOptPanel;
+	private JButton btnReplay;
+	private JButton btnMenu;
 	private JLayeredPane layeredPaneR;
 	
-	
-	
+	/** Creates a GameViewer object 
 	public GameViewer() 
 	{
 		initialize();
 	}
 	
-
 	/** Initializes the game */
 	private void initialize() 
 	{
@@ -139,6 +146,8 @@ public class GameViewer
     	startGame();
     }
     
+    /** Starts the game with the menu
+     */
     private void startGame()
     {
     	gameFrame.setVisible(true);  
@@ -205,7 +214,8 @@ public class GameViewer
 		endOptPanel.add(lblBackground);
 	}
 	
-	/** Read in timed mode rules */
+	/** Read in timed mode rules 
+	 */
 	private void createTRules()
 	{
 		try {
@@ -220,7 +230,8 @@ public class GameViewer
 		}
 	}
 	
-	/** Read in classic mode rules */
+	/** Read in classic mode rules 
+	 */
 	private void createCRules()
 	{
 		try {
@@ -235,11 +246,16 @@ public class GameViewer
 		}
 	}
 	
+	/** Ends the game
+	 */
 	public void endGame()
 	{
 		endGameOpt(new ButtonListener());
 	}
 	
+	/** ButtonListener listens to the button pressed and brings user to the game mode,
+	 *  the menu, or back to the game
+	 */
     private class ButtonListener implements ActionListener
     {
 		public void actionPerformed(ActionEvent e) 
@@ -273,18 +289,23 @@ public class GameViewer
 		}
     }
     
+    /** Returns the frame
+     * @return the first frame
+     */
     public JFrame getFrame1()
     {
     	return frame1;
     }
 	
-    
+    /** Returns the game's frame
+     * @return the game frame
+     */
     public JFrame getGameFrame()
     {
     	return gameFrame;
     }
     
-    
+ 
 	public static void main(String[] args) 
 	{
 		GameViewer gameGame = new GameViewer();	

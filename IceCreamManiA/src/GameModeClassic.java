@@ -1,32 +1,41 @@
+/** GameModeClassic.java creates methods for the rules and scores and draws 
+ *  the necessary diagram for the Classic game mode. It determines when the game is over, 
+ *  whether the added flavor was correct, the current score and high score, and draws a 
+ *  diagram of scoops to be added randomly in sets of 5. 
+ *  @author Carol Zeng
+ *  Collaborators: Helen Zhao, Lauren Ouyang
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2, 3
+ *  Due Date: 5/16/19
+ */
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.util.*;
 
-import javax.swing.*;
+import java.util.*;
 
 
 public class GameModeClassic extends GameMode
 {
-	// Game instance variables
-	private int score;
+	// Game instance constants/variables
 	private static int highscore = 0;
+	private int score;
 	private boolean done;
 	private IceCream icecream;
-	
-	// Diagram instance variables
 	private Queue<Scoop> scoopQueue;
+	
+	// Diagram constants
 	private static final int SCOOP_X = 394;
 	private static final int SCOOP5_Y = 20;
 	private static final int SCOOP4_Y = 80;
 	private static final int SCOOP3_Y = 140;
 	private static final int SCOOP2_Y = 200;
 	private static final int SCOOP1_Y = 260;
-	private static final int NUM_FLAVORS = 4;
+	private static final int NUM_FLAVORS_BOUND = 4;
 		
-	
+
 	/**
 	 *  Instantiates game mode classic
+	 *  @param viewer to view the game
 	 */
 	public GameModeClassic(GameViewer viewer) 
 	{
@@ -38,6 +47,8 @@ public class GameModeClassic extends GameMode
 		createDiagram();
 	}
 
+	/** Resets the game
+	 */
 	@Override
 	public void reset()
 	{
@@ -135,20 +146,6 @@ public class GameModeClassic extends GameMode
 		}
 		return false;
 	}
-	
-	
-	
-	/**
-	 *  Adds a check mark over the diagram
-	 */
-	/*private void addCheckMark()
-	{
-		ImageIcon check = new ImageIcon("checkmark.png");
-		Image image = check.getImage();
-		image = image.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		Graphics g = super.getGraphics();
-		g.drawImage(image, SCOOP_X, scoopQueue.remove().getY(), null);
-	}*/
 
 	
 	/**
@@ -178,11 +175,11 @@ public class GameModeClassic extends GameMode
 	private void createDiagram()
 	{
 		scoopQueue.clear();
-		int rand1 = (int) (Math.random() * NUM_FLAVORS);
-		int rand2 = (int) (Math.random() * NUM_FLAVORS);
-		int rand3 = (int) (Math.random() * NUM_FLAVORS);
-		int rand4 = (int) (Math.random() * NUM_FLAVORS);
-		int rand5 = (int) (Math.random() * NUM_FLAVORS);
+		int rand1 = (int) (Math.random() * NUM_FLAVORS_BOUND);
+		int rand2 = (int) (Math.random() * NUM_FLAVORS_BOUND);
+		int rand3 = (int) (Math.random() * NUM_FLAVORS_BOUND);
+		int rand4 = (int) (Math.random() * NUM_FLAVORS_BOUND);
+		int rand5 = (int) (Math.random() * NUM_FLAVORS_BOUND);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));

@@ -1,5 +1,10 @@
 /** Draws the IceCream which is an ArrayList of scoops and a cone. Moves the IceCream as needed
  *  down, left, or right and adds/removes scoops from the IceCream
+ *  @author Lauren Ouyang
+ *  Collaborators: Helen Zhao, Carol Zeng 
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2. 3
+ *  Due Date: 5/16/19
  */
 
 import java.awt.Color;
@@ -7,7 +12,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.ArrayList;
-// import java.util.concurrent.TimeUnit;
 
 
 public class IceCream 
@@ -20,10 +24,12 @@ public class IceCream
 	private static final int SCOOP_HEIGHT = 36;
 	private static final int CONE_SIDES = 3;
 	
+	// Instance variables
 	private ArrayList<Scoop> scoops; 
 	private int x; 
 	private int y;
 	private Polygon cone;
+ 
 	
 	/** Constructs an array list of Scoop that is an IceCream based of a given (x,y) coordinate
 	 * @param x the x coordinate
@@ -44,8 +50,8 @@ public class IceCream
 	 public void draw(Graphics gr) 
 	 { 
 	        Graphics2D g2 = (Graphics2D) gr;
-	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
-	        
+	        cone = new Polygon(new int[] {x + 1, x + CONE_X_MID, x +  CONE_X_RIGHT}, 
+	        		new int[] {y -  CONE_HEIGHT, y, y -  CONE_HEIGHT}, CONE_SIDES);
 	        gr.setColor(CONE_COLOR);
 	        gr.fillPolygon(cone);
 	        for (int i = 0; i < scoops.size(); i++)
@@ -173,4 +179,7 @@ public class IceCream
 		 else
 			 return false; 
 	 }
+
+	 	 
+	 
 }

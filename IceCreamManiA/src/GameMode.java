@@ -34,7 +34,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	public static final int FRAME_HEIGHT = 600;
 	public static final int FRAME_WIDTH = 450;
-	public static final int CONE_STARTY = 560;
+	public static final int CONE_START_Y = 560;
 	
 	private static final Rectangle BORDER = new Rectangle(0, 0, 450, 600 );
 	private static final Rectangle RIGHT_BOX = new Rectangle(370, 0, 80, 600);
@@ -46,7 +46,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	{
 		speed = ITL_SPEED;
 		this.viewer = viewer; 
-		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_STARTY);
+		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_START_Y);
 
 		addKeyListener(this);
 		setFocusable(true);
@@ -79,7 +79,7 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	public void reset()
 	{
 		updateScoreLabels();
-		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_STARTY);
+		iceCream = new IceCream(RIGHT_BOUND / 2, CONE_START_Y);
 		timer.stop();
 		speed = ITL_SPEED;
 		timer = new Timer(speed, this);

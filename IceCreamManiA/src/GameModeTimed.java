@@ -1,8 +1,14 @@
+/** GameModeTimed.java creates methods for the rules and scores and draws
+ *  the necessary diagram for the Timed game mode. It determines when the game is over, 
+ *  whether the added flavor was correct, the current score and high score, and draws a 
+ *  diagram of scoops to be added randomly each time a correct scoop is added. 
+ *  @author Carol Zeng 
+ *  Collaborators: Helen Zhao, Lauren Ouyang
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2, 3
+ *  Due Date: 5/16/19
+ */
 
-
-import java.util.List;
-
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -11,18 +17,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+
 		
 public class GameModeTimed extends GameMode
 {
-	// Game instance variables
-	private int score;
-	private static int highscore = 0;
-	private boolean done;
-	private IceCream icecream;
-	
-	// Diagram instance variables and constants
-	private Queue<Scoop> scoopQueue;
+	// Diagram constants
 	private static final int SCOOP_X = 394;
 	private static final int SCOOP5_Y = 20;
 	private static final int SCOOP4_Y = 80;
@@ -34,17 +33,39 @@ public class GameModeTimed extends GameMode
 	private static final int NUM_FLAVORS = 5;
 	private static final int MAX_SCOOPS = 5;
 	
+	// Constants for updating score
+	private static final int REMOVE_SCOOPS = 3; 
+	private static final int STROKE = 4; 
+	private static final int MAX_Y = 560; 
+	private static final int MAX_TOP_Y = 500; 
+	private static final int SHIFT_UP = 350; 
+	
+	// Timer static constants
 	private static final Rectangle TIMED_BOX = new Rectangle(385, 253, 50, 55);
 	private static final Color BOX_COLOR = new Color(254, 195, 207);
+	private static final Rectangle TIMER_BOUNDS = new Rectangle(180, 100, 100, 50);
+	private static final int TIMER_START = 70;
+	private static final Font TIMER_FONT = new Font("Lucida Grande", Font.BOLD, 30);
+	private static final int TIMER_DELAY = 1000;
+	private static final int SPEED_CHECK = 10;
+		
+	// Diagram instance variable
+	private Queue<Scoop> scoopQueue;
 	
-	// Timer instance variables/constants
+	// Game instance constants/variables
+	private static int highscore = 0;
+	private int score;
+	private boolean done;
+	private IceCream icecream;
+	
+	// Timer instance variables
 	private int i;
 	private JLabel time;
 	private Timer timer;
-	private static final int TIMER_START = 70;
-	
+
 	/**
 	 *  Instantiates game mode timed
+	 *  @param viewer to view to game
 	 */
 	public GameModeTimed(GameViewer viewer) 
 	{
@@ -57,7 +78,8 @@ public class GameModeTimed extends GameMode
 		drawTimer();	
 	}
 
-	
+	/** Resets the game
+	 */
 	@Override
 	public void reset()
 	{
@@ -71,12 +93,15 @@ public class GameModeTimed extends GameMode
 		timer.restart();
 	}
 	
+	/** Draws the border/rectangle around the scoop that 
+	 *  should be added next
+	 */
 	@Override
 	public void drawBorder(Graphics2D gr)
 	{
 		super.drawBorder(gr);
 		gr.setColor(BOX_COLOR);
-		gr.setStroke(new BasicStroke(4));
+		gr.setStroke(new BasicStroke(STROKE));
 		gr.draw(TIMED_BOX);
 	}
 	
@@ -148,22 +173,22 @@ public class GameModeTimed extends GameMode
 		}
 		else
 		{
-			if(score <= 3)
+			if(score <= REMOVE_SCOOPS)
 			{
 				icecream.clearScoops();
 				score = 0;
-				if(icecream.getY() > 560)
-					icecream.setY(560);
+				if(icecream.getY() > MAX_Y)
+					icecream.setY(MAX_Y);
 			}
 			else
 			{
 				icecream.removeScoops();
-				score -= 3;
-				if(icecream.getTopScoop().getY() > 500)
+				score -= REMOVE_SCOOPS;
+				if(icecream.getTopScoop().getY() > MAX_TOP_Y)
 				{
-					int shiftUpVal = icecream.getTopScoop().getY() - 350;
-					if(icecream.getY() - shiftUpVal < 560)
-						shiftUpVal = icecream.getY() - 560;
+					int shiftUpVal = icecream.getTopScoop().getY() -  SHIFT_UP;
+					if(icecream.getY() - shiftUpVal < MAX_Y)
+						shiftUpVal = icecream.getY() - MAX_Y;
 					icecream.shiftY(shiftUpVal);
 				}
 			}
@@ -198,7 +223,7 @@ public class GameModeTimed extends GameMode
 	{
 		if(icecream.isEmpty())
 			return false;
-		return icecream.getTopScoop().getFlavor() == 5;
+		return icecream.getTopScoop().getFlavor() == NUM_FLAVORS;
 	}
 	
 	
@@ -254,22 +279,24 @@ public class GameModeTimed extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand));
 	}
 
+	/** Increases the speed that the scoop drops
+	 */
 	public void increaseSpeed()
 	{
 		super.increaseSpeed();
 	}
 	
 	/**
-	 *  Draws a label for the countdown timer
+	 *  Draws a label for the count down timer
 	 *  @return the timer label
 	 */
 	public void drawTimer()
 	{
 		i = TIMER_START;
 		time = new JLabel();
-		time.setFont(new Font("Lucida Grande", Font.BOLD, 30));
-		time.setBounds(180, 100, 100, 50);
-		timer = new Timer(1000, new timerListener(this));
+		time.setFont(TIMER_FONT);
+		time.setBounds(TIMER_BOUNDS);
+		timer = new Timer(TIMER_DELAY, new timerListener(this));
 	    timer.start();
 		super.getViewer().getGameFrame().add(time);
 	}
@@ -289,7 +316,7 @@ public class GameModeTimed extends GameMode
     	public void actionPerformed(ActionEvent e) 
     	{
 	    	i--;
-	    	if(i % 10 == 0)
+	    	if(i % SPEED_CHECK == 0)
 	    		game.increaseSpeed();
 	    	time.setText(String.valueOf(i));
 	    	if(i == 0 || done)

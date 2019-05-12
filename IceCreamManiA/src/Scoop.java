@@ -1,6 +1,11 @@
 /** Scoop.java creates the shapes that make up a scoop and draws them based on a given
  *  (x, y) coordinate and flavor. It also moves the scoop down, left, and right by 
  *  the given amounts. 
+ *  @author Lauren Ouyang
+ *  Collaborators: Helen Zhao, Carol Zeng
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2. 3
+ *  Due Date: 5/16/19
  */
 
 import java.awt.Color;
@@ -11,7 +16,7 @@ import java.awt.geom.Ellipse2D;
 
 public class Scoop 
 {
-	// Measurements of scoop components
+	// Constants for measurements of scoop components
 	public static final int MAIN_CIRCLE_DIA = 32; 
 	public static final int SMALL_CIRCLE_DIA = 12; 
 	public static final int LEFT_CIRCLE_X_SHIFT = 2;
@@ -21,7 +26,7 @@ public class Scoop
 	public static final int SCOOP_XY_LENGTH = 36;
 	public static final int SHIFT_AMT = 18;
 	
-	// Flavors
+	// Constants for Flavors
 	public static final int NUM_BANANA = 0;
 	public static final int NUM_STRAWBERRY = 1; 
 	public static final int NUM_MINT = 2; 
@@ -40,7 +45,7 @@ public class Scoop
 	private Ellipse2D.Double middleCircle;
 	private Ellipse2D.Double rightCircle;
 
-	/* Constructs a scoop based on a given (x, y) coordinate and flavor
+	/** Constructs a scoop based on a given (x, y) coordinate and flavor
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 * @param numFlavor the number that corresponds with the flavor
@@ -67,9 +72,12 @@ public class Scoop
 	public void draw(Graphics2D gr)
 	{
 		mainCircle = new Ellipse2D.Double(x, y, MAIN_CIRCLE_DIA, MAIN_CIRCLE_DIA);
-		leftCircle = new Ellipse2D.Double(x-LEFT_CIRCLE_X_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
-		middleCircle = new Ellipse2D.Double(x +  MID_CIRCLE_X_SHIFT, y + MID_CIRCLE_Y_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
-		rightCircle = new Ellipse2D.Double(x + LEFTRIGHT_CIRCLE_XY_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
+		leftCircle = new Ellipse2D.Double(x-LEFT_CIRCLE_X_SHIFT, y + LEFTRIGHT_CIRCLE_XY_SHIFT, 
+							SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
+		middleCircle = new Ellipse2D.Double(x +  MID_CIRCLE_X_SHIFT, y + MID_CIRCLE_Y_SHIFT, 
+							SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
+		rightCircle = new Ellipse2D.Double(x + LEFTRIGHT_CIRCLE_XY_SHIFT, y + 
+								LEFTRIGHT_CIRCLE_XY_SHIFT, SMALL_CIRCLE_DIA, SMALL_CIRCLE_DIA);
 		gr.setColor(getColorFlavor());
 		gr.fill(mainCircle);
 		if(numFlavor != NUM_BOMB)

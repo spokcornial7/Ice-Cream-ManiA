@@ -1,5 +1,13 @@
-import java.awt.Color;
+/** Flavors.java Enum for the flavors of the ice cream scoops. 
+ *  Has 5 flavors: BANANA, STRAWBERRY, MINT, ORANGE CREAM, BIRTHDAY CAKE, and includes a BOMB
+ *  @author Carol Zeng 
+ *  Collaborators: Lauren Ouyang, Helen Zhao
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2, 3
+ *  Due Date: 5/16/19
+ */
 
+import java.awt.Color;
 
 public enum Flavors 
 {	
@@ -12,15 +20,16 @@ public enum Flavors
 	
 	private Color color;
 	
-	/** Create node type with a given symbol 
-	 *  @param symbol the symbol associated with this type
+	/** Creates a flavor with a given color
+	 * @param color the color of the flavor
 	 */
 	Flavors(Color color)
 	{
 		this.color = color;
 	}
 	
-	/** @return this type's symbol
+	/** Returns the color corresponding with the flavor
+	 *  @return the color of the flavor
 	 */
 	public Color getFlavor()
 	{
