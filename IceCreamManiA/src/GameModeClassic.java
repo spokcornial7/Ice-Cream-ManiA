@@ -115,7 +115,8 @@ public class GameModeClassic extends GameMode
 			if(scoopQueue.isEmpty())
 			{
 				score++;
-				super.increaseSpeed();
+				if(score % 2 == 0)
+					super.increaseSpeed();
 				updateDiagram();
 				icecream.clearScoops();
 				return true;
