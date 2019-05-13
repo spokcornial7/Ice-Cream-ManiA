@@ -24,7 +24,7 @@ public class Scoop
 	public static final int MID_CIRCLE_X_SHIFT = 10; 
 	public static final int MID_CIRCLE_Y_SHIFT = 24; 
 	public static final int SCOOP_XY_LENGTH = 36;
-	public static final int SHIFT_AMT = 18;
+	public static final int SHIFT_AMT = 15;
 	
 	// Constants for Flavors
 	public static final int NUM_BANANA = 0;

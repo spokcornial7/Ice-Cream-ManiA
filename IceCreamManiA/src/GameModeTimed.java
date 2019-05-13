@@ -44,7 +44,7 @@ public class GameModeTimed extends GameMode
 	private static final Rectangle TIMED_BOX = new Rectangle(385, 253, 50, 55);
 	private static final Color BOX_COLOR = new Color(254, 195, 207);
 	private static final Rectangle TIMER_BOUNDS = new Rectangle(180, 100, 100, 50);
-	private static final int TIMER_START = 70;
+	private static final int TIMER_START = 60;
 	private static final Font TIMER_FONT = new Font("Lucida Grande", Font.BOLD, 30);
 	private static final int TIMER_DELAY = 1000;
 	private static final int SPEED_CHECK = 10;

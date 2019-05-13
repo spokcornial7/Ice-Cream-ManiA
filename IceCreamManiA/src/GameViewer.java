@@ -21,9 +21,13 @@ public class GameViewer
 	private static final int FRAME_Y = 100;
 	private static final int FRAME_WIDTH = 450;
 	private static final int FRAME_HEIGHT = 600;
-	private static final int BTN_X = 150;
-	private static final int BTN_WIDTH = 150;
-	private static final int BTN_HEIGHT = 60;
+	private static final Rectangle BTN1_BOUNDS = new Rectangle(150, 350, 150, 60);
+	private static final Rectangle BTN2_BOUNDS = new Rectangle(150, 450, 150, 60);
+	private static final Rectangle HIGHSCORE_LABEL_BOUNDS = new Rectangle(250, 185, 70, 70);
+	private static final Rectangle SCORE_LABEL_BOUNDS = new Rectangle(250, 155, 70, 70);
+	private static final Rectangle RULES_BOUNDS = new Rectangle(30, 90, 330, 300);
+	private static final Font SCORE_FONT = new Font("Lucida Grande", Font.BOLD, 30);
+	private static final Font HISCORE_FONT = new Font("Lucida Grande", Font.BOLD, 25);
 	
 	// Game instance variables
 	private GameMode game;
@@ -83,14 +87,12 @@ public class GameViewer
 		welcomePanel.setVisible(true);
 		
 		btnTimed = new JButton("Timed");
-		btnTimed.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);
-		btnTimed.setFont(new Font("Lucida Grande", Font.BOLD, 10));
+		btnTimed.setBounds(BTN1_BOUNDS);
 		welcomePanel.add(btnTimed);
 		btnTimed.addActionListener(listener);
 		
 		btnClassic = new JButton("Classic");
-		btnClassic.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
-		btnClassic.setFont(new Font("Lucida Grande", Font.BOLD, 10));
+		btnClassic.setBounds(BTN2_BOUNDS);
 		welcomePanel.add(btnClassic);
 		btnClassic.addActionListener(listener);
 		
@@ -115,7 +117,7 @@ public class GameViewer
 		rulesPanel.setVisible(false);
 		
 		btnBegin = new JButton("Begin Game!");
-		btnBegin.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
+		btnBegin.setBounds(BTN2_BOUNDS);
 		rulesPanel.add(btnBegin);
 		btnBegin.addActionListener(listener);
 		
@@ -127,19 +129,15 @@ public class GameViewer
 		layeredPaneR.add(lblBackground);
 	}
 	
-	/** 
-	 * 	Creates the game frame.
+	/** Creates the game frame	
 	 */
     private void createGame()
     {
     	if(gameMode.equals("classic"))
-    	{
     		game = new GameModeClassic(this);
-    	}
     	else
-    	{
     		game = new GameModeTimed(this);
-    	}
+    	
     	game.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     	gameFrame.getContentPane().add(game);    	
     
@@ -161,16 +159,15 @@ public class GameViewer
 		}
 		else
 		{			
-			ImageIcon img = new ImageIcon("Timer.JPG");
+			ImageIcon img = new ImageIcon("TIMED.JPG");
 			JLabel lblBackground = new JLabel(img);
 			lblBackground.setBounds(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
 			gameFrame.add(lblBackground);
 		}
     }
     
-    /**
-	 * Creates the End Game Options Panel
-	 * @param listener is the button listener
+    /** Creates the End Game Options Panel
+	 *  @param listener is the button listener
 	 */
 	private void endGameOpt(ButtonListener listener) 
 	{	
@@ -183,25 +180,15 @@ public class GameViewer
 		frame1.setVisible(true);
 		welcomePanel.setVisible(false);
 		
-		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
-		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 30));
-		lblScore.setForeground(Color.white);
-		lblScore.setBounds(250, 155, 70, 70);
-		endOptPanel.add(lblScore);
-	
-		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
-		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-		lblHighscore.setForeground(Color.white);
-		lblHighscore.setBounds(250, 185, 70, 70);
-		endOptPanel.add(lblHighscore);	
+		addEndLabels();
 		
-		btnReplay = new JButton("REPLAY");
-		btnReplay.setBounds(BTN_X, 350, BTN_WIDTH, BTN_HEIGHT);
+		btnReplay = new JButton("Replay");
+		btnReplay.setBounds(BTN1_BOUNDS);
 		endOptPanel.add(btnReplay);
 		btnReplay.addActionListener(listener);
 		
-		btnMenu = new JButton("MENU");
-		btnMenu.setBounds(BTN_X, 450, BTN_WIDTH, BTN_HEIGHT);
+		btnMenu = new JButton("Menu");
+		btnMenu.setBounds(BTN2_BOUNDS);
 		endOptPanel.add(btnMenu);
 		btnMenu.addActionListener(listener);
 		
@@ -221,7 +208,7 @@ public class GameViewer
 		try {
 			Scanner scan = new Scanner(new File("TimerModeRules.txt"));
 			JLabel timedRules = new JLabel(scan.nextLine());
-			timedRules.setBounds(30, 90, 330, 300);
+			timedRules.setBounds(RULES_BOUNDS);
 			rulesPanel.add(timedRules);
 			rulesPanel.add(layeredPaneR);
 			scan.close();
@@ -237,13 +224,30 @@ public class GameViewer
 		try {
 			Scanner scan = new Scanner(new File("ClassicModeRules.txt"));
 			JLabel classicRules = new JLabel(scan.nextLine());
-			classicRules.setBounds(30, 90, 330, 300);
+			classicRules.setBounds(RULES_BOUNDS);
 			rulesPanel.add(classicRules);
 			rulesPanel.add(layeredPaneR);
 			scan.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/** Adds score labels to the end option panel 
+	 */
+	private void addEndLabels()
+	{
+		JLabel lblScore = new JLabel(String.valueOf(game.getPoints()));
+		lblScore.setFont(SCORE_FONT);
+		lblScore.setForeground(Color.white);
+		lblScore.setBounds(SCORE_LABEL_BOUNDS);
+		endOptPanel.add(lblScore);
+	
+		JLabel lblHighscore = new JLabel(String.valueOf(game.getHighScore()));
+		lblHighscore.setFont(HISCORE_FONT);
+		lblHighscore.setForeground(Color.white);
+		lblHighscore.setBounds(HIGHSCORE_LABEL_BOUNDS);
+		endOptPanel.add(lblHighscore);	
 	}
 	
 	/** Ends the game
