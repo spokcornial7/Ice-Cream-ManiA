@@ -29,7 +29,7 @@ public class GameModeTimed extends GameMode
 	private static final int SCOOP2_Y = 200;
 	private static final int SCOOP1_Y = 260;
 	private static final int DIA_SHIFT_AMT = 60;
-	private static final int DIA_FLAVORS = 4;
+	private static final int DIA_FLAVORS = 5;
 	private static final int NUM_FLAVORS = 5;
 	private static final int MAX_SCOOPS = 5;
 	

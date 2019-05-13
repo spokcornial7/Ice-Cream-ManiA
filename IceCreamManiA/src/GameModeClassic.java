@@ -31,6 +31,7 @@ public class GameModeClassic extends GameMode
 	private static final int SCOOP2_Y = 200;
 	private static final int SCOOP1_Y = 260;
 	private static final int NUM_FLAVORS_BOUND = 4;
+	private static final int DIA_FLAVORS = 5;
 		
  
 	/** Instantiates game mode classic
@@ -62,7 +63,7 @@ public class GameModeClassic extends GameMode
 	 */
 	public int flavorNum()
 	{
-		return NUM_FLAVORS;
+		return NUM_FLAVORS_BOUND;
 	}
 	
 	/** Returns the high score
@@ -165,11 +166,11 @@ public class GameModeClassic extends GameMode
 	private void createDiagram()
 	{
 		scoopQueue.clear();
-		int rand1 = (int) (Math.random() * NUM_FLAVORS_BOUND);
-		int rand2 = (int) (Math.random() * NUM_FLAVORS_BOUND);
-		int rand3 = (int) (Math.random() * NUM_FLAVORS_BOUND);
-		int rand4 = (int) (Math.random() * NUM_FLAVORS_BOUND);
-		int rand5 = (int) (Math.random() * NUM_FLAVORS_BOUND);
+		int rand1 = (int) (Math.random() * DIA_FLAVORS);
+		int rand2 = (int) (Math.random() * DIA_FLAVORS);
+		int rand3 = (int) (Math.random() * DIA_FLAVORS);
+		int rand4 = (int) (Math.random() * DIA_FLAVORS);
+		int rand5 = (int) (Math.random() * DIA_FLAVORS);
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP1_Y, rand1));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP2_Y, rand2));
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP3_Y, rand3));

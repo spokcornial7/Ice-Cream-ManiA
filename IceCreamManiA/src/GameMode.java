@@ -310,7 +310,6 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			repaint();
 			s.dropDown(1);
 		}
-	
 	}
 	
 	/** Adds the score label to the game viewer
