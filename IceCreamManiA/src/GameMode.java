@@ -34,6 +34,10 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	private static final Rectangle RIGHT_BOX = new Rectangle(370, 0, 80, 600);
 	private static final Rectangle DIA_BOX = new Rectangle(380, 6, 60, 310);
 	private static final Color BORDER_COLOR = new Color(71, 87, 165);
+	private static final Font SCORE_FONT = new Font("Lucida Grande", Font.BOLD, 50);
+	private static final Font HISCORE_FONT = new Font("Lucida Grande", Font.BOLD, 25);
+	private static final Rectangle SCORE_BOUNDS = new Rectangle(380, 400, 100, 100);
+	private static final Rectangle HISCORE_BOUNDS = new Rectangle(380, 450, 100, 100);
 	
 	//Constants for the game
 	public static final int NUM_FLAVORS = 6;
@@ -309,25 +313,30 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	
 	}
 	
-
+	/** Adds the score label to the game viewer
+	 */
 	public void addScoreLabel()
 	{
 		lblScore = new JLabel(String.valueOf(getPoints()));
-		lblScore.setFont(new Font("Lucida Grande", Font.BOLD, 50));
+		lblScore.setFont(SCORE_FONT);
 		lblScore.setForeground(Color.white);
-		lblScore.setBounds(380, 400, 100, 100);
+		lblScore.setBounds(SCORE_BOUNDS);
 		viewer.getGameFrame().add(lblScore);
 	}
 	
+	/** Adds the high score label to the game viewer
+	 */
 	public void addHighScoreLabel()
 	{
 		lblHighscore = new JLabel(String.valueOf(getHighScore()));
-		lblHighscore.setFont(new Font("Lucida Grande", Font.BOLD, 25));
+		lblHighscore.setFont(HISCORE_FONT);
 		lblHighscore.setForeground(Color.white);
-		lblHighscore.setBounds(380, 450, 100, 100);
+		lblHighscore.setBounds(HISCORE_BOUNDS);
 		viewer.getGameFrame().add(lblHighscore);
 	}
 	
+	/** Updates the score labels
+	 */
 	public void updateScoreLabels()
 	{
 		lblScore.setText(String.valueOf(getPoints()));

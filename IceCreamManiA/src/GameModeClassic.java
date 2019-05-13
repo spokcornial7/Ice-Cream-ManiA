@@ -32,9 +32,8 @@ public class GameModeClassic extends GameMode
 	private static final int SCOOP1_Y = 260;
 	private static final int NUM_FLAVORS_BOUND = 4;
 		
-
-	/**
-	 *  Instantiates game mode classic
+ 
+	/** Instantiates game mode classic
 	 *  @param viewer to view the game
 	 */
 	public GameModeClassic(GameViewer viewer) 
@@ -59,16 +58,14 @@ public class GameModeClassic extends GameMode
 		createDiagram();
 	}
 	
-	/**
-	 *  Returns the number of flavors in this game mode
+	/** Returns the number of flavors used in this game mode 
 	 */
 	public int flavorNum()
 	{
 		return NUM_FLAVORS;
 	}
 	
-	/**
-	 *  Returns the high score
+	/** Returns the high score
 	 *  @return high score
 	 */
 	@Override
@@ -77,9 +74,8 @@ public class GameModeClassic extends GameMode
 		return highscore;
 	}
 	
-	/**
-	 *  Returns the score
-	 *  @return score
+	/** Returns the score
+	 *  @return score 
 	 */
 	@Override
 	public int getPoints()
@@ -87,8 +83,7 @@ public class GameModeClassic extends GameMode
 		return score;
 	}
 	
-	/**
-	 *  Sets/updates the high score
+	/** Sets/updates the high score
 	 */
 	@Override
 	public void setHighScore()
@@ -97,8 +92,7 @@ public class GameModeClassic extends GameMode
 			highscore = score;
 	}
 	
-	/**
-	 *  Returns if the game is over 
+	/** Returns if the game is over 
 	 *  @return variable holding true if game over, false if not
 	 */
 	@Override
@@ -108,8 +102,7 @@ public class GameModeClassic extends GameMode
 	}
 	
 	
-	/**
-	 *  Updates and returns true if the score was updated
+	/** Updates and returns true if the score was updated
 	 *  @return returns true if score increased
 	 */
 	@Override
@@ -148,8 +141,7 @@ public class GameModeClassic extends GameMode
 	}
 
 	
-	/**
-	 *  Draws the diagram
+	/** Draws the diagram  
 	 */
 	@Override
 	public void drawDiagram(Graphics g)
@@ -160,17 +152,15 @@ public class GameModeClassic extends GameMode
 			s.draw(gr2);
 		}
 	}
-	
-	/**
-	 *  Updates the diagram with a new diagram
+	 
+	/** Updates the diagram with a new diagram
 	 */
 	private void updateDiagram()
 	{
 		createDiagram();
 	}
 	
-	/**
-	 *  Creates a new diagram
+	/** Creates a new diagram 
 	 */
 	private void createDiagram()
 	{

@@ -63,8 +63,7 @@ public class GameModeTimed extends GameMode
 	private JLabel time;
 	private Timer timer;
 
-	/**
-	 *  Instantiates game mode timed
+	/** Instantiates game mode timed
 	 *  @param viewer to view to game
 	 */
 	public GameModeTimed(GameViewer viewer) 
@@ -105,8 +104,7 @@ public class GameModeTimed extends GameMode
 		gr.draw(TIMED_BOX);
 	}
 	
-	/**
-	 *  Returns the number of flavors in this game mode
+	/** Returns the number of flavors in this game mode
 	 *  @return the number of flavors
 	 */
 	public int flavorNum()
@@ -114,9 +112,8 @@ public class GameModeTimed extends GameMode
 		return NUM_FLAVORS;
 	}
 	
-	/**
-	 *  Returns the high score
-	 *  @return high score
+	/** Returns the high score
+	 *  @return high score  
 	 */
 	@Override
 	public int getHighScore()
@@ -124,9 +121,8 @@ public class GameModeTimed extends GameMode
 		return highscore;
 	}
 	
-	/**
-	 *  Returns the score
-	 *  @return score
+	/** Returns the score
+	 *  @return score  
 	 */
 	@Override
 	public int getPoints()
@@ -134,8 +130,7 @@ public class GameModeTimed extends GameMode
 		return score;
 	}
 	
-	/**
-	 *  Sets/updates the high score
+	/** Sets/updates the high score
 	 */
 	@Override
 	public void setHighScore()
@@ -154,9 +149,8 @@ public class GameModeTimed extends GameMode
 		return done;
 	}
 	
-	/**
-	 *  Updates and returns true if the score was updated
-	 *  @return returns true if score increased
+	/** Updates and returns true if the score was updated
+	 *  @return returns true if score increased  
 	 */
 	@Override
 	public boolean updateScore()
@@ -198,9 +192,8 @@ public class GameModeTimed extends GameMode
 		return true;
 	}
 
-	/**
-	 *  Returns if the correct flavor was added 
-	 *  @return true if correct flavor added, false if otherwise
+	/** Returns if the correct flavor was added 
+	 *  @return true if correct flavor added, false if otherwise 
 	 */
 	private boolean correctFlavor()
 	{
@@ -216,9 +209,8 @@ public class GameModeTimed extends GameMode
 		return false;
 	}
 	
-	/**
-	 *  Returns whether the scoop added was a bomb
-	 *  @return true if the scoop was a bomb
+	/** Returns whether the scoop added was a bomb
+	 *  @return true if the scoop was a bomb 
 	 */
 	private boolean touchedBomb()
 	{
@@ -228,8 +220,7 @@ public class GameModeTimed extends GameMode
 	}
 	
 	
-	/**
-	 *  Draws the diagram
+	/** Draws the diagram
 	 */
 	public void drawDiagram(Graphics g)
 	{
@@ -240,8 +231,7 @@ public class GameModeTimed extends GameMode
 		}
 	}
 	
-	/**
-	 *  Updates the diagram by shifting down the previous diagram
+	/** Updates the diagram by shifting down the previous diagram
 	 */
 	private void updateDiagram()
 	{
@@ -253,8 +243,7 @@ public class GameModeTimed extends GameMode
 		addRandomScoop();
 	}
 	
-	/**
-	 *  Creates a new diagram
+	/** Creates a new diagram
 	 */
 	private void createDiagram()
 	{
@@ -271,8 +260,7 @@ public class GameModeTimed extends GameMode
 		scoopQueue.add(new Scoop(SCOOP_X, SCOOP5_Y, rand5));
 	}
 	
-	/**
-	 *  Adds a new random scoop for the top of the diagram
+	/**  Adds a new random scoop for the top of the diagram
 	 */
 	private void addRandomScoop()
 	{
@@ -287,9 +275,8 @@ public class GameModeTimed extends GameMode
 		super.increaseSpeed();
 	}
 	
-	/**
-	 *  Draws a label for the count down timer
-	 *  @return the timer label
+	/** Draws a label for the count down timer
+	 *  @return the timer label 
 	 */
 	public void drawTimer()
 	{
@@ -302,8 +289,7 @@ public class GameModeTimed extends GameMode
 		super.getViewer().getGameFrame().add(time);
 	}
 
-	/**
-	 * An ActionListener for the count down timer
+	/** An ActionListener for the count down timer
 	 */
     class timerListener implements ActionListener 
     {
