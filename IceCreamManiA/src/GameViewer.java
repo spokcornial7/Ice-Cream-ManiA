@@ -42,7 +42,7 @@ public class GameViewer
 	private JButton btnMenu;
 	private JLayeredPane layeredPaneR;
 	
-	/** Creates a GameViewer object 
+	/** Creates a GameViewer object */
 	public GameViewer() 
 	{
 		initialize();
