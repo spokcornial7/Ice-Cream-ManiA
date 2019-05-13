@@ -1,3 +1,13 @@
+/** The GameMode class contains basic functions shared by both the GameModeTimed and GameModeClassic classes. 
+ *	It creates a seemingly never ending amount of random scoops to fall from the top of the screen. The class
+ *  also determines whether or not the player had successfully stacked a scoop on the IceCream. 
+ *  @author Helen Zhao
+ *  Collaborators: Carol Zeng, Lauren Ouyang
+ *  Teacher: Mrs. Ishman
+ *  Periods: 2, 3
+ *  Due Date: 5/16/19
+ */
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -9,39 +19,42 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
 public abstract class GameMode extends JComponent implements KeyListener, ActionListener
 {
+	//Constants relating to the frame
+	public static final int RIGHT_BOUND = 334;
+	public static final int LEFT_BOUND = 15;
+	public static final int FRAME_HEIGHT = 600;
+	public static final int FRAME_WIDTH = 450;
+	private static final Rectangle BORDER = new Rectangle(0, 0, 450, 600 );
+	private static final Rectangle RIGHT_BOX = new Rectangle(370, 0, 80, 600);
+	private static final Rectangle DIA_BOX = new Rectangle(380, 6, 60, 310);
+	private static final Color BORDER_COLOR = new Color(71, 87, 165);
+	
+	//Constants for the game
+	public static final int NUM_FLAVORS = 6;
+	public static final int CONE_START_Y = 560;
+	public static final int NUM_SCOOPS = 12;
+	public static final int SCOOP_DISTANCE = 40;
+	
+	//Instance variables for the game
 	private ArrayList<Scoop> scoops;
 	private IceCream iceCream; 
 	private JLabel lblScore;
 	private JLabel lblHighscore;
 	private Timer timer;
 	private GameViewer viewer;
-	
 	private boolean added;
 	private int speed;
 	private static final int ITL_SPEED = 8;
 	
-	public static final int RIGHT_BOUND = 334;
-	public static final int LEFT_BOUND = 15;
-	public static final int NUM_FLAVORS = 6;
-	
-	public static final int FRAME_HEIGHT = 600;
-	public static final int FRAME_WIDTH = 450;
-	public static final int CONE_START_Y = 560;
-	
-	private static final Rectangle BORDER = new Rectangle(0, 0, 450, 600 );
-	private static final Rectangle RIGHT_BOX = new Rectangle(370, 0, 80, 600);
-	private static final Rectangle DIA_BOX = new Rectangle(380, 6, 60, 310);
-	private static final Color BORDER_COLOR = new Color(71, 87, 165);
-	
-	
+	/** Constructs a GameMode object
+	 *  @param viewer is the GameViewer object
+	 */
 	public GameMode(GameViewer viewer)
 	{
 		speed = ITL_SPEED;
@@ -62,6 +75,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		addHighScoreLabel();
 	}	
 	
+	/** Draws the components of the Game
+	 *  @param g is the Graphics object
+	 */
 	@Override
 	public void paintComponent(Graphics g)
 	{	
@@ -76,6 +92,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 			updateScoreLabels();		
 	}
 	
+	/** Resets the game
+	 */
 	public void reset()
 	{
 		updateScoreLabels();
@@ -88,6 +106,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		randScoops();
 	}
 	
+	/** Draws the border for the diagram
+	 * 	@param gr is the Graphics object 
+	 */
 	public void drawBorder(Graphics2D gr)
 	{
 		gr.setColor(BORDER_COLOR);
@@ -98,6 +119,8 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		gr.fill(DIA_BOX);
 	}
 	
+	/** Increases the speed of the scoops falling from the top of the screen 
+	 */
 	public void increaseSpeed()
 	{
 		timer.stop();
@@ -106,17 +129,22 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		timer.start();
 	}
 	
+	/** Determines if the scoop can be added to the iceCream
+	 * 	@param s the Scoop to be determined if added
+	 *  @return true if the scoop is added to the iceCream, false otherwise
+	 */
 	public boolean ifScoopAdded(Scoop s)
 	{
-		//Get 
 		double sX = s.getBoundingBox().getX();
 		double sY = s.getBoundingBox().getY() + s.getBoundingBox().getHeight();
 		
+		double iceCreamWidth = (IceCream.CONE_X_RIGHT - IceCream.CONE_X_MID) * 2;
 		if(iceCream.isEmpty())
 		{
-			if(sX >= (iceCream.getX() - 18) && sX <= (iceCream.getX() + 18)) // 18 is half the cone's width
+			if(sX >= (iceCream.getX() - iceCreamWidth) 
+					&& sX <= (iceCream.getX() + iceCreamWidth))
 			{
-				if(sY == iceCream.getY() - 40) // 40 is cone height
+				if(sY == iceCream.getY() - IceCream.CONE_HEIGHT) 
 					return true; 
 			}
 			return false; 
@@ -126,9 +154,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		double topScoopY = topScoop.getBoundingBox().getY();
 		double topScoopX = topScoop.getBoundingBox().getX();
 		
-		double radius = topScoop.getBoundingBox().getWidth() / 2;
+		double radius = Scoop.SCOOP_XY_LENGTH / 2;
 		
-		if(sX >= (topScoopX - radius) && sX <= (topScoopX + radius)) //36 is scoop's width
+		if(sX >= (topScoopX - radius) && sX <= (topScoopX + radius))
 		{
 			if(sY == topScoopY)
 				return true; 
@@ -136,14 +164,25 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return false; 
 	}
 	
-	public IceCream getIceCream() {
+	/** Returns the IceCream object
+	 *  @return the IceCream object
+	 */
+	public IceCream getIceCream() 
+	{
 		return iceCream;
 	}
 	
-	public GameViewer getViewer() {
+	/** Returns the GameViewer object
+	 *  @return the GameViewer object
+	 */
+	public GameViewer getViewer() 
+	{
 		return viewer;
 	}
 	
+	/** Moves the iceCream right and left 
+	 *	@param e is the key typed
+	 */
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
@@ -173,20 +212,16 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void keyReleased(KeyEvent e) {}
+	
+	/** Creates a random list of scoops
+	 */
 	public void randScoops()
 	{
-		for(int index = 0; index < 12; index++)
+		for(int index = 0; index < NUM_SCOOPS; index++)
 		{
 			Scoop s = makeScoop();
 			scoops.add(s);
@@ -195,6 +230,9 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 
 	}
 	
+	/** Makes a random scoop
+	 *  @return the newly created scoop
+	 */
 	public Scoop makeScoop()
 	{	
 		Scoop s;
@@ -209,28 +247,38 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		return s; 
 	}
 	
+	/** Checks if the newly created scoop overlaps with the rest of the scoops in the list of scoops
+	 *  @param s is the newly created Scoop
+	 *  @return true if overlap exists, false otherwise
+	 */
 	public boolean ifOverlap(Scoop s)
 	{	
 		for(int index = 0; index < scoops.size(); index++)
 		{
 			Scoop temp = scoops.get(index);
-			if(scoopTouch(s, temp)) // if the scoops touch
+			if(scoopTouch(s, temp))
 				return true;
 		}
 		return false; 
 	}
 	
+	/** Checks if the two scoops touch
+	 *  @param s is the first Scoop
+	 *  @param temp is the other Scoop
+	 *  @return true if the scoops do touch, false otherwise
+	 */
 	public boolean scoopTouch(Scoop s, Scoop temp)
 	{
-		//this returns that the scoops do touch
-		if(s.getX()  < temp.getX() + 50 && s.getX() + 40 > temp.getX())
-			if(s.getY() < temp.getY() + 40 && s.getY() + 40 > temp.getY()) //a size bigger than the width 
+		if(s.getX()  < temp.getX() + SCOOP_DISTANCE && s.getX() + SCOOP_DISTANCE > temp.getX())  
+			if(s.getY() < temp.getY() + SCOOP_DISTANCE && s.getY() + SCOOP_DISTANCE > temp.getY()) 
 				return true; 
-		
-		//returns that the scoops don't touch 
+
 		return false; 
 	}
 	
+	/** Runs the game
+	 *  @param e is the actionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{ 
@@ -286,18 +334,38 @@ public abstract class GameMode extends JComponent implements KeyListener, Action
 		lblHighscore.setText(String.valueOf(getHighScore()));
 	}
 
+	/** Returns whether or not the game is over
+	 *  @return true if game is over, false otherwise
+	 */
 	abstract boolean isGameOver();
 	
+	/** draws the Diagram 
+	 *  @param gr is the Graphics object
+	 */
 	abstract void drawDiagram(Graphics gr);
-
+	
+	/** Returns the highScore
+	 *  @return the highScore
+	 */
 	abstract int getHighScore();
 	
+	/** Returns the points earned by the player
+	 *  @return the points
+	 */
 	abstract int getPoints();	
 	
+	/** updates the high score
+	 */
 	abstract void setHighScore();
 	
+	/**  Updates and returns true if the score was updated
+	 *  @return returns true if score increased
+	 */
 	abstract boolean updateScore();
 	
+	/** Returns the number of flavors in this game mode
+	 *  @return the number of flavors
+	 */
 	abstract int flavorNum();
 	
 	
