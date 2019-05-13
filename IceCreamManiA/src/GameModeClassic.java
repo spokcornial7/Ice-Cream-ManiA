@@ -16,13 +16,6 @@ import java.util.*;
 
 public class GameModeClassic extends GameMode
 {
-	// Game instance constants/variables
-	private static int highscore = 0;
-	private int score;
-	private boolean done;
-	private IceCream icecream;
-	private Queue<Scoop> scoopQueue;
-	
 	// Diagram constants
 	private static final int SCOOP_X = 394;
 	private static final int SCOOP5_Y = 20;
@@ -32,6 +25,14 @@ public class GameModeClassic extends GameMode
 	private static final int SCOOP1_Y = 260;
 	private static final int NUM_FLAVORS_BOUND = 4;
 	private static final int DIA_FLAVORS = 5;
+	
+	// Game instance constants/variables
+	private static final int LVL_SPEED = 3;
+	private static int highscore = 0;
+	private int score;
+	private boolean done;
+	private IceCream icecream;
+	private Queue<Scoop> scoopQueue;
 		
  
 	/** Instantiates game mode classic
@@ -115,7 +116,7 @@ public class GameModeClassic extends GameMode
 			if(scoopQueue.isEmpty())
 			{
 				score++;
-				if(score % 2 == 0)
+				if(score % LVL_SPEED == 0)
 					super.increaseSpeed();
 				updateDiagram();
 				icecream.clearScoops();
