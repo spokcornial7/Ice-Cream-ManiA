@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class IceCream 
 {
 	// Constants for the cone
-	private static final Color CONE_COLOR = new Color(205, 133, 63);
-	private static final int CONE_X_MID = 16;
-	private static final int CONE_X_RIGHT = 31;
-	private static final int CONE_HEIGHT = 40;
-	private static final int SCOOP_HEIGHT = 36;
-	private static final int CONE_SIDES = 3;
-	private static final int SHIFT_AMT = 15; 
+	public static final Color CONE_COLOR = new Color(205, 133, 63);
+	public static final int CONE_X_MID = 16;
+	public static final int CONE_X_RIGHT = 31;
+	public static final int CONE_HEIGHT = 40;
+	public static final int SCOOP_HEIGHT = 36;
+	public static final int CONE_SIDES = 3;
+	public static final int SHIFT_AMT = 15; 
 	
 	// Instance variables
 	private ArrayList<Scoop> scoops; 
