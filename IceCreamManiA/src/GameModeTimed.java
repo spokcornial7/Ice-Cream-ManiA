@@ -107,6 +107,7 @@ public class GameModeTimed extends GameMode
 	
 	/**
 	 *  Returns the number of flavors in this game mode
+	 *  @return the number of flavors
 	 */
 	public int flavorNum()
 	{
